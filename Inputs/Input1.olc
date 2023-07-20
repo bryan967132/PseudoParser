@@ -1,0 +1,88 @@
+inicio
+
+	//variables
+	ingresar var_1 como Numero con valor 7
+	ingresar var_2 como Numero con valor 3.1416
+	ingresar var_3 como Cadena con valor "Siete"
+	ingresar var_4 como Booleano con valor Verdadero
+	ingresar var_5 como Booleano con valor Falso
+	ingresar var_6, var_7 como Caracter con valor 'F'
+	ingresar var_8 como Caracter con valor '${70}'
+
+	/*
+	Estructuras de Control
+	*/
+
+	metodo estructuraIf
+		si var_1 mayor que 9 entonces
+			imprimir "Valor var_1 "
+			imprimir nl var1
+		o si var_1 diferente de var_8 entonces
+			segun var3 hacer
+				en caso de ser "ocho" entonces
+					imprimir nl "8"
+					detener
+				en caso de ser "siete" entonces
+					imprimir nl "7"
+					detener
+				de lo contrario entonces
+					imprimir nl "desconocido"
+			fin segun
+		fin si
+		si var_6 mayor igual que 7 entonces
+			imprimir nl "7 es mayor"
+		de lo contrario
+			imprimir nl "7 no es mayor"
+		fin si
+	fin metodo
+
+	ingresar n como Numero con valor 0
+	metodo cicloMientras
+		mientras n menor igual que 5 hacer
+			ingresar r como Numero con valor 17
+			repetir
+				r -> r - 1
+			hasta que r mayor que 7
+			n -> n + 1
+		fin mientras
+	fin metodo
+
+	metodo cicloPara
+		para i -> 1 hasta 10 hacer
+			para j -> 1 hasta 10 con incremento 2 hacer
+				imprimir nl i + ", " + j
+			fin para
+		fin para
+	fin metodo
+
+	metodo f1
+		imprimir nl "inicial"
+	fin metodo
+
+	metodo f2 con parametros(n1 Numero, n2 Cadena, n3 Booleano, n4 Caracter)
+		imprimir nl n1 + n2 + n3 + n4
+		ejecutar suma()
+	fin metodo
+
+	funcion suma Numero
+		retornar 7 + 3
+	fin funcion
+
+	funcion par Booleano con parametros(n Numero)
+		si n igual a 0 entonces
+			retornar Verdadero
+		fin si
+		retornar ejecutar impar(n - 1)
+	fin funcion
+
+	funcion impar Booleano con parametros(n Numero)
+		si n igual a 0 entonces
+			retornar Falso
+		fin si
+		retornar ejecutar par(n - 1)
+	fin funcion
+
+	funcion ackerman Numero con parametros(m Numero, n Numero)
+		retornar m + 1
+	fin funcion
+fin

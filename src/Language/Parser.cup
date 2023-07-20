@@ -1,0 +1,277 @@
+/* 1. Package e importaciones */
+package Language;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+import java_cup.runtime.*;
+import Classes.Abstracts.*;
+import Classes.Expressions.*;
+import Classes.Instructions.*;
+import Classes.Utils.*;
+import Components.Response;
+import Components.ErrorS;
+
+/* 2. Codigo para el parser, variables y metodos */
+
+parser code 
+{:
+    public Scanner s;
+    private int errors = 0;
+    public ArrayList<Response> errorsS = new ArrayList<>();
+    public ArrayList<Instruction> execute;
+    public Parser(Scanner s) {
+        super(s);
+        this.s = s;
+    }
+    public void syntax_error(Symbol sym) {
+        errorsS.add(new Response(new ErrorS(sym.left,sym.right,sym.value,Sym.terminalNames[sym.sym])));
+        errors ++;
+    }
+    public void unrecovered_syntax_error(Symbol sym) throws java.lang.Exception {
+        errorsS.add(new Response("Error Sintáctico sin recuperar."));
+    }
+    public boolean isSuccessExecution() {
+        return !(errors > 0);
+    }
+    public String getErrors() {
+        return errorsS.stream().map(Object::toString).collect(Collectors.joining("\n-> "));
+    }
+    ArrayList<Instruction> toInstructions(ArrayList<Object> arrObjs) {
+        ArrayList<Instruction> inst = new ArrayList<>();
+        for(Object object : arrObjs) {
+            inst.add((Instruction) object);
+        }
+        return inst;
+    }
+:} 
+
+/* 3. Terminales*/
+
+terminal String RW_else, RW_elseif, RW_params, RW_incr, RW_equ, RW_endwhile, RW_endfunc, RW_endmeth, RW_endswitch;
+terminal String RW_endfor, RW_endif, RW_println, RW_moreequ, RW_lessequ, RW_until, RW_to, RW_break, RW_start;
+terminal String RW_print, RW_more, RW_less, RW_equequ, RW_notequ, RW_case, RW_or, RW_and, RW_not, RW_begin, RW_end;
+terminal String RW_insert, RW_as, RW_then, RW_if, RW_switch, RW_do, RW_for, RW_while, RW_repeat, RW_return;
+terminal String RW_meth, RW_func, RW_exec, RW_num, RW_str, RW_bool, RW_char, RW_pow, RW_mod, RW_true, RW_false;
+terminal String TK_prompt, TK_plus, TK_minus, TK_uminus, TK_mult, TK_div, TK_lpar, TK_rpar, TK_comma;
+terminal String TK_id, TK_num, TK_str, TK_char;
+
+/* 4. No Terminales*/
+non terminal String INI;
+non terminal ArrayList<Instruction> INSTSGLOBAL;
+non terminal ArrayList<Sentence> INSTRUCTIONS;
+non terminal ArrayList<Expression> LISTARGS, LISTPARAMS;
+non terminal Expression EXP, ARITHMETICS, RELATIONALS, LOGICS, CALLFUNC;
+non terminal Instruction CALLMAINFUNC, INSTGLOBAL, PRINT;
+non terminal Instruction DECLID, DECLFUNC;
+non terminal ArrayList<String> LISTID;
+non terminal Sentence INSTRUCTION;
+non terminal Sentence IFSTRUCT, SWITCHSTRUCT;
+non terminal Object[] CASESDEFAULT;
+non terminal ArrayList<Case> CASES;
+non terminal Case CASE;
+non terminal Sentence LOOPFOR, LOOPWHILE, LOOPDOWHILE;
+non terminal Instruction ID_ASIGN;
+non terminal Type TYPE;
+non terminal Block INSTIF, INST_FUNC, INST_METH, INST_FOR, INST_WHILE, INST_REPEAT, DEFAULT;
+non terminal ElseIfStruct ELSEIFSTRUCT, ELSESTRUCT;
+non terminal String IDS;
+
+/* 5. Precedencias */
+precedence left RW_or;
+precedence left RW_and;
+precedence right RW_not;
+precedence left RW_equequ, RW_notequ;
+precedence left RW_less, RW_lessequ, RW_more, RW_moreequ;
+precedence left TK_plus, TK_minus;
+precedence left TK_mult, TK_div, RW_mod;
+precedence nonassoc RW_pow;
+precedence right TK_uminus;
+
+/* 6. Gramatica Libre de Contexto */
+
+start with INI;
+
+INI ::=
+    RW_begin IDS INSTSGLOBAL :ins RW_end {:execute = ins;              :} |
+    RW_begin IDS RW_end                  {:execute = new ArrayList<>();:} ;
+
+INSTSGLOBAL ::=
+    INSTSGLOBAL :insts INSTGLOBAL :inst {:insts.add(inst); RESULT = insts;              :} |
+    INSTGLOBAL :inst                    {:RESULT = new ArrayList<>(Arrays.asList(inst));:} ;
+
+INSTGLOBAL ::=
+    CALLMAINFUNC :inst {:RESULT = inst;:} |
+    DECLID       :inst {:RESULT = inst;:} |
+    DECLFUNC     :inst {:RESULT = inst;:} |
+    error        ;
+
+INSTRUCTIONS ::=
+    INSTRUCTIONS:insts INSTRUCTION:inst {:insts.add(inst); RESULT = insts;              :} |
+    INSTRUCTION:inst                    {:RESULT = new ArrayList<>(Arrays.asList(inst));:} ;
+
+INSTRUCTION ::=
+    DECLID          :inst {:RESULT = inst;                          :} |
+    ID_ASIGN        :inst {:RESULT = inst;                          :} |
+    IFSTRUCT        :inst {:RESULT = inst;                          :} |
+    SWITCHSTRUCT    :inst {:RESULT = inst;                          :} |
+    LOOPFOR         :inst {:RESULT = inst;                          :} |
+    LOOPWHILE       :inst {:RESULT = inst;                          :} |
+    LOOPDOWHILE     :inst {:RESULT = inst;                          :} |
+    CALLFUNC        :inst {:RESULT = inst;                          :} |
+    PRINT           :inst {:RESULT = inst;                          :} |
+    RW_break        :inst {:RESULT = new Break(instleft, instright);:} |
+    RW_return:r EXP :exp  {:RESULT = new Return(rleft, rright, exp);:} |
+    error           ;
+
+CALLMAINFUNC ::=
+    RW_start :s CALLFUNC :fnc {:RESULT = new MainMethod(sleft, sright, fnc);:} ;
+
+DECLID ::=
+    RW_insert :i LISTID :ids RW_as TYPE :t RW_equ EXP :exp {:RESULT = new InitID(ileft, iright, ids, exp, t);:} ;
+
+ID_ASIGN ::=
+    LISTID :ids TK_prompt EXP :exp {:RESULT = new AsignID(idsleft, idsright, ids, exp);:} ;
+
+LISTID ::=
+    LISTID :ls TK_comma IDS :id {:RESULT = ls; RESULT.add(id);                :} |
+    IDS :id                     {:RESULT = new ArrayList<>(Arrays.asList(id));:} ;
+
+IFSTRUCT ::=
+    RW_if :r EXP :cn RW_then ELSEIFSTRUCT :b1 {:RESULT = new If(rleft, rright, cn, new Block(b1left, b1right, b1.instructions), b1._if);:} |
+    RW_if :r EXP :cn RW_then ELSESTRUCT :b1   {:RESULT = new If(rleft, rright, cn, new Block(b1left, b1right, b1.instructions), b1._if);:} |
+    RW_if :r EXP :cn RW_then INSTIF :b1       {:RESULT = new If(rleft, rright, cn, b1, null);                                           :} ;
+
+ELSEIFSTRUCT ::=
+    INSTRUCTIONS :b1 RW_elseif :r EXP :cn RW_then ELSEIFSTRUCT :b2 {:RESULT = new ElseIfStruct(b1, new If(rleft, rright, cn, new Block(b2left, b2right, b2.instructions), b2._if));               :} |
+    INSTRUCTIONS :b1 RW_elseif :r EXP :cn RW_then ELSESTRUCT :b2   {:RESULT = new ElseIfStruct(b1, new If(rleft, rright, cn, new Block(b2left, b2right, b2.instructions), b2._if));               :} |
+    INSTRUCTIONS :b1 RW_elseif :r EXP :cn RW_then INSTIF :b2       {:RESULT = new ElseIfStruct(b1, new If(rleft, rright, cn, b2, null));                                                          :} |
+    RW_elseif :r EXP :cn RW_then ELSEIFSTRUCT :b2                  {:RESULT = new ElseIfStruct(new ArrayList<>(), new If(rleft, rright, cn, new Block(b2left, b2right, b2.instructions), b2._if));:} |
+    RW_elseif :r EXP :cn RW_then ELSESTRUCT :b2                    {:RESULT = new ElseIfStruct(new ArrayList<>(), new If(rleft, rright, cn, new Block(b2left, b2right, b2.instructions), b2._if));:} |
+    RW_elseif :r EXP :cn RW_then INSTIF :b2                        {:RESULT = new ElseIfStruct(new ArrayList<>(), new If(rleft, rright, cn, b2, null));                                           :} ;
+
+ELSESTRUCT ::=
+    INSTRUCTIONS :ins RW_else INSTIF :insif {:RESULT = new ElseIfStruct(ins, insif);              :} |
+    RW_else :el INSTIF :insif               {:RESULT = new ElseIfStruct(new ArrayList<>(), insif);:} ;
+
+INSTIF ::=
+    INSTRUCTIONS :l RW_endif {:RESULT = new Block(lleft, lright, l);                :} |
+    RW_endif :l              {:RESULT = new Block(lleft, lright, new ArrayList<>());:} ;
+
+SWITCHSTRUCT ::=
+    RW_switch :s EXP :exp RW_do CASESDEFAULT :b RW_endswitch {:RESULT = new Switch(sleft, sright, exp, (ArrayList<Case>) b[0], (Block) b[1]);:} |
+    RW_switch :s EXP :exp RW_do RW_endswitch                 {:RESULT = new Switch(sleft, sright, exp, null, null);                          :} ;
+
+CASESDEFAULT ::=
+    CASES :c DEFAULT :d {:RESULT = new Object[] {c,    d};   :} |
+    CASES :c            {:RESULT = new Object[] {c,    null};:} |
+    DEFAULT :d          {:RESULT = new Object[] {null, d};   :} ;
+
+CASES ::=
+    CASES :l CASE :c {:RESULT = l; RESULT.add(c);                 :} |
+    CASE :c          {:RESULT = new ArrayList<>(Arrays.asList(c));:} ;
+
+CASE ::=
+    RW_case :c EXP :exp RW_then INSTRUCTIONS :b {:RESULT = new Case(cleft, cright, exp, new Block(bleft, bright, b));                :} |
+    RW_case :c EXP :exp RW_then                 {:RESULT = new Case(cleft, cright, exp, new Block(cleft, cright, new ArrayList<>()));:} ;
+
+DEFAULT ::=
+    RW_else :d RW_then INSTRUCTIONS :b {:RESULT = new Block(dleft, dright, b);                :} |
+    RW_else :d RW_then                 {:RESULT = new Block(dleft, dright, new ArrayList<>());:} ;
+
+LOOPFOR ::=
+    RW_for :f IDS :id TK_prompt EXP :v1 RW_to EXP :v2 RW_incr EXP :v3 RW_do INST_FOR :b {:RESULT = new For(fleft, fright, id, v1, v2, v3,   b);:} |
+    RW_for :f IDS :id TK_prompt EXP :v1 RW_to EXP :v2 RW_do INST_FOR :b                 {:RESULT = new For(fleft, fright, id, v1, v2, null, b);:} ;
+
+LOOPWHILE ::=
+    RW_while :w EXP :exp RW_do INST_WHILE :b {:RESULT = new While(wleft, wright, exp, b);:} ;
+
+LOOPDOWHILE ::=
+    INST_REPEAT :d RW_until EXP :exp {:RESULT = new DoWhile(dleft, dright, exp, d);:} ;
+
+INST_FOR ::=
+    INSTRUCTIONS :l RW_endfor {:RESULT = new Block(lleft, lright, l);                :} |
+    RW_endfor :l              {:RESULT = new Block(lleft, lright, new ArrayList<>());:} ;
+
+INST_WHILE ::=
+    INSTRUCTIONS :l RW_endwhile {:RESULT = new Block(lleft, lright, l);                :} |
+    RW_endwhile :l              {:RESULT = new Block(lleft, lright, new ArrayList<>());:} ;
+
+INST_REPEAT ::=
+    RW_repeat INSTRUCTIONS :l {:RESULT = new Block(lleft, lright, l);                :} |
+    RW_repeat :l              {:RESULT = new Block(lleft, lright, new ArrayList<>());:} ;
+
+DECLFUNC ::=
+    RW_func :s IDS :id TYPE :t RW_params TK_lpar LISTPARAMS :l TK_rpar INST_FUNC :b {:RESULT = new Function(sleft, sright, id, l,                 b ,t);        :} |
+    RW_func :s IDS :id TYPE :t INST_FUNC :b                                         {:RESULT = new Function(sleft, sright, id, new ArrayList<>(), b ,t);        :} |
+    RW_meth :s IDS :id RW_params TK_lpar LISTPARAMS :l TK_rpar INST_METH :b         {:RESULT = new Function(sleft, sright, id, l,                 b ,Type.NULL);:} |
+    RW_meth :s IDS :id INST_METH :b                                                 {:RESULT = new Function(sleft, sright, id, new ArrayList<>(), b ,Type.NULL);:} ;
+
+INST_FUNC ::=
+    INSTRUCTIONS :l RW_endfunc {:RESULT = new Block(lleft, lright, l);                :} |
+    RW_endfunc :l              {:RESULT = new Block(lleft, lright, new ArrayList<>());:} ;
+
+INST_METH ::=
+    INSTRUCTIONS :l RW_endmeth {:RESULT = new Block(lleft, lright, l);                :} |
+    RW_endmeth :l              {:RESULT = new Block(lleft, lright, new ArrayList<>());:} ;
+
+LISTPARAMS ::=
+    LISTPARAMS :l TK_comma IDS :id TYPE :t {:RESULT = l; RESULT.add(new Parameter(idleft, idright, id, t));                 :} |
+    IDS :id TYPE :t                        {:RESULT = new ArrayList<>(Arrays.asList(new Parameter(idleft, idright, id, t)));:} ;
+
+CALLFUNC ::=
+    RW_exec :ex IDS :id TK_lpar LISTARGS :l TK_rpar {:RESULT = new CallFunction(exleft, exright, id, l);             :} |
+    RW_exec :ex IDS :id TK_lpar TK_rpar             {:RESULT = new CallFunction(exleft, exright, id, new ArrayList<>());:} ;
+
+LISTARGS ::=
+    LISTARGS :l TK_comma EXP :e1 {:RESULT = l; RESULT.add(e1);                 :} |
+    EXP :e1                      {:RESULT = new ArrayList<>(Arrays.asList(e1));:} ;
+
+PRINT ::=
+    RW_println :p EXP :exp {:RESULT = new Print(pleft, pright, exp); :} |
+    RW_print   :p EXP :exp {:RESULT = new Print(pleft, pright, exp);:} ;
+
+TYPE ::=
+    RW_num  {:RESULT = Type.NUMBER; :} |
+    RW_str  {:RESULT = Type.STRING; :} |
+    RW_char {:RESULT = Type.CHAR;   :} |
+    RW_bool {:RESULT = Type.BOOLEAN;:} ;
+
+IDS ::=
+    TK_id  :id {:RESULT = id;:} |
+    RW_or  :id {:RESULT = id;:} |
+    RW_and :id {:RESULT = id;:} ;
+
+EXP ::=
+    ARITHMETICS :exp         {:RESULT = exp;:} |
+    RELATIONALS :exp         {:RESULT = exp;:} |
+    LOGICS      :exp         {:RESULT = exp;:} |
+    CALLFUNC    :exp         {:RESULT = exp;:} |
+    TK_id       :id          {:RESULT = new AccessID(idleft, idright, id);:} |
+    TK_str      :p           {:RESULT = new Primitive(pleft, pright, p, Type.STRING); :} |
+    TK_char     :p           {:RESULT = new Primitive(pleft, pright, p, Type.CHAR);   :} |
+    TK_num      :p           {:RESULT = new Primitive(pleft, pright, p, Type.NUMBER); :} |
+    RW_true     :p           {:RESULT = new Primitive(pleft, pright, p, Type.BOOLEAN);:} |
+    RW_false    :p           {:RESULT = new Primitive(pleft, pright, p, Type.BOOLEAN);:} |
+    TK_lpar EXP :exp TK_rpar {:RESULT = exp;:} ;
+
+ARITHMETICS ::=
+    EXP :e1 TK_plus  :s EXP :e2 {:RESULT = new Arithmetic(e1left, e1right, e1, s, e2);:} |
+    EXP :e1 TK_minus :s EXP :e2 {:RESULT = new Arithmetic(e1left, e1right, e1, s, e2);:} |
+    EXP :e1 TK_mult  :s EXP :e2 {:RESULT = new Arithmetic(e1left, e1right, e1, s, e2);:} |
+    EXP :e1 TK_div   :s EXP :e2 {:RESULT = new Arithmetic(e1left, e1right, e1, s, e2);:} |
+    EXP :e1 RW_pow   :s EXP :e2 {:RESULT = new Arithmetic(e1left, e1right, e1, s, e2);:} |
+    EXP :e1 RW_mod   :s EXP :e2 {:RESULT = new Arithmetic(e1left, e1right, e1, s, e2);:} |
+    TK_minus :s         EXP :e2 {:RESULT = new Arithmetic(sleft, sright, null, s, e2);:} %prec TK_uminus ;
+
+RELATIONALS ::=
+    EXP :e1 RW_equequ  :s EXP :e2 {:RESULT = new Relational(e1left, e1right, e1, s, e2);:} |
+    EXP :e1 RW_notequ  :s EXP :e2 {:RESULT = new Relational(e1left, e1right, e1, s, e2);:} |
+    EXP :e1 RW_lessequ :s EXP :e2 {:RESULT = new Relational(e1left, e1right, e1, s, e2);:} |
+    EXP :e1 RW_moreequ :s EXP :e2 {:RESULT = new Relational(e1left, e1right, e1, s, e2);:} |
+    EXP :e1 RW_less    :s EXP :e2 {:RESULT = new Relational(e1left, e1right, e1, s, e2);:} |
+    EXP :e1 RW_more    :s EXP :e2 {:RESULT = new Relational(e1left, e1right, e1, s, e2);:} ;
+
+LOGICS ::=
+    EXP :e1 RW_and :s EXP :e2 {:RESULT = new Logic(e1left, e1right, e1, s, e2);:} |
+    EXP :e1 RW_or  :s EXP :e2 {:RESULT = new Logic(e1left, e1right, e1, s, e2);:} |
+    RW_not :s         EXP :e2 {:RESULT = new Logic(sleft, sright, null, s, e2);:} ;
