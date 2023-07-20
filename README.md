@@ -1,2 +1,2 @@
 ## **PseudoP**
-![Window](Images/Screen.png)
+![Pantalla](Images/Screen.png)
