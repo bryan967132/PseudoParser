@@ -101,7 +101,7 @@ public class ToolBar extends JPanel implements MouseListener {
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
 		}
         this.file = new JFileChooser();
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos OLC (*.psp)", "psp");
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos PsP (*.psp)", "psp");
         file.setFileFilter(filtro);
         int seleccion = file.showOpenDialog(null);
         if (seleccion == JFileChooser.APPROVE_OPTION) {
@@ -130,7 +130,7 @@ public class ToolBar extends JPanel implements MouseListener {
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             olcFile = file.getSelectedFile();
             String name;
-            String message = "Nombre del Archivo OLC [.psp]:";
+            String message = "Nombre del Archivo PsP [.psp]:";
             String path;
             ImageIcon icon = new ImageIcon(Icons.FILE1);
             Image img = icon.getImage();
@@ -141,7 +141,7 @@ public class ToolBar extends JPanel implements MouseListener {
                 name = (String) JOptionPane.showInputDialog(null,message,"Nuevo Proyecto",JOptionPane.PLAIN_MESSAGE,icon,null,null);
                 if(name == null) break;
                 else if(name.replace(" ","").equals("")) {
-                    message = "Debe Ingresar un Nombre.\nNombre del Archivo OLC [.psp]:";
+                    message = "Debe Ingresar un Nombre.\nNombre del Archivo PsP [.psp]:";
                     continue;
                 }
                 path = olcFile.getAbsolutePath() + "\\" + name + ".psp";
@@ -165,7 +165,7 @@ public class ToolBar extends JPanel implements MouseListener {
                     catch(Exception e1) {}
                     break;
                 }
-                message = "El nuevo archivo no puede llamarse\ncon el mismo nombre de uno existente\nen el mismo directorio.\nNombre del Archivo OLC [.psp]:";
+                message = "El nuevo archivo no puede llamarse\ncon el mismo nombre de uno existente\nen el mismo directorio.\nNombre del Archivo PsP [.psp]:";
             } while(true);
         }
     }
