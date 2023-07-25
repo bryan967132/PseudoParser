@@ -33,7 +33,7 @@ public class EditorArea extends JPanel {
     public EditorArea() {
         setAlignmentX(LEFT_ALIGNMENT);
         setForeground(Colors.WHITE);
-        setBackground(Colors.DARKVSCODE);
+        setBackground(Colors.DARKCOLOR);
         setMinimumSize(new Dimension (30, 30));
         setPreferredSize(new Dimension (30, 30));
         setMinimumSize(new Dimension (30, 30));
@@ -54,7 +54,7 @@ public class EditorArea extends JPanel {
 
         
         editor.setForeground(Colors.WHITE);
-        editor.setBackground(Colors.DARKVSCODE);
+        editor.setBackground(Colors.DARKCOLOR);
         editor.setFont(new java.awt.Font("Consolas", 0, 11));
         editor.setCaretColor(Colors.WHITE);
         editor.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));

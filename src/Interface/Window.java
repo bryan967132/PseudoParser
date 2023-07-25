@@ -13,7 +13,7 @@ public class Window extends JFrame {
     }
     void initComponents() {
         ide = new IDE(this);
-        this.getContentPane().setBackground(Colors.LIGHTVSCODE);
+        this.getContentPane().setBackground(Colors.LIGHTCOLOR);
         this.getContentPane().add(ide);
         controller.deserialize(ide);
         ide.lookPJFiles();

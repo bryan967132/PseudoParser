@@ -44,8 +44,8 @@ public class ToolBar extends JPanel implements MouseListener {
         openOLC = new Button("Abrir");
         openOLC.locationSize(20,5,50,25);
         openOLC.text(Colors.WHITE,14);
-        openOLC.setDesign(Colors.MEDIUMVSCODE1);
-        openOLC.setHoverColor(Colors.MEDIUMVSCODE2);
+        openOLC.setDesign(Colors.MEDIUMCOLOR1);
+        openOLC.setHoverColor(Colors.MEDIUMCOLOR2);
         openOLC.addMouseListener(this);
         this.add(openOLC);
     }
@@ -53,8 +53,8 @@ public class ToolBar extends JPanel implements MouseListener {
         newOLC = new Button("Nuevo");
         newOLC.locationSize(72,5,60,25);
         newOLC.text(Colors.WHITE,14);
-        newOLC.setDesign(Colors.MEDIUMVSCODE1);
-        newOLC.setHoverColor(Colors.MEDIUMVSCODE2);
+        newOLC.setDesign(Colors.MEDIUMCOLOR1);
+        newOLC.setHoverColor(Colors.MEDIUMCOLOR2);
         newOLC.addMouseListener(this);
         this.add(newOLC);
     }
@@ -62,19 +62,19 @@ public class ToolBar extends JPanel implements MouseListener {
         saveAsOLC = new Button("Guardar Como");
         saveAsOLC.locationSize(134,5,110,25);
         saveAsOLC.text(Colors.WHITE,14);
-        saveAsOLC.setDesign(Colors.MEDIUMVSCODE1);
-        saveAsOLC.setHoverColor(Colors.MEDIUMVSCODE2);
+        saveAsOLC.setDesign(Colors.MEDIUMCOLOR1);
+        saveAsOLC.setHoverColor(Colors.MEDIUMCOLOR2);
         saveAsOLC.addMouseListener(this);
         this.add(saveAsOLC);
     }
     private void init() {
         this.setLayout(null);
-        this.setBackground(Colors.MEDIUMVSCODE1);
+        this.setBackground(Colors.MEDIUMCOLOR1);
         this.setVisible(true);
     }
     private void addDivisor() {
         div = new JPanel();
-        div.setBackground(Colors.MEDIUMVSCODE2);
+        div.setBackground(Colors.MEDIUMCOLOR2);
         div.setBounds(0,35,1390,5);
         div.setVisible(true);
         this.add(div);
@@ -91,7 +91,7 @@ public class ToolBar extends JPanel implements MouseListener {
         minimize = new FunctionButton();
         minimize.locationSize(1286,0,45,35);
         minimize.text("─",20);
-        minimize.setHoverColor(Colors.LIGHTVSCODE);
+        minimize.setHoverColor(Colors.LIGHTCOLOR);
         minimize.addMouseListener(this);
         this.add(minimize);
     }

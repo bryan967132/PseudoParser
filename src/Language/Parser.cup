@@ -46,7 +46,6 @@ parser code
 :} 
 
 /* 3. Terminales*/
-
 terminal String RW_else, RW_elseif, RW_params, RW_incr, RW_equ, RW_endwhile, RW_endfunc, RW_endmeth, RW_endswitch;
 terminal String RW_endfor, RW_endif, RW_println, RW_moreequ, RW_lessequ, RW_until, RW_to, RW_break, RW_start;
 terminal String RW_print, RW_more, RW_less, RW_equequ, RW_notequ, RW_case, RW_or, RW_and, RW_not, RW_begin, RW_end;
@@ -219,7 +218,7 @@ LISTPARAMS ::=
     IDS :id TYPE :t                        {:RESULT = new ArrayList<>(Arrays.asList(new Parameter(idleft, idright, id, t)));:} ;
 
 CALLFUNC ::=
-    RW_exec :ex IDS :id TK_lpar LISTARGS :l TK_rpar {:RESULT = new CallFunction(exleft, exright, id, l);             :} |
+    RW_exec :ex IDS :id TK_lpar LISTARGS :l TK_rpar {:RESULT = new CallFunction(exleft, exright, id, l);                :} |
     RW_exec :ex IDS :id TK_lpar TK_rpar             {:RESULT = new CallFunction(exleft, exright, id, new ArrayList<>());:} ;
 
 LISTARGS ::=

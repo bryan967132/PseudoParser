@@ -92,12 +92,12 @@ public class IDE extends JPanel implements ActionListener,KeyListener,MouseWheel
     }
     void defineComponents() {
         //projects
-        projects.setBackground(Colors.MEDIUMVSCODE2);
+        projects.setBackground(Colors.MEDIUMCOLOR2);
         projects.setBounds(40,105,160,585);
         projects.setLayout(null);
         //editorArea
         editorAreaContent.setLayout(new BorderLayout());
-        editorAreaContent.setBorder(BorderFactory.createLineBorder(Colors.DARKVSCODE,8));
+        editorAreaContent.setBorder(BorderFactory.createLineBorder(Colors.DARKCOLOR,8));
         editorArea = new EditorArea();
         editorArea.editor.addKeyListener(this);
         editorAreaContent.add(editorArea,BorderLayout.WEST);
@@ -113,12 +113,12 @@ public class IDE extends JPanel implements ActionListener,KeyListener,MouseWheel
         //console
         console.setEditable(false);
         console.setForeground(Colors.WHITE);
-        console.setBackground(Colors.DARKVSCODE);
+        console.setBackground(Colors.DARKCOLOR);
         console.setFont(new java.awt.Font("Consolas", 0, 11));
         console.setBounds(0,0,1120,140);;
         console.setText("PseudoP:\n->");
         consoleScroll = new JScrollPane(console);
-        consoleScroll.setBorder(BorderFactory.createLineBorder(Colors.DARKVSCODE,8));
+        consoleScroll.setBorder(BorderFactory.createLineBorder(Colors.DARKCOLOR,8));
         consoleScroll.setBounds(220,550,1120,140);
         //graphics
         // graphics.setBackground(Colors.DARKVSCODE);
@@ -128,30 +128,30 @@ public class IDE extends JPanel implements ActionListener,KeyListener,MouseWheel
         //out
         outConsole.setEditable(false);
         outConsole.setForeground(Colors.WHITE);
-        outConsole.setBackground(Colors.DARKVSCODE);
+        outConsole.setBackground(Colors.DARKCOLOR);
         outConsole.setFont(new java.awt.Font("Consolas", 0, 11));
         outConsole.setBounds(0,0,550,425);;
         outConsole.setText("PseudoP:\n->");
         outScroll = new JScrollPane(outConsole);
-        outScroll.setBorder(BorderFactory.createLineBorder(Colors.DARKVSCODE,8));
+        outScroll.setBorder(BorderFactory.createLineBorder(Colors.DARKCOLOR,8));
         outScroll.setBounds(790,105,550,425);
         //analyzeInput
         analyzeInput.locationSize(440,56,30,30);
         analyzeInput.Icon(Icons.PLAY);
-        analyzeInput.setDesign(Colors.GREEN2);
-        analyzeInput.setHoverColor(Colors.GREEN3);
+        analyzeInput.setDesign(Colors.COLOR2);
+        analyzeInput.setHoverColor(Colors.COLOR3);
         analyzeInput.addMouseListener(this);
         //analyzeStrings
         uploadOuts.locationSize(475,56,30,30);
         uploadOuts.Icon(Icons.UPLOAD);
-        uploadOuts.setDesign(Colors.GREEN2);
-        uploadOuts.setHoverColor(Colors.GREEN3);
+        uploadOuts.setDesign(Colors.COLOR2);
+        uploadOuts.setHoverColor(Colors.COLOR3);
         uploadOuts.addMouseListener(this);
         //saveOLC
         saveOLC.locationSize(510,56,30,30);
         saveOLC.Icon(Icons.SAVE);
-        saveOLC.setDesign(Colors.GREEN2);
-        saveOLC.setHoverColor(Colors.GREEN3);
+        saveOLC.setDesign(Colors.COLOR2);
+        saveOLC.setHoverColor(Colors.COLOR3);
         saveOLC.addMouseListener(this);
     }
     public void initManagerGraphs() {
@@ -222,7 +222,7 @@ public class IDE extends JPanel implements ActionListener,KeyListener,MouseWheel
         projects.add(new Label(0,10,projects.getWidth(),25,"Proyectos",16));
         for(int i = 0; i < controller.countPJ(); i ++) {
             controller.pjs.get(i).locationSize(0,i * 25 + 40,this.projects.getWidth(),25);
-            controller.pjs.get(i).setHoverColor(Colors.LIGHTVSCODE);
+            controller.pjs.get(i).setHoverColor(Colors.LIGHTCOLOR);
             projects.add(controller.pjs.get(i));
         }
         projects.repaint();
@@ -248,7 +248,7 @@ public class IDE extends JPanel implements ActionListener,KeyListener,MouseWheel
         this.add(toolbar);
     }
     void init() {
-        this.setBackground(Colors.MEDIUMVSCODE1);
+        this.setBackground(Colors.MEDIUMCOLOR1);
         this.setLayout(null);
     }
     void execute() {

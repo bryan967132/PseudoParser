@@ -14,7 +14,7 @@ public class Tag extends Button {
         this.setBounds(220,80,150,25);
         this.setLayout(null);
         this.setOpaque(false);
-        this.setDesign(Colors.MEDIUMVSCODE2);
+        this.setDesign(Colors.MEDIUMCOLOR2);
         IconFile icnf = controller.pjs.get(id);
         close = new Button("×");
         text(icnf.name,Colors.WHITE,12);
@@ -26,8 +26,8 @@ public class Tag extends Button {
     private void button() {
         close.locationSize(this.getWidth() - 25,0,25,25);
         close.text(Colors.WHITE,15);
-        close.setDesign(Colors.MEDIUMVSCODE2);
-        close.setHoverColor(Colors.LIGHTVSCODE);
+        close.setDesign(Colors.MEDIUMCOLOR2);
+        close.setHoverColor(Colors.LIGHTCOLOR);
         close.addMouseListener(this);
         this.add(close);
 	}

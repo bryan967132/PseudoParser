@@ -82,9 +82,9 @@ public class IconFile extends JPanel implements MouseListener {
         this.setBackground(hoverColor);
 	}
 	public void mouseClicked(MouseEvent e) {
-        if(e.getClickCount() == 2) {
+        //if(e.getClickCount() == 2) {
             lookCode();
-        }
+        //}
     }
 	public void mousePressed(MouseEvent e) {}
 	public void mouseReleased(MouseEvent e) {}

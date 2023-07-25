@@ -39,6 +39,11 @@ public class WordPainter {
         StyleConstants.setForeground(attr,Colors.KEYWORD4);
         doc.setCharacterAttributes(startPos,endPos,attr,true);
     }
+    public void RW5(int startPos,int endPos) {
+        SimpleAttributeSet attr = new SimpleAttributeSet();
+        StyleConstants.setForeground(attr,Colors.KEYWORD5);
+        doc.setCharacterAttributes(startPos,endPos,attr,true);
+    }
     public void STRING(int startPos,int endPos) {
         SimpleAttributeSet attr = new SimpleAttributeSet();
         StyleConstants.setForeground(attr,Colors.STRING);
@@ -54,9 +59,19 @@ public class WordPainter {
         StyleConstants.setForeground(attr,Colors.FNC);
         doc.setCharacterAttributes(startPos,endPos,attr,true);
     }
+    public void USEFNC(int startPos,int endPos) {
+        SimpleAttributeSet attr = new SimpleAttributeSet();
+        StyleConstants.setForeground(attr,Colors.USEFNC);
+        doc.setCharacterAttributes(startPos,endPos,attr,true);
+    }
     public void VARIABLE(int startPos,int endPos) {
         SimpleAttributeSet attr = new SimpleAttributeSet();
         StyleConstants.setForeground(attr,Colors.VARIABLE);
+        doc.setCharacterAttributes(startPos,endPos,attr,true);
+    }
+    public void USEVARIABLE(int startPos,int endPos) {
+        SimpleAttributeSet attr = new SimpleAttributeSet();
+        StyleConstants.setForeground(attr,Colors.USEVARIABLE);
         doc.setCharacterAttributes(startPos,endPos,attr,true);
     }
     public void NUMBER(int startPos,int endPos) {

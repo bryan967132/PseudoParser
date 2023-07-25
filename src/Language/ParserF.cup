@@ -23,7 +23,6 @@ parser code
 :} 
 
 /* 3. Terminales*/
-
 terminal String RW_else, RW_elseif, RW_params, RW_incr, RW_equ, RW_endwhile, RW_endfunc, RW_endmeth, RW_endswitch;
 terminal String RW_endfor, RW_endif, RW_println, RW_moreequ, RW_lessequ, RW_until, RW_to, RW_break, RW_start;
 terminal String RW_print, RW_more, RW_less, RW_equequ, RW_notequ, RW_case, RW_or, RW_and, RW_not, RW_begin, RW_end;
@@ -33,14 +32,13 @@ terminal String TK_prompt, TK_plus, TK_minus, TK_uminus, TK_mult, TK_div, TK_lpa
 terminal String TK_id, TK_num, TK_str, TK_char;
 
 /* 4. No Terminales*/
-non terminal String INI, INSTRUCTIONS, INSTRUCTION, MAIN_METHOD;
-non terminal String INIT_ID, LIST_ID, TYPE, ID_ASIGN;
-non terminal String EXP, IDS, CALLFUNC, ARGS;
-non terminal String INST_IF, INST_FOR, INST_WHILE, INST_FUNC, INST_METH, INST_REPEAT;
-non terminal String IF_STRUCT, ELSEIF_STRUCT, ELSE_STRUCT, SWITCH_STRUCT, CASE_BLOCK, CASE_LIST, CASE, DEFAULT;
-non terminal String LOOP, FUNCTION, PARAMS, NATIVES_FUNCTION, BEGIN, INSTSGLOBAL, INSTGLOBAL;
-non terminal String ARITHMETICS, RELATIONALS, LOGICS;
-non terminal String IF, ELSE, ELSEIF, THEN, CASE1, FOR, TO, FNC, MTH, CALL, SWITCHCOLOR, COLORLPAR, COLORRPAR;
+non terminal String INI, INSTSGLOBAL, INSTRUCTIONS, LISTARGS, LISTPARAMS, EXP, ARITHMETICS, RELATIONALS, LOGICS, CALLFUNC;
+non terminal String CALLMAINFUNC, INSTGLOBAL, PRINT, DECLID, DECLFUNC, LISTID1, LISTID2;
+non terminal String INSTRUCTION, IFSTRUCT, SWITCHSTRUCT, CASESDEFAULT, CASES, CASE, LOOPFOR, ARGSFOR, INITIALIZE, LOOPWHILE, LOOPDOWHILE;
+non terminal String ID_ASIGN, TYPE, INSTIF, INST_FUNC, INST_METH, INST_FOR, INST_WHILE, INST_REPEAT, DEFAULT;
+non terminal String ELSEIFSTRUCT, ELSESTRUCT, IDS;
+non terminal String BEGINCOLOR, IFCOLOR, ELSEIFCOLOR, SWITCHCOLOR, CASECOLOR, ELSECOLOR, THENCOLOR;
+non terminal String FORCOLOR, TOCOLOR, FNCCOLOR, MTHCOLOR, IDCOLORUSEFNC, PRINTCOLOR, COLORLPAR, COLORRPAR;
 
 /* 5. Precedencias */
 precedence left RW_or;
@@ -58,204 +56,238 @@ precedence right TK_uminus;
 start with INI;
 
 INI ::=
-    BEGIN INSTSGLOBAL RW_end:c2 {:painter.RW3(c2left,c2right);:}    |
-    BEGIN RW_end:c2 {:painter.RW3(c2left,c2right);:}                 ;
+    BEGINCOLOR INSTSGLOBAL RW_end :c2 {:painter.RW3(c2left,c2right);:} |
+    BEGINCOLOR RW_end :c2             {:painter.RW3(c2left,c2right);:} ;
 
-BEGIN ::= RW_begin:c1 {:painter.RW3(c1left,c1right);:} IDS:id {:painter.RW1(idleft,idright);:} ;
+BEGINCOLOR ::=
+    RW_begin :c1 {:painter.RW3(c1left, c1right);:} IDS :id {:painter.RW5(idleft, idright);:} ;
 
 INSTSGLOBAL ::=
     INSTSGLOBAL INSTGLOBAL |
     INSTGLOBAL             ;
 
 INSTGLOBAL ::=
-    MAIN_METHOD |
-    INIT_ID     |
-    FUNCTION    |
-    error       ;
+    CALLMAINFUNC |
+    DECLID       |
+    DECLFUNC     |
+    error        ;
 
 INSTRUCTIONS ::=
-    INSTRUCTIONS INSTRUCTION    |
-    INSTRUCTION                 ;
+    INSTRUCTIONS INSTRUCTION |
+    INSTRUCTION              ;
 
 INSTRUCTION ::=
-    INIT_ID                         |
-    ID_ASIGN                        |
-    IF_STRUCT                       |
-    SWITCH_STRUCT                   |
-    LOOP                            |
-    CALLFUNC                        |
-    NATIVES_FUNCTION                |
-    RW_break:d  {:painter.RW2(dleft,dright);:}     |
-    RW_return:d {:painter.RW2(dleft,dright);:} EXP |
-    error                           ;
+    DECLID           |
+    ID_ASIGN         |
+    IFSTRUCT         |
+    SWITCHSTRUCT     |
+    LOOPFOR          |
+    LOOPWHILE        |
+    LOOPDOWHILE      |
+    CALLFUNC         |
+    PRINT            |
+    RW_break :d      {:painter.RW2(dleft, dright);:} |
+    RW_return :d EXP {:painter.RW2(dleft, dright);:} |
+    error            ;
 
-MAIN_METHOD ::=
-    RW_start:st {:painter.RW2(stleft,stright);:} CALLFUNC ;
+CALLMAINFUNC ::=
+    RW_start :st {:painter.RW2(stleft,stright);:} CALLFUNC ;
 
-INIT_ID ::=
-    RW_insert:ins {:painter.RW1(insleft,insright);:} LIST_ID RW_as:a {:painter.RW2(aleft,aright);:} TYPE RW_equ:eq {:painter.RW2(eqleft,eqright);:} EXP ;
+DECLID ::=
+    RW_insert :ins {:painter.RW1(insleft,insright);:} LISTID1 RW_as :a {:painter.RW2(aleft,aright);:} TYPE RW_equ :eq {:painter.RW2(eqleft,eqright);:} EXP ;
+
+LISTID1 ::=
+    LISTID1 TK_comma IDS :id {:painter.VARIABLE(idleft,idright);:} |
+    IDS :id                 {:painter.VARIABLE(idleft,idright);:} ;
 
 ID_ASIGN ::=
-    LIST_ID:id {:painter.VARIABLE(idleft,idright);:} TK_prompt EXP ;
+    LISTID2 TK_prompt EXP ;
 
-LIST_ID ::=
-    LIST_ID TK_comma IDS:id {:painter.VARIABLE(idleft,idright);:} |
-    IDS:id                  {:painter.VARIABLE(idleft,idright);:} ;
+LISTID2 ::=
+    LISTID2 TK_comma IDS :id {:painter.USEVARIABLE(idleft,idright);:} |
+    IDS :id                  {:painter.USEVARIABLE(idleft,idright);:} ;
 
-IF_STRUCT ::=
-    IF EXP THEN INST_IF           |
-    IF EXP THEN ELSEIF_STRUCT     |
-    IF EXP THEN ELSE_STRUCT       ;
+IFSTRUCT ::=
+    IFCOLOR EXP THENCOLOR ELSEIFSTRUCT |
+    IFCOLOR EXP THENCOLOR ELSESTRUCT   |
+    IFCOLOR EXP THENCOLOR INSTIF       ;
 
-ELSEIF_STRUCT ::=
-    INSTRUCTIONS ELSEIF EXP THEN ELSEIF_STRUCT    |
-    ELSEIF EXP THEN ELSEIF_STRUCT                 |
-    INSTRUCTIONS ELSEIF EXP THEN INST_IF          |
-    ELSEIF EXP THEN INST_IF                       |
-    INSTRUCTIONS ELSEIF EXP THEN ELSE_STRUCT      |
-    ELSEIF EXP THEN ELSE_STRUCT                   ;
+IFCOLOR ::=
+    RW_if :ifr {:painter.RW2(ifrleft,ifrright);:} ;
 
-INST_IF ::=
-    INSTRUCTIONS RW_endif:d  {:painter.RW2(dleft,dright);:} |
-    RW_endif:d               {:painter.RW2(dleft,dright);:} ;
+ELSEIFSTRUCT ::=
+    INSTRUCTIONS ELSEIFCOLOR EXP THENCOLOR ELSEIFSTRUCT |
+    INSTRUCTIONS ELSEIFCOLOR EXP THENCOLOR ELSESTRUCT   |
+    INSTRUCTIONS ELSEIFCOLOR EXP THENCOLOR INSTIF       |
+    ELSEIFCOLOR EXP THENCOLOR ELSEIFSTRUCT              |
+    ELSEIFCOLOR EXP THENCOLOR ELSESTRUCT                |
+    ELSEIFCOLOR EXP THENCOLOR INSTIF                    ;
 
-ELSE_STRUCT ::=
-    INSTRUCTIONS ELSE INST_IF |
-    ELSE INST_IF              ;
+ELSEIFCOLOR ::=
+    RW_elseif :elif {:painter.RW2(elifleft,elifright);:} ;
 
+ELSESTRUCT ::=
+    INSTRUCTIONS ELSECOLOR INSTIF |
+    ELSECOLOR INSTIF              ;
 
-SWITCH_STRUCT ::=
-    SWITCHCOLOR CASE_BLOCK RW_endswitch:ed {:painter.RW2(edleft,edright);:} |
-    SWITCHCOLOR RW_endswitch:ed {:painter.RW2(edleft,edright);:} ;
+INSTIF ::=
+    INSTRUCTIONS RW_endif :d  {:painter.RW2(dleft,dright);:} |
+    RW_endif :d               {:painter.RW2(dleft,dright);:} ;
 
-SWITCHCOLOR ::=
-    RW_switch:sw {:painter.RW2(swleft,swright);:} EXP RW_do:d {:painter.RW2(dleft,dright);:} ;
+SWITCHSTRUCT ::=
+    SWITCHCOLOR CASESDEFAULT :b RW_endswitch :ed {:painter.RW2(edleft,edright);:} |
+    SWITCHCOLOR RW_endswitch :ed                 {:painter.RW2(edleft,edright);:} ;
 
-CASE_BLOCK ::=
-    CASE_LIST DEFAULT |
-    CASE_LIST         |
-    DEFAULT           ;
+SWITCHCOLOR ::= 
+    RW_switch :sw {:painter.RW2(swleft, swright);:} EXP RW_do :d {:painter.RW2(dleft, dright);:} ;
 
-CASE_LIST ::=
-    CASE_LIST CASE |
-    CASE           ;
+CASESDEFAULT ::=
+    CASES DEFAULT |
+    CASES         |
+    DEFAULT       ;
+
+CASES ::=
+    CASES CASE |
+    CASE       ;
 
 CASE ::=
-    CASE1 EXP THEN INSTRUCTIONS    |
-    CASE1 EXP THEN                 ;
+    CASECOLOR EXP THENCOLOR INSTRUCTIONS |
+    CASECOLOR EXP THENCOLOR              ;
+
+CASECOLOR ::=
+    RW_case :c {:painter.RW2(cleft, cright);:} ;
 
 DEFAULT ::=
-    ELSE THEN INSTRUCTIONS    |
-    ELSE THEN                 ;
+    ELSECOLOR THENCOLOR INSTRUCTIONS |
+    ELSECOLOR THENCOLOR              ;
 
-LOOP ::=
-    FOR ID_ASIGN TO EXP RW_incr:inc {:painter.RW3(incleft,incright);:} EXP RW_do:d {:painter.RW2(dleft,dright);:} INST_FOR   |
-    FOR ID_ASIGN TO EXP RW_do:d {:painter.RW2(dleft,dright);:} INST_FOR                                                      |
-    RW_while:wh {:painter.RW2(whleft,whright);:} EXP RW_do:d {:painter.RW2(dleft,dright);:} INST_WHILE                       |
-    INST_REPEAT RW_until:u {:painter.RW2(uleft,uright);:} EXP                                                                ;
+ELSECOLOR ::=
+    RW_else :el {:painter.RW2(elleft, elright);:} ;
+
+THENCOLOR ::=
+    RW_then :th {:painter.RW2(thleft, thright);:} ;
+
+LOOPFOR ::=
+    FORCOLOR ARGSFOR RW_do :d {:painter.RW2(dleft, dright);:} INST_FOR ;
+
+FORCOLOR ::=
+    RW_for :f {:painter.RW2(fleft, fright);:} ;
+
+ARGSFOR ::=
+    INITIALIZE TOCOLOR EXP RW_incr :inc {:painter.RW3(incleft, incright);:} EXP |
+    INITIALIZE TOCOLOR EXP                                                     ;
+
+TOCOLOR ::=
+    RW_to:t {:painter.RW3(tleft, tright);:} ;
+
+INITIALIZE ::=
+    IDS :id {:painter.VARIABLE(idleft, idright);:} TK_prompt EXP ;
+
+LOOPWHILE ::=
+    RW_while :wh {:painter.RW2(whleft, whright);:} EXP RW_do :d {:painter.RW2(dleft,dright);:} INST_WHILE ;
+
+LOOPDOWHILE ::=
+    INST_REPEAT RW_until :u {:painter.RW2(uleft, uright);:} EXP ;
 
 INST_FOR ::=
-    INSTRUCTIONS RW_endfor:ef {:painter.RW2(efleft,efright);:} |
-    RW_endfor:ef              {:painter.RW2(efleft,efright);:} ;
+    INSTRUCTIONS RW_endfor :ef {:painter.RW2(efleft, efright);:} |
+    RW_endfor :ef              {:painter.RW2(efleft, efright);:} ;
 
 INST_WHILE ::=
-    INSTRUCTIONS RW_endwhile:ew {:painter.RW2(ewleft,ewright);:} |
-    RW_endwhile:ew              {:painter.RW2(ewleft,ewright);:} ;
+    INSTRUCTIONS RW_endwhile :ew {:painter.RW2(ewleft, ewright);:} |
+    RW_endwhile :ew              {:painter.RW2(ewleft, ewright);:} ;
 
 INST_REPEAT ::=
-    RW_repeat:r {:painter.RW2(rleft,rright);:} INSTRUCTIONS |
-    RW_repeat:r {:painter.RW2(rleft,rright);:}              ;
+    RW_repeat :r {:painter.RW2(rleft, rright);:} INSTRUCTIONS |
+    RW_repeat :r {:painter.RW2(rleft, rright);:}              ;
 
-FUNCTION ::=
-    FNC TYPE RW_params:p {:painter.RW4(pleft,pright);:} COLORLPAR PARAMS COLORRPAR:r INST_FUNC   |
-    FNC TYPE INST_FUNC                                                                                                                                       |
-    MTH RW_params:p {:painter.RW4(pleft,pright);:} COLORLPAR PARAMS COLORRPAR:r INST_METH        |
-    MTH INST_METH                                                                                                                                            ;
+DECLFUNC ::=
+    FNCCOLOR TYPE RW_params :p {:painter.RW4(pleft, pright);:} COLORLPAR LISTPARAMS COLORRPAR INST_FUNC |
+    FNCCOLOR TYPE INST_FUNC                                                                             |
+    MTHCOLOR RW_params :p {:painter.RW4(pleft, pright);:} COLORLPAR LISTPARAMS COLORRPAR INST_METH      |
+    MTHCOLOR INST_METH                                                                                  ;
 
-FNC ::= RW_func:t {:painter.RW1(tleft,tright);:} IDS:id {:painter.FNC(idleft,idright);:} ;
+FNCCOLOR ::=
+    RW_func :s {:painter.RW1(sleft, sright);:} IDS :id {:painter.FNC(idleft, idright);:} ;
 
-MTH ::= RW_meth:t {:painter.RW1(tleft,tright);:} IDS:id {:painter.FNC(idleft,idright);:} ;
+MTHCOLOR ::=
+    RW_meth :s {:painter.RW1(sleft, sright);:} IDS :id {:painter.FNC(idleft, idright);:} ;
 
 INST_FUNC ::=
-    INSTRUCTIONS RW_endfunc:ef {:painter.RW1(efleft,efright);:} |
-    RW_endfunc:ef              {:painter.RW1(efleft,efright);:} ;
+    INSTRUCTIONS RW_endfunc :ef {:painter.RW1(efleft, efright);:} |
+    RW_endfunc :ef              {:painter.RW1(efleft, efright);:} ;
 
 INST_METH ::=
-    INSTRUCTIONS RW_endmeth:ef {:painter.RW1(efleft,efright);:} |
-    RW_endmeth:ef              {:painter.RW1(efleft,efright);:} ;
+    INSTRUCTIONS RW_endmeth :ef {:painter.RW1(efleft, efright);:} |
+    RW_endmeth :ef              {:painter.RW1(efleft, efright);:} ;
 
-PARAMS ::=
-    PARAMS TK_comma IDS:id {:painter.VARIABLE(idleft,idright);:} TYPE |
-    IDS:id {:painter.VARIABLE(idleft,idright);:} TYPE                 ;
+LISTPARAMS ::=
+    LISTPARAMS TK_comma IDS :id {:painter.VARIABLE(idleft, idright);:} TYPE |
+    IDS :id {:painter.VARIABLE(idleft, idright);:} TYPE                     ;
 
 CALLFUNC ::=
-    CALL COLORLPAR ARGS COLORRPAR |
-    CALL COLORLPAR COLORRPAR      ;
+    IDCOLORUSEFNC COLORLPAR LISTARGS COLORRPAR |
+    IDCOLORUSEFNC COLORLPAR COLORRPAR          ;
 
-CALL ::=
-    RW_exec:ex {:painter.RW4(exleft,exright);:} IDS:id {:painter.FNC(idleft,idright);:} ;
+IDCOLORUSEFNC ::=
+    RW_exec :ex {:painter.RW4(exleft, exright);:} IDS :id {:painter.USEFNC(idleft, idright);:} ;
 
-ARGS ::=
-    ARGS TK_comma EXP       |
-    EXP                     ;
+LISTARGS ::=
+    LISTARGS TK_comma EXP |
+    EXP                   ;
 
-NATIVES_FUNCTION ::=
-    RW_println:c {:painter.FNC(cleft,cright);:} EXP     |
-    RW_print  :c {:painter.FNC(cleft,cright);:} EXP     ;
+PRINT ::=
+    PRINTCOLOR EXP ;
+
+PRINTCOLOR ::=
+    RW_println :p {:painter.USEFNC(pleft, pright);:} |
+    RW_print   :p {:painter.USEFNC(pleft, pright);:} ;
 
 TYPE ::=
-    RW_num :t {:painter.RW1(tleft,tright);:} |
-    RW_str :t {:painter.RW1(tleft,tright);:} |
-    RW_char:t {:painter.RW1(tleft,tright);:} |
-    RW_bool:t {:painter.RW1(tleft,tright);:} ;
+    RW_str  :tp {:painter.RW5(tpleft, tpright);:} |
+    RW_num  :tp {:painter.RW1(tpleft, tpright);:} |
+    RW_bool :tp {:painter.RW1(tpleft, tpright);:} |
+    RW_char :tp {:painter.RW1(tpleft, tpright);:} ;
 
 IDS ::=
-    TK_id :id {:RESULT = id;:} |
-    RW_or :id {:RESULT = id;:} |
-    RW_and:id {:RESULT = id;:} ;
+    TK_id  :id {:RESULT = id;:} |
+    RW_or  :id {:RESULT = id;:} |
+    RW_and :id {:RESULT = id;:} ;
 
 EXP ::=
-    ARITHMETICS                                     |
-    RELATIONALS                                     |
-    LOGICS                                          |
-    CALLFUNC                                        |
-    TK_str  :p {:painter.STRING(pleft,pright);  :} |
-    TK_char :p {:painter.CHAR(pleft,pright);    :} |
-    TK_num  :p {:painter.NUMBER(pleft,pright);  :} |
-    TK_id   :p {:painter.VARIABLE(pleft,pright);:} |
-    RW_true :p {:painter.RW3(pleft,pright);     :} |
-    RW_false:p {:painter.RW3(pleft,pright);     :} |
-    COLORLPAR EXP COLORRPAR ;
+    ARITHMETICS |
+    RELATIONALS |
+    LOGICS      |
+    CALLFUNC    |
+    TK_id       :tr          {:painter.USEVARIABLE(trleft, trright);:} |
+    TK_str      :tr          {:painter.STRING(trleft, trright);     :} |
+    TK_char     :tr          {:painter.CHAR(trleft, trright);       :} |
+    TK_num      :tr          {:painter.NUMBER(trleft, trright);     :} |
+    RW_true     :tr          {:painter.RW3(trleft, trright);        :} |
+    RW_false    :tr          {:painter.RW3(trleft, trright);        :} |
+    COLORLPAR EXP :exp COLORRPAR ;
 
 ARITHMETICS ::=
-    EXP TK_plus  EXP |
-    EXP TK_minus EXP |
-    EXP TK_mult  EXP |
-    EXP TK_div   EXP |
-    EXP RW_pow   EXP |
-    EXP RW_mod   EXP |
-    TK_minus     EXP %prec TK_uminus ;
+    EXP :e1 TK_plus  :s EXP :e2 |
+    EXP :e1 TK_minus :s EXP :e2 |
+    EXP :e1 TK_mult  :s EXP :e2 |
+    EXP :e1 TK_div   :s EXP :e2 |
+    EXP :e1 RW_pow   :s EXP :e2 |
+    EXP :e1 RW_mod   :s EXP :e2 |
+    TK_minus :s         EXP :e2 %prec TK_uminus ;
 
 RELATIONALS ::=
-    EXP RW_equequ  EXP |
-    EXP RW_notequ  EXP |
-    EXP RW_lessequ EXP |
-    EXP RW_moreequ EXP |
-    EXP RW_less    EXP |
-    EXP RW_more    EXP ;
+    EXP :e1 RW_equequ  :s EXP :e2 |
+    EXP :e1 RW_notequ  :s EXP :e2 |
+    EXP :e1 RW_lessequ :s EXP :e2 |
+    EXP :e1 RW_moreequ :s EXP :e2 |
+    EXP :e1 RW_less    :s EXP :e2 |
+    EXP :e1 RW_more    :s EXP :e2 ;
 
 LOGICS ::=
-    EXP RW_and:o {:painter.RW4(oleft,oright);:} EXP |
-    EXP RW_or:o  {:painter.RW4(oleft,oright);:} EXP |
-    RW_not:o     {:painter.RW4(oleft,oright);:} EXP ;
-
-IF ::= RW_if:ifr {:painter.RW2(ifrleft,ifrright);:} ;
-ELSE ::= RW_else:el {:painter.RW2(elleft,elright);:} ;
-THEN ::= RW_then:th {:painter.RW2(thleft,thright);:} ;
-ELSEIF ::= RW_elseif:elif {:painter.RW2(elifleft,elifright);:} ;
-CASE1 ::= RW_case:c {:painter.RW2(cleft,cright);:} ;
-FOR ::= RW_for:f {:painter.RW2(fleft,fright);:};
-TO ::= RW_to:t {:painter.RW3(tleft,tright);:} ;
+    EXP RW_and EXP |
+    EXP RW_or  EXP |
+    RW_not     EXP ;
 
 COLORLPAR ::=
     TK_lpar :l {:painter.BRKT(nIB, lleft, lright); nIB ++;:} ;
