@@ -4,7 +4,7 @@ public class Colors {
 	// TEMA VSCODE 0
 	// TEMA GITHUB 1
 	// TEMA ECPLIPSE 2
-	private static int n = 1;
+	private static int n = 0;
 	public static Color LIGHTCOLOR    = ColorsChoosen.getLightColor(n);
 	public static Color MEDIUMCOLOR1  = ColorsChoosen.getMediumColor1(n);
 	public static Color MEDIUMCOLOR2  = ColorsChoosen.getMediumColor2(n);
