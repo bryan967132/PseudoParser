@@ -1,0 +1,32 @@
+inicio ParImpar
+	inicia ejecutar inicial()
+
+	metodo inicial
+		ingresar n como Numero con valor 7
+		ingresar r como Numero con valor 4
+		si ejecutar par(n) entonces
+			imprimir n + " es par."
+		de lo contrario
+			imprimir n + " es impar."
+		fin si
+		si ejecutar par(r) entonces
+			imprimir r + " es par."
+		de lo contrario
+			imprimir r + " es impar."
+		fin si
+	fin metodo
+
+	funcion par Booleano con parametros(n Numero)
+		si n igual a 0 entonces
+			retornar Verdadero
+		fin si
+		retornar ejecutar impar(n - 1)
+	fin funcion
+
+	funcion impar Booleano con parametros(n Numero)
+		si n igual a 0 entonces
+			retornar Falso
+		fin si
+		retornar ejecutar par(n - 1)
+	fin funcion
+fin

@@ -1,0 +1,22 @@
+inicio Ackermann
+	funcion ackermann Numero con parametros(m Numero, n Numero)
+		si m igual a 0 entonces
+			retornar n + 1
+		fin si
+		si n igual a 0 entonces
+			retornar ejecutar ackermann(m - 1, 1)
+		fin si
+		retornar ejecutar ackermann(m - 1, ejecutar ackermann(m, n - 1))
+	fin funcion
+
+	inicia ejecutar mainP()
+
+	metodo mainP
+		ingresar m como Numero con valor 3
+		ingresar n como Numero con valor 4
+		imprimir "ackermann(m: " + m + ", n: " + n + ") = " + ejecutar ackermann(m, n)
+		m <- 2
+		n <- 5
+		imprimir "ackermann(m: " + m + ", n: " + n + ") = " + ejecutar ackermann(m, n)
+	fin metodo
+fin

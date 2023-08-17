@@ -1,0 +1,25 @@
+inicio Factorial
+	inicia ejecutar inicial()
+
+	metodo inicial
+		ingresar n como Numero con valor 5
+		ingresar resultado como Cadena con valor n + "! = " + ejecutar factorial(n)
+		imprimir resultado
+		n <- n - 1
+		resultado <- n + "! = " + ejecutar factorial(n)
+		imprimir resultado
+		n <- n + 2
+		resultado <- n + "! = " + ejecutar factorial(n)
+		imprimir resultado
+		n <- n - 3
+		resultado <- n + "! = " + ejecutar factorial(n)
+		imprimir resultado
+	fin metodo
+
+	funcion factorial Numero con parametros(n Numero)
+		si n igual a 0 entonces
+			retornar 1
+		fin si
+		retornar n * ejecutar factorial(n - 1)
+	fin funcion
+fin

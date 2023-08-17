@@ -1,0 +1,24 @@
+inicio Hanoi
+	inicia ejecutar hanoi(7, "A", "B", "C")
+
+	ingresar c como Numero con valor 1
+
+	metodo hanoi con parametros(n Numero, origen Cadena, medio Cadena, destino Cadena)
+		si n igual a 1 entonces
+			imprimir ejecutar t(c mayor que 9, c, " " + c) + ") Mover disco 1.0: desde " + origen + " hasta " + destino
+			c <- c + 1
+		de lo contrario
+			ejecutar hanoi(n - 1, origen, destino, medio)
+			imprimir ejecutar t(c mayor que 9, c, " " + c) + ") Mover disco " + n + ": desde " + origen + " hasta " + destino
+			c <- c + 1
+			ejecutar hanoi(n - 1, medio, origen, destino)
+		fin si
+	fin metodo
+
+	funcion t Cadena con parametros(condicion Booleano, n1 Numero, n2 Cadena)
+		si condicion entonces
+			retornar n1
+		fin si
+		retornar n2
+	fin funcion
+fin
