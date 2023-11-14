@@ -96,7 +96,7 @@ public class IDE extends JPanel implements ActionListener, KeyListener, MouseWhe
         console.setBackground(Colors.DARKCOLOR);
         console.setFont(new java.awt.Font("Consolas",  0,  11));
         console.setBounds(0, 0, 550, 575);;
-        console.setText("MiniJ:");
+        console.setText("PseudoP:");
         consoleScroll = new JScrollPane(console);
         consoleScroll.setBorder(BorderFactory.createLineBorder(Colors.DARKCOLOR, 8));
         consoleScroll.setBounds(790, 105, 550, 575);
@@ -149,7 +149,7 @@ public class IDE extends JPanel implements ActionListener, KeyListener, MouseWhe
         this.add(saveOLC);
     }
     void copyright() {
-        this.add(new Label(0, 695, 1390, 15, "MiniJ", 11));
+        this.add(new Label(0, 695, 1390, 15, "PseudoP", 11));
         this.add(new Label(0, 710, 1390, 15, "© Danny Hugo Bryan Tejaxún Pichiyá", 11));
     }
     void addToolBar() {
@@ -207,7 +207,7 @@ public class IDE extends JPanel implements ActionListener, KeyListener, MouseWhe
                 execute();
             }
             else {
-                console.setText("MiniJ:\n");
+                console.setText("PseudoP:\n");
             }
         }
         else if(e.getSource() == uploadOuts) {
@@ -215,7 +215,7 @@ public class IDE extends JPanel implements ActionListener, KeyListener, MouseWhe
                 //controller.validateString(indexFilePJ, editorArea.editor, console);
             }
             else {
-                console.setText("MiniJ:");
+                console.setText("PseudoP:");
             }
         }
         else if(e.getSource() == saveOLC) {
