@@ -32,7 +32,7 @@ terminal String TK_prompt, TK_plus, TK_minus, TK_uminus, TK_mult, TK_div, TK_lpa
 terminal String TK_id, TK_num, TK_str, TK_char;
 
 /* 4. No Terminales*/
-non terminal String INI, INSTSGLOBAL, INSTRUCTIONS, LISTARGS, LISTPARAMS, EXP, ARITHMETICS, RELATIONALS, LOGICS, CALLFUNC;
+non terminal String INIT, INSTSGLOBAL, INSTRUCTIONS, LISTARGS, LISTPARAMS, EXP, ARITHMETICS, RELATIONALS, LOGICS, CALLFUNC;
 non terminal String CALLMAINFUNC, INSTGLOBAL, PRINT, DECLID, DECLFUNC, LISTID1, LISTID2;
 non terminal String INSTRUCTION, IFSTRUCT, SWITCHSTRUCT, CASESDEFAULT, CASES, CASE, LOOPFOR, ARGSFOR, INITIALIZE, LOOPWHILE, LOOPDOWHILE;
 non terminal String ID_ASIGN, TYPE, INSTIF, INST_FUNC, INST_METH, INST_FOR, INST_WHILE, INST_REPEAT, DEFAULT;
@@ -53,9 +53,9 @@ precedence right TK_uminus;
 
 /* 6. Gramatica Libre de Contexto */
 
-start with INI;
+start with INIT;
 
-INI ::=
+INIT ::=
     BEGINCOLOR INSTSGLOBAL RW_end :c2 {:painter.RW3(c2left,c2right);:} |
     BEGINCOLOR RW_end :c2             {:painter.RW3(c2left,c2right);:} ;
 

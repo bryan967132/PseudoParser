@@ -40,7 +40,7 @@ terminal String TK_prompt, TK_plus, TK_minus, TK_uminus, TK_mult, TK_div, TK_lpa
 terminal String TK_id, TK_num, TK_str, TK_char;
 
 /* 4. No Terminales*/
-non terminal String INI;
+non terminal String INIT;
 non terminal ArrayList<Instruction> INSTSGLOBAL;
 non terminal ArrayList<Sentence> INSTRUCTIONS;
 non terminal ArrayList<Expression> LISTARGS;
@@ -74,9 +74,9 @@ precedence right TK_uminus;
 
 /* 6. Gramatica Libre de Contexto */
 
-start with INI;
+start with INIT;
 
-INI ::=
+INIT ::=
     RW_begin IDS INSTSGLOBAL :ins RW_end {:execute = ins;              :} |
     RW_begin IDS RW_end                  {:execute = new ArrayList<>();:} ;
 
