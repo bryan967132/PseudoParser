@@ -7,7 +7,7 @@ public class GParser {
                     "-destdir",
                     "src/Language",
                     "-symbols",
-                    "Sym",
+                    "TOK",
                     "-parser",
                     "Parser",
                     "src/Language/Parser.cup"

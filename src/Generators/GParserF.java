@@ -10,7 +10,7 @@ public class GParserF {
                     "-destdir",
                     "src/Language",
                     "-symbols",
-                    "Sym",
+                    "TOK",
                     "-parser",
                     "ParserF",
                     "src/Language/ParserF.cup"
