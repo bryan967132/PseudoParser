@@ -28,11 +28,11 @@ import Classes.Utils.Outs;
 %init}
 
 //Expresiones regulares
-UNUSED=[ \r\t]+
-ID = [a-zA-Z][a-zA-Z0-9\_]*
-NUMBER = [0-9]+(\.[0-9]+)?
-STRING = \"(([^\"\\]?|\\.)*)\"
-CHAR = \'(([^\"\\]?|\\.))\'
+UNUSED   = [ \r\t]+
+ID       = [a-zA-Z][a-zA-Z0-9\_]*
+NUMBER   = [0-9]+(\.[0-9]+)?
+CHAR     = \'([^\n\'\\]|\\.)\'
+STRING   = \"(([^\n\"\\]|\\.)*)\"
 COMMENTS = "//"([^\r\n]*)
 COMMENTM = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 
