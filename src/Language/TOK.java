@@ -6,7 +6,7 @@
 package Language;
 
 /** CUP generated class containing symbol constants. */
-public class Sym {
+public class TOK {
   /* terminals */
   public static final int RW_less = 22;
   public static final int RW_params = 4;
