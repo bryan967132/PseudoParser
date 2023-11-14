@@ -4,13 +4,16 @@ import java.util.TreeMap;
 import Classes.Instructions.Function;
 import Classes.Utils.ReturnType;
 import Classes.Utils.Type;
+import Classes.Utils.TypeError;
+import Classes.Utils.Error;
+import Classes.Utils.Outs;
 public class Env {
     private Map<String, Symbol> ids = new TreeMap<>();
     private Map<String, Function> functions = new TreeMap<>();
-    private Env anterior;
+    private Env previous;
     public String name;
-    public Env(Env anterior, String name) {
-        this.anterior = anterior;
+    public Env(Env previous, String name) {
+        this.previous = previous;
         this.name = name;
     }
     public boolean saveID(String id, Object value, Type type, int line, int column) {
@@ -27,7 +30,7 @@ public class Env {
             if(current.ids.containsKey(id)) {
                 return current.ids.get(id);
             }
-            current = current.anterior;
+            current = current.previous;
         }
         // ERROR SEMANTICO
         return null;
@@ -39,7 +42,7 @@ public class Env {
                 current.ids.get(id).value = value.value;
                 return true;
             }
-            current = current.anterior;
+            current = current.previous;
         }
         // ERROR SEMANTICO
         return false;
@@ -58,16 +61,32 @@ public class Env {
             if(current.functions.containsKey(id)) {
                 return current.functions.get(id);
             }
-            current = current.anterior;
+            current = current.previous;
         }
         // ERROR SEMANTICO
         return null;
     }
     public Env getGlobal() {
         Env env = this;
-        while(env.anterior != null) {
-            env = env.anterior;
+        while(env.previous != null) {
+            env = env.previous;
         }
         return env;
+    }
+    public void setPrint(String print) {
+        Outs.printConsole.add(print);
+    }
+    public void setError(String errorD, int line, int column) {
+        if(!match(errorD, line, column)) {
+
+        }
+    }
+    public boolean match(String err, int line, int column) {
+        for(Error s : Outs.errors) {
+            if(s.toString().equals(new Error(line, column, TypeError.SEMANTIC, err).toString())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
