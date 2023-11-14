@@ -1,5 +1,4 @@
 package Controller;
-import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,15 +10,12 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.text.StyledDocument;
-
 import Classes.Abstracts.Instruction;
 import Classes.Env.Env;
 import Classes.Instructions.MainMethod;
+import Classes.Utils.Outs;
 import Classes.Utils.TypeInst;
 import Interface.IDE;
 import Interface.IconFile;
@@ -59,8 +55,10 @@ public class Controller {
         }
         catch(Exception e) {}
     }
-    public void analyze(IDE ide,int index,JTextPane editor,JTextPane console) {
+    public void analyze(IDE ide, int index, JTextPane editor, JTextPane console) {
+        IconFile currentFile = pjs.get(index);
         try {
+            Outs.resetOuts();
             StyledDocument doc = editor.getStyledDocument();
             String input = doc.getText(0,doc.getLength());
             Scanner scanner = new Scanner(
@@ -69,63 +67,30 @@ public class Controller {
                 )
             );
             Parser parser = new Parser(scanner);
-            IconFile currentFile = pjs.get(index);
             parser.parse();
-            Classes.Utils.Out.printConsole = new ArrayList<>();
-            if(parser.isSuccessExecution()) {
-                String out = "PseudoP: " + currentFile.name + "\n-> Análisis de Entrada Exitoso.";
-                String outPrint = "PseudoP: " + currentFile.name;
-                out += "\n-> Código Verificado\n-> Estado de Verificación: Satisfactorio";
-                Env global = new Env(null, "Global");
-                MainMethod mainMethod = null;
-                for (Instruction instruction : parser.execute) {
-                    try {
-                        if (instruction.typeInst == TypeInst.MAIN) {
-                            mainMethod = (MainMethod) instruction;
-                        } else {
-                            instruction.exec(global);
-                        }
-                    } catch (Exception e) {
+            Classes.Utils.Outs.printConsole = new ArrayList<>();
+            Env global = new Env(null, "Global");
+            MainMethod mainMethod = null;
+            for (Instruction instruction : parser.execute) {
+                try {
+                    if (instruction.typeInst == TypeInst.MAIN) {
+                        mainMethod = (MainMethod) instruction;
+                    } else {
+                        instruction.exec(global);
                     }
-                }
-                if (mainMethod != null) {
-                    mainMethod.exec(global);
-                    if(Classes.Utils.Out.printConsole.size() > 0) {
-                        for(String c : Classes.Utils.Out.printConsole) {
-                            outPrint += "\n" + c;
-                        }
-                    }
-                }
-                ide.outConsole.setText(outPrint);
-                console.setText(out);
+                } catch (Exception e) {}
             }
-            else {
-                console.setText("PseudoP: " + currentFile.name + "\n-> " + parser.getErrors());
+            if (mainMethod != null) {
+                mainMethod.exec(global);
             }
+            String outPrint = "MiniJ: " + currentFile.name + "\n";
+            outPrint += Outs.getStringOuts();
+            console.setText(outPrint);
         } catch (Exception e) {
-            System.out.println(e);
+            String outPrint = "MiniJ: " + currentFile.name + "\n";
+            outPrint += Outs.getStringOuts();
+            console.setText(outPrint);
         }
-    }
-    public void lookGraphs(IDE ide,int index) {
-        try {
-            // ide.zoomFactor = 1.05;
-            // ide.graphics.removeMouseListener(ide);
-            // ide.graphics.removeMouseWheelListener(ide);
-            // ide.graphics.removeMouseMotionListener(ide);
-            // ide.regexCB.repaint();
-            // ide.graphics.removeAll();
-            // ide.img = new JLabel();
-            // ide.image = new ImageIcon((ide.treesR.isSelected() ? "Data/ARBOLES_201908355/tree_" : (ide.nextsR.isSelected() ? "Data/SIGUIENTES_201908355/nexts_" : (ide.transitionsR.isSelected() ? "Data/TRANSICIONES_201908355/transitions_" : (ide.afdsR.isSelected() ? "Data/AFD_201908355/afd_" : "Data/AFND_201908355/afnd_")))) + index + "_" + ide.regexCB.getSelectedItem() + ".png");
-            // ide.icono = new ImageIcon(ide.image.getImage().getScaledInstance(ide.image.getIconWidth(),ide.image.getIconHeight(),Image.SCALE_DEFAULT));
-            // ide.img.setIcon(ide.icono);
-            // ide.img.setBounds(0,0,ide.icono.getIconWidth(),ide.icono.getIconHeight());
-            // ide.graphics.add(ide.img);
-            // ide.graphics.addMouseListener(ide);
-            // ide.graphics.addMouseWheelListener(ide);
-            // ide.graphics.addMouseMotionListener(ide);
-            // ide.graphics.repaint();
-        }
-        catch(Exception e) {}
     }
     public void saveOLCPJ(int index,JTextPane editor) {
         try {
