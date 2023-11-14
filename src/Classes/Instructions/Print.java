@@ -3,7 +3,6 @@ import Classes.Abstracts.Expression;
 import Classes.Abstracts.Instruction;
 import Classes.Env.Env;
 import Classes.Utils.TypeInst;
-import Classes.Utils.Out;
 import Classes.Utils.ReturnType;
 import Classes.Utils.Type;
 public class Print extends Instruction {
@@ -18,7 +17,7 @@ public class Print extends Instruction {
             ReturnType value1 = exp.exec(env);
             value = getValueB(value1);
         }
-        Out.printConsole.add(value);
+        env.setPrint(value);
     }
     public String getValueB(ReturnType value) {
         if(value.type == Type.BOOLEAN) {
