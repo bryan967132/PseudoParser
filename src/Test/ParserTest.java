@@ -4,12 +4,18 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.util.ArrayList;
+import Classes.Abstracts.Instruction;
+import Classes.Env.Env;
+import Classes.Instructions.MainMethod;
+import Classes.Utils.Outs;
+import Classes.Utils.TypeInst;
 import Language.Parser;
 import Language.Scanner;
 public class ParserTest {
     public static void main(String[] args) throws Exception {
         try {
-            String input = readInput("./Inputs/Input1.olc");
+            String input = readInput("./Inputs/Ackermann.psp");
             Scanner scanner = new Scanner(
                 new BufferedReader(
                     new StringReader(input)
@@ -17,7 +23,22 @@ public class ParserTest {
             );
             Parser parser = new Parser(scanner);
             parser.parse();
-            System.out.println("-> " + parser.getErrors());
+            Classes.Utils.Outs.printConsole = new ArrayList<>();
+            Env global = new Env(null, "Global");
+            MainMethod mainMethod = null;
+            for (Instruction instruction : parser.execute) {
+                try {
+                    if (instruction.typeInst == TypeInst.MAIN) {
+                        mainMethod = (MainMethod) instruction;
+                    } else {
+                        instruction.exec(global);
+                    }
+                } catch (Exception e) {}
+            }
+            if (mainMethod != null) {
+                mainMethod.exec(global);
+            }
+            System.out.println(Outs.getStringOuts());
         }
         catch(Exception e) {
             System.out.println(e);
