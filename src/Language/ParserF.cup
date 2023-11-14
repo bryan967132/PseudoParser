@@ -11,13 +11,13 @@ parser code
     int index;
     int nIB = 0;
     WordPainter painter;
-    public ParserF(ScannerF s,WordPainter painter) {
+    public ParserF(ScannerF s, WordPainter painter) {
         super(s);
         this.s = s;
         this.painter = painter;
     }
     public void syntax_error(Symbol sym) {
-        painter.SERROR(sym.left,sym.right);
+        painter.SERROR(sym.left, sym.right);
     }
     public void unrecovered_syntax_error(Symbol sym) throws java.lang.Exception {}
 :} 

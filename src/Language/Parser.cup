@@ -7,41 +7,26 @@ import java_cup.runtime.*;
 import Classes.Abstracts.*;
 import Classes.Expressions.*;
 import Classes.Instructions.*;
-import Classes.Utils.*;
-import Components.Response;
-import Components.ErrorS;
+import Classes.Utils.Parameter;
+import Classes.Utils.Type;
+import Classes.Utils.ElseIfStruct;
+import Classes.Utils.Error;
+import Classes.Utils.TypeError;
+import Classes.Utils.Outs;
 
 /* 2. Codigo para el parser, variables y metodos */
 
 parser code 
 {:
-    public Scanner s;
-    private int errors = 0;
-    public ArrayList<Response> errorsS = new ArrayList<>();
     public ArrayList<Instruction> execute;
     public Parser(Scanner s) {
         super(s);
-        this.s = s;
     }
     public void syntax_error(Symbol sym) {
-        errorsS.add(new Response(new ErrorS(sym.left,sym.right,sym.value,Sym.terminalNames[sym.sym])));
-        errors ++;
+        Outs.errors.add(new Error(sym.left, sym.right, TypeError.SYNTAX, "No se esperaba «" + sym.value + "»"));
     }
     public void unrecovered_syntax_error(Symbol sym) throws java.lang.Exception {
-        errorsS.add(new Response("Error Sintáctico sin recuperar."));
-    }
-    public boolean isSuccessExecution() {
-        return !(errors > 0);
-    }
-    public String getErrors() {
-        return errorsS.stream().map(Object::toString).collect(Collectors.joining("\n-> "));
-    }
-    ArrayList<Instruction> toInstructions(ArrayList<Object> arrObjs) {
-        ArrayList<Instruction> inst = new ArrayList<>();
-        for(Object object : arrObjs) {
-            inst.add((Instruction) object);
-        }
-        return inst;
+        Outs.errors.add(new Error(sym.left, sym.right, TypeError.SYNTAX, "No se esperaba (0) «" + sym.value + "»"));
     }
 :} 
 
@@ -58,7 +43,8 @@ terminal String TK_id, TK_num, TK_str, TK_char;
 non terminal String INI;
 non terminal ArrayList<Instruction> INSTSGLOBAL;
 non terminal ArrayList<Sentence> INSTRUCTIONS;
-non terminal ArrayList<Expression> LISTARGS, LISTPARAMS;
+non terminal ArrayList<Expression> LISTARGS;
+non terminal ArrayList<Parameter> LISTPARAMS;
 non terminal Expression EXP, ARITHMETICS, RELATIONALS, LOGICS, CALLFUNC;
 non terminal Instruction CALLMAINFUNC, INSTGLOBAL, PRINT;
 non terminal Instruction DECLID, DECLFUNC;
@@ -66,8 +52,8 @@ non terminal ArrayList<String> LISTID;
 non terminal Sentence INSTRUCTION;
 non terminal Sentence IFSTRUCT, SWITCHSTRUCT;
 non terminal Object[] CASESDEFAULT;
-non terminal ArrayList<Case> CASES;
-non terminal Case CASE;
+non terminal ArrayList<Sentence> CASES;
+non terminal Sentence CASE;
 non terminal Sentence LOOPFOR, LOOPWHILE, LOOPDOWHILE;
 non terminal Instruction ID_ASIGN;
 non terminal Type TYPE;
