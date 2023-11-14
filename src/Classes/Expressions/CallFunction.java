@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import Classes.Abstracts.Expression;
 import Classes.Env.Env;
 import Classes.Instructions.Function;
+import Classes.Utils.Parameter;
 import Classes.Utils.ReturnType;
 import Classes.Utils.TypeExp;
 public class CallFunction extends Expression {
@@ -20,9 +21,9 @@ public class CallFunction extends Expression {
             if(func.params.size() == args.size()) {
                 for(int i = 0; i < func.params.size(); i++) {
                     ReturnType value = args.get(i).exec(env);
-                    ReturnType param = func.params.get(i).exec(env);
+                    Parameter param = func.params.get(i);
                     if(value.type == param.type) {
-                        envFunc.saveID(param.value.toString(), value.value, param.type, this.line, this.column);
+                        envFunc.saveID(param.id, value.value, param.type, this.line, this.column);
                         continue;
                     }
                     // ERROR SEMANTICO: NO COINCIDEN LOS TIPOS DE LOS PARAMETROS
