@@ -83,11 +83,11 @@ public class Controller {
             if (mainMethod != null) {
                 mainMethod.exec(global);
             }
-            String outPrint = "MiniJ: " + currentFile.name + "\n";
+            String outPrint = "PseudoP: " + currentFile.name + "\n";
             outPrint += Outs.getStringOuts();
             console.setText(outPrint);
         } catch (Exception e) {
-            String outPrint = "MiniJ: " + currentFile.name + "\n";
+            String outPrint = "PseudoP: " + currentFile.name + "\n";
             outPrint += Outs.getStringOuts();
             console.setText(outPrint);
         }
