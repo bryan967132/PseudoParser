@@ -2,9 +2,12 @@ package Classes.Expressions;
 import java.util.ArrayList;
 import Classes.Abstracts.Expression;
 import Classes.Env.Env;
+import Classes.Generators.GoGen;
+import Classes.Generators.PyGen;
 import Classes.Instructions.Function;
 import Classes.Utils.Parameter;
 import Classes.Utils.ReturnType;
+import Classes.Utils.Type;
 import Classes.Utils.TypeExp;
 public class CallFunction extends Expression {
     String id;
@@ -43,5 +46,38 @@ public class CallFunction extends Expression {
         }
         // ERROR SEMANTICO: LA FUNCION QUE SE INTENTA LLAMAR NO ESTÁ DECLARADO
         return null;
+    }
+    public ReturnType goGenerate(Env env, GoGen goGen) {
+        Function func = env.getFunction(id);
+        if(func != null) {
+            String code = id + "(";
+            for(int i = 0; i < args.size(); i ++) {
+                code += args.get(i).goGenerate(env, goGen).value.toString();
+                if(i < args.size() - 1) {
+                    code += ", ";
+                }
+            }
+            code += ")";
+            return new ReturnType(code, func.type);
+        }
+        return new ReturnType("nil", Type.NULL);
+    }
+    public ReturnType pyGenerate(Env env, PyGen pyGen) {
+        Function func = env.getFunction(id);
+        if(func != null) {
+            String code = id + "(";
+            for(int i = 0; i < args.size(); i ++) {
+                code += args.get(i).pyGenerate(env, pyGen).value.toString();
+                if(i < args.size() - 1) {
+                    code += ", ";
+                }
+            }
+            code += ")";
+            return new ReturnType(code, func.type);
+        }
+        return new ReturnType("None", Type.NULL);
+    }
+    public String getId() {
+        return id;
     }
 }
