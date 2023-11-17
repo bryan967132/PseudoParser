@@ -18,6 +18,7 @@ import Classes.Utils.Outs;
 
 parser code 
 {:
+    public String fileName;
     public ArrayList<Instruction> execute;
     public Parser(Scanner s) {
         super(s);
@@ -34,10 +35,10 @@ parser code
 terminal String RW_else, RW_elseif, RW_params, RW_incr, RW_equ, RW_endwhile, RW_endfunc, RW_endmeth, RW_endswitch;
 terminal String RW_endfor, RW_endif, RW_println, RW_moreequ, RW_lessequ, RW_until, RW_to, RW_break, RW_start;
 terminal String RW_print, RW_more, RW_less, RW_equequ, RW_notequ, RW_case, RW_or, RW_and, RW_not, RW_begin, RW_end;
-terminal String RW_insert, RW_as, RW_then, RW_if, RW_switch, RW_do, RW_for, RW_while, RW_repeat, RW_return;
-terminal String RW_meth, RW_func, RW_exec, RW_num, RW_str, RW_bool, RW_char, RW_pow, RW_mod, RW_true, RW_false;
+terminal String RW_insert, RW_as, RW_then, RW_if, RW_switch, RW_do, RW_for, RW_while, RW_repeat, RW_return, RW_continue;
+terminal String RW_meth, RW_func, RW_exec, RW_int, RW_double, RW_str, RW_bool, RW_char, RW_pow, RW_mod, RW_true, RW_false;
 terminal String TK_prompt, TK_plus, TK_minus, TK_uminus, TK_mult, TK_div, TK_lpar, TK_rpar, TK_comma;
-terminal String TK_id, TK_num, TK_str, TK_char;
+terminal String TK_id, TK_int, TK_double, TK_str, TK_char;
 
 /* 4. No Terminales*/
 non terminal String INIT;
@@ -77,8 +78,8 @@ precedence right TK_uminus;
 start with INIT;
 
 INIT ::=
-    RW_begin IDS INSTSGLOBAL :ins RW_end {:execute = ins;              :} |
-    RW_begin IDS RW_end                  {:execute = new ArrayList<>();:} ;
+    RW_begin IDS :fn INSTSGLOBAL :ins RW_end {:fileName = fn; execute = ins;              :} |
+    RW_begin IDS :fn RW_end                  {:fileName = fn; execute = new ArrayList<>();:} ;
 
 INSTSGLOBAL ::=
     INSTSGLOBAL :insts INSTGLOBAL :inst {:insts.add(inst); RESULT = insts;              :} |
@@ -95,17 +96,18 @@ INSTRUCTIONS ::=
     INSTRUCTION:inst                    {:RESULT = new ArrayList<>(Arrays.asList(inst));:} ;
 
 INSTRUCTION ::=
-    DECLID          :inst {:RESULT = inst;                          :} |
-    ID_ASIGN        :inst {:RESULT = inst;                          :} |
-    IFSTRUCT        :inst {:RESULT = inst;                          :} |
-    SWITCHSTRUCT    :inst {:RESULT = inst;                          :} |
-    LOOPFOR         :inst {:RESULT = inst;                          :} |
-    LOOPWHILE       :inst {:RESULT = inst;                          :} |
-    LOOPDOWHILE     :inst {:RESULT = inst;                          :} |
-    CALLFUNC        :inst {:RESULT = inst;                          :} |
-    PRINT           :inst {:RESULT = inst;                          :} |
-    RW_break        :inst {:RESULT = new Break(instleft, instright);:} |
-    RW_return:r EXP :exp  {:RESULT = new Return(rleft, rright, exp);:} |
+    DECLID          :inst {:RESULT = inst;                             :} |
+    ID_ASIGN        :inst {:RESULT = inst;                             :} |
+    IFSTRUCT        :inst {:RESULT = inst;                             :} |
+    SWITCHSTRUCT    :inst {:RESULT = inst;                             :} |
+    LOOPFOR         :inst {:RESULT = inst;                             :} |
+    LOOPWHILE       :inst {:RESULT = inst;                             :} |
+    LOOPDOWHILE     :inst {:RESULT = inst;                             :} |
+    CALLFUNC        :inst {:RESULT = inst;                             :} |
+    PRINT           :inst {:RESULT = inst;                             :} |
+    RW_return:r EXP :exp  {:RESULT = new Return(rleft, rright, exp);   :} |
+    RW_continue     :inst {:RESULT = new Continue(instleft, instright);:} |
+    RW_break        :inst {:RESULT = new Break(instleft, instright);   :} |
     error           ;
 
 CALLMAINFUNC ::=
@@ -216,10 +218,11 @@ PRINT ::=
     RW_print   :p EXP :exp {:RESULT = new Print(pleft, pright, exp);:} ;
 
 TYPE ::=
-    RW_num  {:RESULT = Type.NUMBER; :} |
-    RW_str  {:RESULT = Type.STRING; :} |
-    RW_char {:RESULT = Type.CHAR;   :} |
-    RW_bool {:RESULT = Type.BOOLEAN;:} ;
+    RW_str    {:RESULT = Type.STRING; :} |
+    RW_int    {:RESULT = Type.INT;    :} |
+    RW_char   {:RESULT = Type.CHAR;   :} |
+    RW_bool   {:RESULT = Type.BOOLEAN;:} |
+    RW_double {:RESULT = Type.DOUBLE; :} ;
 
 IDS ::=
     TK_id  :id {:RESULT = id;:} |
@@ -234,10 +237,11 @@ EXP ::=
     TK_id       :id          {:RESULT = new AccessID(idleft, idright, id);:} |
     TK_str      :p           {:RESULT = new Primitive(pleft, pright, p, Type.STRING); :} |
     TK_char     :p           {:RESULT = new Primitive(pleft, pright, p, Type.CHAR);   :} |
-    TK_num      :p           {:RESULT = new Primitive(pleft, pright, p, Type.NUMBER); :} |
+    TK_int      :p           {:RESULT = new Primitive(pleft, pright, p, Type.INT);    :} |
+    TK_double   :p           {:RESULT = new Primitive(pleft, pright, p, Type.DOUBLE); :} |
     RW_true     :p           {:RESULT = new Primitive(pleft, pright, p, Type.BOOLEAN);:} |
     RW_false    :p           {:RESULT = new Primitive(pleft, pright, p, Type.BOOLEAN);:} |
-    TK_lpar EXP :exp TK_rpar {:RESULT = exp;:} ;
+    TK_lpar EXP :exp TK_rpar {:exp.isGrp = true; RESULT = exp;:} ;
 
 ARITHMETICS ::=
     EXP :e1 TK_plus  :s EXP :e2 {:RESULT = new Arithmetic(e1left, e1right, e1, s, e2);:} |

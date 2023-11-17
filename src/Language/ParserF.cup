@@ -26,10 +26,10 @@ parser code
 terminal String RW_else, RW_elseif, RW_params, RW_incr, RW_equ, RW_endwhile, RW_endfunc, RW_endmeth, RW_endswitch;
 terminal String RW_endfor, RW_endif, RW_println, RW_moreequ, RW_lessequ, RW_until, RW_to, RW_break, RW_start;
 terminal String RW_print, RW_more, RW_less, RW_equequ, RW_notequ, RW_case, RW_or, RW_and, RW_not, RW_begin, RW_end;
-terminal String RW_insert, RW_as, RW_then, RW_if, RW_switch, RW_do, RW_for, RW_while, RW_repeat, RW_return;
-terminal String RW_meth, RW_func, RW_exec, RW_num, RW_str, RW_bool, RW_char, RW_pow, RW_mod, RW_true, RW_false;
+terminal String RW_insert, RW_as, RW_then, RW_if, RW_switch, RW_do, RW_for, RW_while, RW_repeat, RW_return, RW_continue;
+terminal String RW_meth, RW_func, RW_exec, RW_int, RW_double, RW_str, RW_bool, RW_char, RW_pow, RW_mod, RW_true, RW_false;
 terminal String TK_prompt, TK_plus, TK_minus, TK_uminus, TK_mult, TK_div, TK_lpar, TK_rpar, TK_comma;
-terminal String TK_id, TK_num, TK_str, TK_char;
+terminal String TK_id, TK_int, TK_double, TK_str, TK_char;
 
 /* 4. No Terminales*/
 non terminal String INIT, INSTSGLOBAL, INSTRUCTIONS, LISTARGS, LISTPARAMS, EXP, ARITHMETICS, RELATIONALS, LOGICS, CALLFUNC;
@@ -86,8 +86,9 @@ INSTRUCTION ::=
     LOOPDOWHILE      |
     CALLFUNC         |
     PRINT            |
-    RW_break :d      {:painter.RW2(dleft, dright);:} |
     RW_return :d EXP {:painter.RW2(dleft, dright);:} |
+    RW_continue :d   {:painter.RW2(dleft, dright);:} |
+    RW_break :d      {:painter.RW2(dleft, dright);:} |
     error            ;
 
 CALLMAINFUNC ::=
@@ -244,10 +245,11 @@ PRINTCOLOR ::=
     RW_print   :p {:painter.USEFNC(pleft, pright);:} ;
 
 TYPE ::=
-    RW_str  :tp {:painter.RW5(tpleft, tpright);:} |
-    RW_num  :tp {:painter.RW1(tpleft, tpright);:} |
-    RW_bool :tp {:painter.RW1(tpleft, tpright);:} |
-    RW_char :tp {:painter.RW1(tpleft, tpright);:} ;
+    RW_str    :tp {:painter.RW5(tpleft, tpright);:} |
+    RW_int    :tp {:painter.RW1(tpleft, tpright);:} |
+    RW_bool   :tp {:painter.RW1(tpleft, tpright);:} |
+    RW_char   :tp {:painter.RW1(tpleft, tpright);:} |
+    RW_double :tp {:painter.RW1(tpleft, tpright);:} ;
 
 IDS ::=
     TK_id  :id {:RESULT = id;:} |
@@ -262,7 +264,8 @@ EXP ::=
     TK_id       :tr          {:painter.USEVARIABLE(trleft, trright);:} |
     TK_str      :tr          {:painter.STRING(trleft, trright);     :} |
     TK_char     :tr          {:painter.CHAR(trleft, trright);       :} |
-    TK_num      :tr          {:painter.NUMBER(trleft, trright);     :} |
+    TK_int      :tr          {:painter.NUMBER(trleft, trright);     :} |
+    TK_double   :tr          {:painter.NUMBER(trleft, trright);     :} |
     RW_true     :tr          {:painter.RW3(trleft, trright);        :} |
     RW_false    :tr          {:painter.RW3(trleft, trright);        :} |
     COLORLPAR EXP :exp COLORRPAR ;

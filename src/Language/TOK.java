@@ -11,68 +11,71 @@ public class TOK {
   public static final int RW_less = 22;
   public static final int RW_params = 4;
   public static final int RW_switch = 35;
-  public static final int TK_comma = 60;
-  public static final int RW_pow = 48;
-  public static final int RW_bool = 46;
-  public static final int RW_str = 45;
+  public static final int TK_comma = 62;
+  public static final int RW_pow = 50;
+  public static final int RW_bool = 48;
+  public static final int RW_str = 47;
   public static final int RW_start = 19;
   public static final int RW_break = 18;
   public static final int RW_insert = 31;
   public static final int RW_notequ = 24;
-  public static final int RW_meth = 41;
+  public static final int RW_meth = 42;
+  public static final int RW_int = 45;
   public static final int RW_println = 13;
   public static final int RW_endif = 12;
   public static final int RW_to = 17;
   public static final int RW_for = 37;
   public static final int RW_endmeth = 9;
-  public static final int RW_true = 50;
+  public static final int RW_true = 52;
   public static final int RW_while = 38;
   public static final int RW_not = 28;
   public static final int RW_and = 27;
   public static final int RW_as = 32;
-  public static final int TK_lpar = 58;
+  public static final int TK_lpar = 60;
   public static final int RW_equequ = 23;
-  public static final int TK_uminus = 55;
-  public static final int RW_num = 44;
-  public static final int TK_str = 63;
-  public static final int RW_false = 51;
+  public static final int TK_uminus = 57;
+  public static final int TK_str = 66;
+  public static final int RW_false = 53;
   public static final int RW_do = 36;
-  public static final int TK_id = 61;
+  public static final int TK_id = 63;
   public static final int RW_else = 2;
+  public static final int TK_double = 65;
   public static final int EOF = 0;
-  public static final int RW_func = 42;
+  public static final int RW_func = 43;
   public static final int RW_print = 20;
+  public static final int RW_continue = 41;
   public static final int error = 1;
   public static final int RW_moreequ = 14;
+  public static final int TK_int = 64;
   public static final int RW_endfunc = 8;
   public static final int RW_then = 33;
   public static final int RW_repeat = 39;
-  public static final int RW_mod = 49;
-  public static final int TK_mult = 56;
-  public static final int TK_char = 64;
-  public static final int TK_prompt = 52;
-  public static final int RW_exec = 43;
+  public static final int RW_double = 46;
+  public static final int RW_mod = 51;
+  public static final int TK_mult = 58;
+  public static final int TK_char = 67;
+  public static final int TK_prompt = 54;
+  public static final int RW_exec = 44;
   public static final int RW_equ = 6;
   public static final int RW_elseif = 3;
-  public static final int TK_div = 57;
+  public static final int TK_div = 59;
   public static final int RW_more = 21;
-  public static final int TK_num = 62;
   public static final int RW_endwhile = 7;
   public static final int RW_endfor = 11;
   public static final int RW_endswitch = 10;
   public static final int RW_or = 26;
-  public static final int RW_char = 47;
+  public static final int RW_char = 49;
   public static final int RW_lessequ = 15;
   public static final int RW_end = 30;
-  public static final int TK_rpar = 59;
+  public static final int TK_rpar = 61;
   public static final int RW_return = 40;
-  public static final int TK_minus = 54;
+  public static final int TK_minus = 56;
   public static final int RW_if = 34;
   public static final int RW_case = 25;
   public static final int RW_begin = 29;
   public static final int RW_until = 16;
   public static final int RW_incr = 5;
-  public static final int TK_plus = 53;
+  public static final int TK_plus = 55;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -115,10 +118,12 @@ public class TOK {
   "RW_while",
   "RW_repeat",
   "RW_return",
+  "RW_continue",
   "RW_meth",
   "RW_func",
   "RW_exec",
-  "RW_num",
+  "RW_int",
+  "RW_double",
   "RW_str",
   "RW_bool",
   "RW_char",
@@ -136,7 +141,8 @@ public class TOK {
   "TK_rpar",
   "TK_comma",
   "TK_id",
-  "TK_num",
+  "TK_int",
+  "TK_double",
   "TK_str",
   "TK_char"
   };

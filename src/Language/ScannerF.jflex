@@ -32,9 +32,10 @@ import Painter.WordPainter;
 //Expresiones regulares
 UNUSED   = [ \r\t]+
 ID       = [a-zA-Z][a-zA-Z0-9\_]*
-NUMBER   = [0-9]+(\.[0-9]+)?
 CHAR     = \'([^\n\'\\]|\\.)\'
 STRING   = \"(([^\n\"\\]|\\.)*)\"
+INTEGER  = [0-9]+
+DOUBLE   = [0-9]+\.[0-9]+
 COMMENTS = "//"([^\r\n]*)
 COMMENTM = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 
@@ -83,7 +84,8 @@ COMMENTM = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 "metodo"                {return new Symbol(TOK.RW_meth,      yychar, yylength(), yytext());}
 "funcion"               {return new Symbol(TOK.RW_func,      yychar, yylength(), yytext());}
 "ejecutar"              {return new Symbol(TOK.RW_exec,      yychar, yylength(), yytext());}
-"Numero"                {return new Symbol(TOK.RW_num,       yychar, yylength(), yytext());}
+"Entero"                {return new Symbol(TOK.RW_int,       yychar, yylength(), yytext());}
+"Decimal"               {return new Symbol(TOK.RW_double,    yychar, yylength(), yytext());}
 "Cadena"                {return new Symbol(TOK.RW_str,       yychar, yylength(), yytext());}
 "Booleano"              {return new Symbol(TOK.RW_bool,      yychar, yylength(), yytext());}
 "Caracter"              {return new Symbol(TOK.RW_char,      yychar, yylength(), yytext());}
@@ -92,6 +94,7 @@ COMMENTM = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 "Verdadero"             {return new Symbol(TOK.RW_true,      yychar, yylength(), yytext());}
 "Falso"                 {return new Symbol(TOK.RW_false,     yychar, yylength(), yytext());}
 "detener"               {return new Symbol(TOK.RW_break,     yychar, yylength(), yytext());}
+"continuar"             {return new Symbol(TOK.RW_continue,  yychar, yylength(), yytext());}
 (\<[\s]*\-)             {return new Symbol(TOK.TK_prompt,    yychar, yylength(), yytext());}
 "+"                     {return new Symbol(TOK.TK_plus,      yychar, yylength(), yytext());}
 "-"                     {return new Symbol(TOK.TK_minus,     yychar, yylength(), yytext());}
@@ -101,7 +104,8 @@ COMMENTM = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 ")"                     {return new Symbol(TOK.TK_rpar,      yychar, yylength(), yytext());}
 ","                     {return new Symbol(TOK.TK_comma,     yychar, yylength(), yytext());}
 {ID}                    {return new Symbol(TOK.TK_id,        yychar, yylength(), yytext());}
-{NUMBER}                {return new Symbol(TOK.TK_num,       yychar, yylength(), yytext());}
+{INTEGER}               {return new Symbol(TOK.TK_int,       yychar, yylength(), yytext());}
+{DOUBLE}                {return new Symbol(TOK.TK_double,    yychar, yylength(), yytext());}
 {STRING}                {return new Symbol(TOK.TK_str,       yychar, yylength(), yytext());}
 "'${"[0-9]+"}'"         {return new Symbol(TOK.TK_char,      yychar, yylength(), yytext());}
 {CHAR}                  {return new Symbol(TOK.TK_char,      yychar, yylength(), yytext());}

@@ -30,9 +30,10 @@ import Classes.Utils.Outs;
 //Expresiones regulares
 UNUSED   = [ \r\t]+
 ID       = [a-zA-Z][a-zA-Z0-9\_]*
-NUMBER   = [0-9]+(\.[0-9]+)?
 CHAR     = \'([^\n\'\\]|\\.)\'
 STRING   = \"(([^\n\"\\]|\\.)*)\"
+INTEGER  = [0-9]+
+DOUBLE   = [0-9]+\.[0-9]+
 COMMENTS = "//"([^\r\n]*)
 COMMENTM = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 
@@ -81,7 +82,8 @@ COMMENTM = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 "metodo"                {return new Symbol(TOK.RW_meth,       yyline, yychar, yytext());}
 "funcion"               {return new Symbol(TOK.RW_func,       yyline, yychar, yytext());}
 "ejecutar"              {return new Symbol(TOK.RW_exec,       yyline, yychar, yytext());}
-"Numero"                {return new Symbol(TOK.RW_num,        yyline, yychar, yytext());}
+"Entero"                {return new Symbol(TOK.RW_int,        yyline, yychar, yytext());}
+"Decimal"               {return new Symbol(TOK.RW_double,     yyline, yychar, yytext());}
 "Cadena"                {return new Symbol(TOK.RW_str,        yyline, yychar, yytext());}
 "Booleano"              {return new Symbol(TOK.RW_bool,       yyline, yychar, yytext());}
 "Caracter"              {return new Symbol(TOK.RW_char,       yyline, yychar, yytext());}
@@ -90,6 +92,7 @@ COMMENTM = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 "Verdadero"             {return new Symbol(TOK.RW_true,       yyline, yychar, yytext());}
 "Falso"                 {return new Symbol(TOK.RW_false,      yyline, yychar, yytext());}
 "detener"               {return new Symbol(TOK.RW_break,      yyline, yychar, yytext());}
+"continuar"             {return new Symbol(TOK.RW_continue,   yyline, yychar, yytext());}
 (\<[\s]*\-)             {return new Symbol(TOK.TK_prompt,     yyline, yychar, yytext());}
 "+"                     {return new Symbol(TOK.TK_plus,       yyline, yychar, yytext());}
 "-"                     {return new Symbol(TOK.TK_minus,      yyline, yychar, yytext());}
@@ -99,7 +102,8 @@ COMMENTM = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 ")"                     {return new Symbol(TOK.TK_rpar,       yyline, yychar, yytext());}
 ","                     {return new Symbol(TOK.TK_comma,      yyline, yychar, yytext());}
 {ID}                    {return new Symbol(TOK.TK_id,         yyline, yychar, yytext());}
-{NUMBER}                {return new Symbol(TOK.TK_num,        yyline, yychar, yytext());}
+{INTEGER}               {return new Symbol(TOK.TK_int,        yyline, yychar, yytext());}
+{DOUBLE}                {return new Symbol(TOK.TK_double,     yyline, yychar, yytext());}
 {STRING}                {return new Symbol(TOK.TK_str,        yyline, yychar, yytext().substring(1, yytext().toString().length() - 1));}
 "'${"[0-9]+"}'"         {return new Symbol(TOK.TK_char,       yyline, yychar, yytext().substring(1, yytext().toString().length() - 1));}
 {CHAR}                  {return new Symbol(TOK.TK_char,       yyline, yychar, yytext().substring(1, yytext().toString().length() - 1));}
