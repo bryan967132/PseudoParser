@@ -30,6 +30,9 @@ public class AccessID extends Expression {
     public ReturnType pyGenerate(Env env, PyGen pyGen) {
         Symbol value = env.getValueID(id);
         if(value != null) {
+            if(env.isGlobal(id)) {
+                env.getLocal().setIdGlobal(id);
+            }
             return new ReturnType(id, value.type);
         }
         return new ReturnType("None", Type.NULL);

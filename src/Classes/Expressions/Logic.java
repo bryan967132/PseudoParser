@@ -63,7 +63,7 @@ public class Logic extends Expression {
         if(exp1 != null) {
             code += exp1.pyGenerate(env, pyGen).value.toString() + " ";
         }
-        code += sign + " ";
+        code += getSignPy() + " ";
         code += exp2.pyGenerate(env, pyGen).value.toString();
         if(isGrp) {
             code = "(" + code + ")";
