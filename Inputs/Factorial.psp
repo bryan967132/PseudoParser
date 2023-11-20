@@ -2,7 +2,7 @@ inicio Factorial
 	inicia ejecutar inicial()
 
 	metodo inicial
-		ingresar n como Numero con valor 5
+		ingresar n como Entero con valor 5
 		ingresar resultado como Cadena con valor n + "! = " + ejecutar factorial(n)
 		imprimir resultado
 		n <- n - 1
@@ -16,7 +16,7 @@ inicio Factorial
 		imprimir resultado
 	fin metodo
 
-	funcion factorial Numero con parametros(n Numero)
+	funcion factorial Entero con parametros(n Entero)
 		si n igual a 0 entonces
 			retornar 1
 		fin si

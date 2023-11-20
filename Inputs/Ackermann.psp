@@ -1,5 +1,5 @@
 inicio Ackermann
-	funcion ackermann Numero con parametros(m Numero, n Numero)
+	funcion ackermann Entero con parametros(m Entero, n Entero)
 		si m igual a 0 entonces
 			retornar n + 1
 		fin si
@@ -12,8 +12,8 @@ inicio Ackermann
 	inicia ejecutar mainP()
 
 	metodo mainP
-		ingresar m como Numero con valor 3
-		ingresar n como Numero con valor 4
+		ingresar m como Entero con valor 3
+		ingresar n como Entero con valor 4
 		imprimir "ackermann(m: " + m + ", n: " + n + ") = " + ejecutar ackermann(m, n)
 		m <- 2
 		n <- 5
