@@ -1,6 +1,8 @@
 package Classes.Instructions;
 import Classes.Abstracts.Expression;
 import Classes.Env.Env;
+import Classes.Generators.GoGen;
+import Classes.Generators.PyGen;
 import Classes.Utils.ReturnType;
 import Classes.Utils.TypeExp;
 public class While extends Expression {
@@ -28,6 +30,17 @@ public class While extends Expression {
             }
             condition = this.condition.exec(envWhile);
         }
+        return null;
+    }
+    public ReturnType goGenerate(Env env, GoGen goGen) {
+        goGen.addInstruction("for " + condition.goGenerate(env, goGen).value.toString() + " {");
+        block.goGenerate(env, goGen);
+        goGen.addInstruction("}");
+        return null;
+    }
+    public ReturnType pyGenerate(Env env, PyGen pyGen) {
+        pyGen.addInstruction("while " + condition.pyGenerate(env, pyGen).value.toString() + ":");
+        block.pyGenerate(env, pyGen);
         return null;
     }
 }

@@ -5,6 +5,8 @@ import Classes.Env.Env;
 import Classes.Env.Symbol;
 import Classes.Expressions.Arithmetic;
 import Classes.Expressions.Primitive;
+import Classes.Generators.GoGen;
+import Classes.Generators.PyGen;
 import Classes.Utils.TypeInst;
 public class AddSub extends Instruction {
     private String id;
@@ -40,5 +42,11 @@ public class AddSub extends Instruction {
                 );
                 break;
         }
+    }
+    public void goGenerate(Env env, GoGen goGen) {
+        goGen.addInstruction(id + " " + sign + " " + exp.goGenerate(env, goGen));
+    }
+    public void pyGenerate(Env env, PyGen pyGen) {
+        pyGen.addInstruction(id + " " + sign + " " + exp.pyGenerate(env, pyGen));
     }
 }

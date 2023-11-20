@@ -1,6 +1,8 @@
 package Classes.Instructions;
 import Classes.Abstracts.Expression;
 import Classes.Env.Env;
+import Classes.Generators.GoGen;
+import Classes.Generators.PyGen;
 import Classes.Utils.ReturnType;
 import Classes.Utils.Type;
 import Classes.Utils.TypeExp;
@@ -8,6 +10,7 @@ public class Case extends Expression {
     Expression _case;
     Block block;
     ReturnType caseEvaluate;
+    public boolean flag = false;
     public Case(int line, int column, Expression _case, Block block){
         super(line, column, TypeExp.IF);
         this._case = _case;
@@ -22,6 +25,7 @@ public class Case extends Expression {
         ReturnType case_ = _case.exec(envCase); 
         envCase.name += " " + case_.value.toString();
         if(compare(case_, caseE)) {
+            flag = true;
             ReturnType block = this.block.exec(envCase);
             if (block != null) {
                 return block;
@@ -31,7 +35,10 @@ public class Case extends Expression {
     }
     public boolean compare(ReturnType value1, ReturnType value2) {
         if(value1.type == value2.type) {
-            if(value1.type == Type.NUMBER) {
+            if(value1.type == Type.INT) {
+                return Integer.parseInt(value1.value.toString()) == Integer.parseInt(value2.value.toString());
+            }
+            if(value1.type == Type.DOUBLE) {
                 return Double.parseDouble(value1.value.toString()) == Double.parseDouble(value2.value.toString());
             }
             if(value1.type == Type.BOOLEAN) {
@@ -45,5 +52,15 @@ public class Case extends Expression {
             }
         }
         return false;
+    }
+    public ReturnType goGenerate(Env env, GoGen goGen) {
+        goGen.addInstruction("case " + _case.goGenerate(env, goGen).value.toString() + ":");
+        block.goGenerate(env, goGen);
+        return null;
+    }
+    public ReturnType pyGenerate(Env env, PyGen pyGen) {
+        pyGen.addInstruction("case " + _case.pyGenerate(env, pyGen).value.toString() + ":");
+        block.pyGenerate(env, pyGen);
+        return null;
     }
 }
