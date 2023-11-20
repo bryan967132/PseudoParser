@@ -1,4 +1,5 @@
 package Classes.Env;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 import Classes.Instructions.Function;
@@ -8,6 +9,7 @@ import Classes.Utils.TypeError;
 import Classes.Utils.Error;
 import Classes.Utils.Outs;
 public class Env {
+    private ArrayList<String> globals = new ArrayList<>();
     private Map<String, Symbol> ids = new TreeMap<>();
     private Map<String, Function> functions = new TreeMap<>();
     private Env previous;
@@ -72,6 +74,34 @@ public class Env {
             env = env.previous;
         }
         return env;
+    }
+    public boolean isGlobal(String id) {
+        Env current = this;
+        while(current != null) {
+            if(current.ids.containsKey(id)) {
+                if(current.name.equals("Global")) {
+                    return true;
+                }
+                return false;
+            }
+            current = current.previous;
+        }
+        return false;
+    }
+    public void setIdGlobal(String id) {
+        if(!globals.contains(id)) {
+            globals.add(id);
+        }
+    }
+    public Env getLocal() {
+        Env env = this;
+        while(env.previous != null && !env.previous.name.equals("Global")) {
+            env = env.previous;
+        }
+        return env;
+    }
+    public ArrayList<String> getGlobals() {
+        return globals;
     }
     public void setPrint(String print) {
         Outs.printConsole.add(print);
