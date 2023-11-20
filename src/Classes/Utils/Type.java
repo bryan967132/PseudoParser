@@ -1,6 +1,7 @@
 package Classes.Utils;
 public enum Type {
-    NUMBER,
+    INT     ,
+    DOUBLE  ,
     BOOLEAN ,
     CHAR    ,
     STRING  ,
