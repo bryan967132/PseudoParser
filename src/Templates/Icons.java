@@ -7,4 +7,6 @@ public class Icons {
     public static String PLAY = "Images/tocar.png";
     public static String SAVE = "Images/disco.png";
     public static String SEARCH = "Images/busqueda.png";
+    public static String GO = "Images/Go.png";
+    public static String PYTHON = "Images/Python.png";
 }

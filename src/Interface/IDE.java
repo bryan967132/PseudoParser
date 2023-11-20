@@ -8,6 +8,13 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
+import javax.swing.text.StyledEditorKit;
+import javax.swing.text.TabSet;
+import javax.swing.text.TabStop;
+import javax.swing.text.ViewFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -28,7 +35,7 @@ import Templates.Icons;
 import Templates.Label;
 public class IDE extends JPanel implements ActionListener, KeyListener, MouseWheelListener, MouseListener, MouseMotionListener  {
     Controller controller;
-    Button analyzeInput, uploadOuts, saveOLC;
+    Button analyzeInput, goCode, pyCode, saveFile;
     EditorArea editorArea;
     public Icon icono;
     public ImageIcon image;
@@ -67,8 +74,9 @@ public class IDE extends JPanel implements ActionListener, KeyListener, MouseWhe
         cursorPosition = new JLabel();
         console = new JTextPane();
         analyzeInput = new Button();
-        uploadOuts = new Button();
-        saveOLC = new Button();
+        goCode = new Button();
+        pyCode = new Button();
+        saveFile = new Button();
     }
     void defineComponents() {
         //projects
@@ -97,6 +105,25 @@ public class IDE extends JPanel implements ActionListener, KeyListener, MouseWhe
         console.setFont(new java.awt.Font("Consolas",  0,  11));
         console.setBounds(0, 0, 550, 575);;
         console.setText("PseudoP:");
+
+        console.setEditorKit(
+            new StyledEditorKit() {
+                public ViewFactory getViewFactory() {
+                    return new NoWrapViewFactory();
+                }
+            });
+
+        TabStop[] tabStops = new TabStop[50];
+        int tabWidth = 4 * console.getFontMetrics(console.getFont()).charWidth(' ');
+        for (int i = 0; i < tabStops.length; i++) {
+            tabStops[i] = new TabStop((i + 1) * tabWidth, TabStop.ALIGN_LEFT, TabStop.LEAD_NONE);
+        }
+        TabSet tabSet = new TabSet(tabStops);
+        StyledDocument doc = console.getStyledDocument();
+        Style paragraphStyle = doc.addStyle("paragraphStyle", null);
+        StyleConstants.setTabSet(paragraphStyle, tabSet);
+        doc.setParagraphAttributes(0, doc.getLength(), paragraphStyle, false);
+
         consoleScroll = new JScrollPane(console);
         consoleScroll.setBorder(BorderFactory.createLineBorder(Colors.DARKCOLOR, 8));
         consoleScroll.setBounds(790, 105, 550, 575);
@@ -106,18 +133,24 @@ public class IDE extends JPanel implements ActionListener, KeyListener, MouseWhe
         analyzeInput.setDesign(Colors.COLOR2);
         analyzeInput.setHoverColor(Colors.COLOR3);
         analyzeInput.addMouseListener(this);
-        //analyzeStrings
-        uploadOuts.locationSize(475, 56, 30, 30);
-        uploadOuts.Icon(Icons.UPLOAD);
-        uploadOuts.setDesign(Colors.COLOR2);
-        uploadOuts.setHoverColor(Colors.COLOR3);
-        uploadOuts.addMouseListener(this);
+        //Translate Go
+        goCode.locationSize(475, 56, 30, 30);
+        goCode.Icon(Icons.GO);
+        goCode.setDesign(Colors.COLOR2);
+        goCode.setHoverColor(Colors.COLOR3);
+        goCode.addMouseListener(this);
+        //Translate Python
+        pyCode.locationSize(510, 56, 30, 30);
+        pyCode.Icon(Icons.PYTHON);
+        pyCode.setDesign(Colors.COLOR2);
+        pyCode.setHoverColor(Colors.COLOR3);
+        pyCode.addMouseListener(this);
         //saveOLC
-        saveOLC.locationSize(510, 56, 30, 30);
-        saveOLC.Icon(Icons.SAVE);
-        saveOLC.setDesign(Colors.COLOR2);
-        saveOLC.setHoverColor(Colors.COLOR3);
-        saveOLC.addMouseListener(this);
+        saveFile.locationSize(545, 56, 30, 30);
+        saveFile.Icon(Icons.SAVE);
+        saveFile.setDesign(Colors.COLOR2);
+        saveFile.setHoverColor(Colors.COLOR3);
+        saveFile.addMouseListener(this);
     }
     public void updateTag() {
         if(tag != null) {
@@ -143,10 +176,10 @@ public class IDE extends JPanel implements ActionListener, KeyListener, MouseWhe
         this.add(editorAreaContent);
         this.add(cursorPosition);
         this.add(consoleScroll);
-        // this.add(graphics);
         this.add(analyzeInput);
-        this.add(uploadOuts);
-        this.add(saveOLC);
+        this.add(goCode);
+        this.add(pyCode);
+        this.add(saveFile);
     }
     void copyright() {
         this.add(new Label(0, 695, 1390, 15, "PseudoP", 11));
@@ -164,6 +197,14 @@ public class IDE extends JPanel implements ActionListener, KeyListener, MouseWhe
     void execute() {
         controller.setFormat(editorArea.editor);
         controller.analyze(this,  indexFilePJ,  editorArea.editor,  console);
+    }
+    void generateGoCode() {
+        controller.setFormat(editorArea.editor);
+        controller.generateGoCode(this,  indexFilePJ,  editorArea.editor,  console);
+    }
+    void generatePyCode() {
+        controller.setFormat(editorArea.editor);
+        controller.generatePyCode(this,  indexFilePJ,  editorArea.editor,  console);
     }
     void setFormat() {
         controller.setFormat(editorArea.editor);
@@ -207,20 +248,28 @@ public class IDE extends JPanel implements ActionListener, KeyListener, MouseWhe
                 execute();
             }
             else {
-                console.setText("PseudoP:\n");
+                console.setText("PseudoP:");
             }
         }
-        else if(e.getSource() == uploadOuts) {
+        else if(e.getSource() == goCode) {
             if(indexFilePJ != -1) {
-                //controller.validateString(indexFilePJ, editorArea.editor, console);
+                generateGoCode();
             }
             else {
                 console.setText("PseudoP:");
             }
         }
-        else if(e.getSource() == saveOLC) {
+        else if(e.getSource() == pyCode) {
             if(indexFilePJ != -1) {
-                controller.saveOLCPJ(indexFilePJ, editorArea.editor);
+                generatePyCode();
+            }
+            else {
+                console.setText("PseudoP:");
+            }
+        }
+        else if(e.getSource() == saveFile) {
+            if(indexFilePJ != -1) {
+                controller.savePJ(indexFilePJ, editorArea.editor);
             }
         }
     }
