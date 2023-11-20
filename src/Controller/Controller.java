@@ -16,7 +16,6 @@ import Classes.Abstracts.Instruction;
 import Classes.Env.Env;
 import Classes.Generators.GoGen;
 import Classes.Generators.PyGen;
-import Classes.Instructions.Function;
 import Classes.Instructions.MainMethod;
 import Classes.Utils.Outs;
 import Classes.Utils.TypeInst;
