@@ -7,12 +7,12 @@ inicio Hanoi
 		si n igual a 1 entonces
 			imprimir ejecutar t(c) + ") Mover disco 1: desde " + origen + " hasta " + destino
 			c <- c + 1
-		de lo contrario
-			ejecutar hanoi(n - 1, origen, destino, medio)
-			imprimir ejecutar t(c) + ") Mover disco " + n + ": desde " + origen + " hasta " + destino
-			c <- c + 1
-			ejecutar hanoi(n - 1, medio, origen, destino)
+			regresar
 		fin si
+		ejecutar hanoi(n - 1, origen, destino, medio)
+		imprimir ejecutar t(c) + ") Mover disco " + n + ": desde " + origen + " hasta " + destino
+		c <- c + 1
+		ejecutar hanoi(n - 1, medio, origen, destino)
 	fin metodo
 
 	funcion t Cadena con parametros(c Entero)
