@@ -35,7 +35,7 @@ parser code
 terminal String RW_else, RW_elseif, RW_params, RW_incr, RW_equ, RW_endwhile, RW_endfunc, RW_endmeth, RW_endswitch;
 terminal String RW_endfor, RW_endif, RW_println, RW_moreequ, RW_lessequ, RW_until, RW_to, RW_break, RW_start;
 terminal String RW_print, RW_more, RW_less, RW_equequ, RW_notequ, RW_case, RW_or, RW_and, RW_not, RW_begin, RW_end;
-terminal String RW_insert, RW_as, RW_then, RW_if, RW_switch, RW_do, RW_for, RW_while, RW_repeat, RW_return, RW_continue;
+terminal String RW_insert, RW_as, RW_then, RW_if, RW_switch, RW_do, RW_for, RW_while, RW_repeat, RW_return, RW_back, RW_continue;
 terminal String RW_meth, RW_func, RW_exec, RW_int, RW_double, RW_str, RW_bool, RW_char, RW_pow, RW_mod, RW_true, RW_false;
 terminal String TK_prompt, TK_plus, TK_minus, TK_uminus, TK_mult, TK_div, TK_lpar, TK_rpar, TK_comma;
 terminal String TK_id, TK_int, TK_double, TK_str, TK_char;
@@ -105,7 +105,8 @@ INSTRUCTION ::=
     LOOPDOWHILE     :inst {:RESULT = inst;                             :} |
     CALLFUNC        :inst {:RESULT = inst;                             :} |
     PRINT           :inst {:RESULT = inst;                             :} |
-    RW_return:r EXP :exp  {:RESULT = new Return(rleft, rright, exp);   :} |
+    RW_return :r EXP :exp {:RESULT = new Return(rleft, rright, exp);   :} |
+    RW_back :r            {:RESULT = new Return(rleft, rright, null);  :} |
     RW_continue     :inst {:RESULT = new Continue(instleft, instright);:} |
     RW_break        :inst {:RESULT = new Break(instleft, instright);   :} |
     error           ;

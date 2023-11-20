@@ -81,6 +81,7 @@ COMMENTM = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 "mientras"              {return new Symbol(TOK.RW_while,     yychar, yylength(), yytext());}
 "repetir"               {return new Symbol(TOK.RW_repeat,    yychar, yylength(), yytext());}
 "retornar"              {return new Symbol(TOK.RW_return,    yychar, yylength(), yytext());}
+"regresar"              {return new Symbol(TOK.RW_back,      yychar, yylength(), yytext());}
 "metodo"                {return new Symbol(TOK.RW_meth,      yychar, yylength(), yytext());}
 "funcion"               {return new Symbol(TOK.RW_func,      yychar, yylength(), yytext());}
 "ejecutar"              {return new Symbol(TOK.RW_exec,      yychar, yylength(), yytext());}
