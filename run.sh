@@ -1,1 +1,0 @@
-/usr/bin/env C:\\Program\ Files\\Java\\jdk-14.0.2\\bin\\java.exe @C:\\Users\\bryan\\AppData\\Local\\Temp\\cp_28lo0jqm4sxbf2ds53lngsh6a.argfile Home.Main 
