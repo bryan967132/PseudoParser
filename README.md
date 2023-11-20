@@ -33,19 +33,19 @@ INSTRUCTIONS ::=
     INSTRUCTION              
 
 INSTRUCTION ::=
-    DECLID          |
-    ID_ASIGN        |
-    IFSTRUCT        |
-    SWITCHSTRUCT    |
-    LOOPFOR         |
-    LOOPWHILE       |
-    LOOPDOWHILE     |
-    CALLFUNC        |
-    PRINT           |
-    'retornar' EXP  |
-    'regresar'      |
-    'continuar'     |
-    'detener'       
+    DECLID         |
+    ID_ASIGN       |
+    IFSTRUCT       |
+    SWITCHSTRUCT   |
+    LOOPFOR        |
+    LOOPWHILE      |
+    LOOPDOWHILE    |
+    CALLFUNC       |
+    PRINT          |
+    'retornar' EXP |
+    'regresar'     |
+    'continuar'    |
+    'detener'      
 
 CALLMAINFUNC ::=
     'inicia' CALLFUNC 
