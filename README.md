@@ -42,8 +42,10 @@ INSTRUCTION ::=
     LOOPDOWHILE     |
     CALLFUNC        |
     PRINT           |
-    'return' EXP    |
-    'break'         
+    'retornar' EXP  |
+    'regresar'      |
+    'continuar'     |
+    'detener'       
 
 CALLMAINFUNC ::=
     'inicia' CALLFUNC 
