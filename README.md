@@ -2,6 +2,8 @@
 ## Intérprete de Pseudocódigo: JFlex y CUP  
 * Implementa patrón de diseño Interpreter.
 
+## Traductor a Código Go y Python
+
 ## VSCode Theme
 ![Pantalla](Images/ScreenVSCodeTheme.png)
 
@@ -151,10 +153,11 @@ PRINT ::=
     'imprimir'    EXP 
 
 TYPE ::=
-    'Numero'   |
     'Cadena'   |
+    'Entero'   |
     'Caracter' |
     'Booleano' 
+    'Decimal'  |
 
 EXP ::=
     ARITHMETICS         |
