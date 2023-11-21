@@ -198,7 +198,7 @@ LOGICS ::=
 ```
 
 ## Instalación JFlex y CUP
-* Descargar la JFlex: [JavaCC](https://jflex.de/download.html)
+* Descargar la JFlex: [JFlex](https://jflex.de/download.html)
 * Descargar la CUP: [CUP](http://www2.cs.tum.edu/projects/cup/)
 * Incluir las librerías en el proyecto java.
 
