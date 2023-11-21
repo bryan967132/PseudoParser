@@ -196,3 +196,49 @@ LOGICS ::=
     EXP 'o' EXP |
     'no'    EXP 
 ```
+
+## Instalación JFlex y CUP
+* Descargar la JFlex: [JavaCC](https://jflex.de/download.html)
+* Descargar la CUP: [CUP](http://www2.cs.tum.edu/projects/cup/)
+* Incluir las librerías en el proyecto java.
+
+## Generación de Scanner
+```java
+import java.io.File;
+public class GScanner {
+    public static void main(String[] args) {
+        jflex.Main.generate(
+            new File(
+                "src/Language/Scanner.jflex"
+            )
+        );
+    }
+}
+```
+
+## Generación de Parser
+```java
+public class GParser {
+    public static void main(String[] args) {
+        generate();
+    }
+    public static void generate() {
+        try {
+            java_cup.Main.main(
+                new String[] {
+                    "-destdir",
+                    "src/Language",
+                    "-symbols",
+                    "TOK",
+                    "-parser",
+                    "Parser",
+                    "src/Language/Parser.cup"
+                }
+            );
+        }
+        catch(Exception e) {
+            System.out.println(e);
+        }
+    }
+}
+```
