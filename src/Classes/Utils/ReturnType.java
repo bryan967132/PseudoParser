@@ -8,6 +8,6 @@ public class ReturnType {
     }
     @Override
     public String toString() {
-        return "Object: " + value + ", Type: " + type;
+        return "Object: " + value + ", Type: " + type.getValue();
     }
 }

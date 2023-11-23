@@ -11,17 +11,6 @@ public class Error {
         this.description = description;
     }
     public String toString() {
-        return "→ Error " + getType(type) + ", " + this.description + ". " + line + ":" + column;
-    }
-
-    public String getType(TypeError type) {
-        switch(type) {
-            case LEXICAL:
-                return "LEXICO";
-            case SYNTAX:
-                return "SINTACTICO";
-            default:
-                return "SEMANTICO";
-        }
+        return "→ Error " + type.getValue() + ", " + this.description + ". " + line + ":" + column;
     }
 }
