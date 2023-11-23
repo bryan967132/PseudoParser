@@ -45,7 +45,7 @@ public class Env {
                     current.ids.get(id).value = value.value;
                     return true;
                 }
-                setError("Los tipos no coinciden en la asignación. Intenta asignar un \"" + getType(value.type) + "\" a un \"" + getType(current.ids.get(id).type) + "\"", line, column);
+                setError("Los tipos no coinciden en la asignación. Intenta asignar un \"" + value.type.getValue() + "\" a un \"" + current.ids.get(id).type.getValue() + "\"", line, column);
                 return false;
             }
             current = current.previous;
@@ -94,22 +94,6 @@ public class Env {
             }
         }
         return false;
-    }
-    public String getType(Type type) {
-        switch (type) {
-            case INT:
-                return "INT";
-            case DOUBLE:
-                return "DOUBLE";
-            case BOOLEAN:
-                return "BOOLEAN";
-            case STRING:
-                return "STRING";
-            case CHAR:
-                return "CHAR";
-            default:
-                return "null";
-        }
     }
     public boolean isGlobal(String id) {
         Env current = this;
