@@ -5,6 +5,7 @@ import Classes.Env.Env;
 import Classes.Expressions.CallFunction;
 import Classes.Generators.GoGen;
 import Classes.Generators.PyGen;
+import Classes.Utils.ReturnType;
 import Classes.Utils.TypeInst;
 public class MainMethod extends Instruction {
     Expression method;
@@ -12,8 +13,9 @@ public class MainMethod extends Instruction {
         super(line, column, TypeInst.MAIN);
         this.method = method;
     }
-    public void exec(Env env) {
+    public ReturnType exec(Env env) {
         method.exec(env);
+        return null;
     }
     public void goGenerate(Env env, GoGen goGen) {
         goGen.setMainCall(method.goGenerate(env, goGen).value.toString());

@@ -18,11 +18,15 @@ public class InitID extends Instruction {
         this.value = value;
         this.type = type;
     }
-    public void exec(Env env) {
+    public ReturnType exec(Env env) {
         for(String id : inits) {
             if(value != null) {
                 ReturnType value = this.value.exec(env);
-                env.saveID(id, value.value, type, line, column);
+                if(value.type == type || type == Type.DOUBLE && value.type == Type.INT) {
+                    env.saveID(id, value.value, type, line, column);
+                    continue;
+                }
+                env.setError("Los tipos no coinciden en la declaración", line, column);
             }
             else {
                 switch(type) {
@@ -46,6 +50,7 @@ public class InitID extends Instruction {
                 }
             }
         }
+        return null;
     }
     public void goGenerate(Env env, GoGen goGen) {
         ArrayList<String> ids = new ArrayList<>();

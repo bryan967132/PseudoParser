@@ -13,13 +13,14 @@ public class Print extends Instruction {
         super(line, column, TypeInst.PRINT);
         this.exp = exp;
     }
-    public void exec(Env env) {
+    public ReturnType exec(Env env) {
         String value = "";
         if(exp != null) {
             ReturnType value1 = exp.exec(env);
             value = getValueB(value1);
         }
         env.setPrint(value);
+        return null;
     }
     public String getValueB(ReturnType value) {
         if(value.type == Type.BOOLEAN) {

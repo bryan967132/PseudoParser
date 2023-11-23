@@ -1,18 +1,19 @@
 package Classes.Instructions;
 import Classes.Abstracts.Expression;
+import Classes.Abstracts.Instruction;
 import Classes.Env.Env;
 import Classes.Generators.GoGen;
 import Classes.Generators.PyGen;
 import Classes.Utils.ReturnType;
 import Classes.Utils.Type;
-import Classes.Utils.TypeExp;
-public class Case extends Expression {
+import Classes.Utils.TypeInst;
+public class Case extends Instruction {
     Expression _case;
     Block block;
     ReturnType caseEvaluate;
     public boolean flag = false;
     public Case(int line, int column, Expression _case, Block block){
-        super(line, column, TypeExp.IF);
+        super(line, column, TypeInst.CASE);
         this._case = _case;
         this.block = block;
     }
@@ -53,14 +54,12 @@ public class Case extends Expression {
         }
         return false;
     }
-    public ReturnType goGenerate(Env env, GoGen goGen) {
+    public void goGenerate(Env env, GoGen goGen) {
         goGen.addInstruction("case " + _case.goGenerate(env, goGen).value.toString() + ":");
         block.goGenerate(env, goGen);
-        return null;
     }
-    public ReturnType pyGenerate(Env env, PyGen pyGen) {
+    public void pyGenerate(Env env, PyGen pyGen) {
         pyGen.addInstruction("case " + _case.pyGenerate(env, pyGen).value.toString() + ":");
         block.pyGenerate(env, pyGen);
-        return null;
     }
 }

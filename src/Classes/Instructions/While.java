@@ -1,15 +1,17 @@
 package Classes.Instructions;
 import Classes.Abstracts.Expression;
+import Classes.Abstracts.Instruction;
 import Classes.Env.Env;
 import Classes.Generators.GoGen;
 import Classes.Generators.PyGen;
 import Classes.Utils.ReturnType;
 import Classes.Utils.TypeExp;
-public class While extends Expression {
+import Classes.Utils.TypeInst;
+public class While extends Instruction {
     private Expression condition;
     private Block block;
     public While(int line, int column, Expression condition, Block block) {
-        super(line, column, TypeExp.LOOP_WHILE);
+        super(line, column, TypeInst.LOOP_WHILE);
         this.condition = condition;
         this.block = block;
     }
@@ -19,11 +21,11 @@ public class While extends Expression {
         while(Boolean.parseBoolean(condition.value.toString())) {
             ReturnType block = this.block.exec(envWhile);
             if(block != null) {
-                if(block.value == TypeExp.CONTINUE) {
+                if(block.value == TypeInst.CONTINUE) {
                     condition = this.condition.exec(envWhile);
                     continue;
                 }
-                if(block.value == TypeExp.BREAK) {
+                if(block.value == TypeInst.BREAK) {
                     break;
                 }
                 return block;
@@ -32,15 +34,13 @@ public class While extends Expression {
         }
         return null;
     }
-    public ReturnType goGenerate(Env env, GoGen goGen) {
+    public void goGenerate(Env env, GoGen goGen) {
         goGen.addInstruction("for " + condition.goGenerate(env, goGen).value.toString() + " {");
         block.goGenerate(env, goGen);
         goGen.addInstruction("}");
-        return null;
     }
-    public ReturnType pyGenerate(Env env, PyGen pyGen) {
+    public void pyGenerate(Env env, PyGen pyGen) {
         pyGen.addInstruction("while " + condition.pyGenerate(env, pyGen).value.toString() + ":");
         block.pyGenerate(env, pyGen);
-        return null;
     }
 }

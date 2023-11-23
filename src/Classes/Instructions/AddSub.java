@@ -7,6 +7,7 @@ import Classes.Expressions.Arithmetic;
 import Classes.Expressions.Primitive;
 import Classes.Generators.GoGen;
 import Classes.Generators.PyGen;
+import Classes.Utils.ReturnType;
 import Classes.Utils.TypeInst;
 public class AddSub extends Instruction {
     private String id;
@@ -18,7 +19,7 @@ public class AddSub extends Instruction {
         this.sign = sign;
         this.exp = exp;
     }
-    public void exec(Env env) {
+    public ReturnType exec(Env env) {
         Symbol value = env.getValueID(id, this.line, this.column);
         switch(this.sign) {
             case "+=":
@@ -44,6 +45,7 @@ public class AddSub extends Instruction {
                 );
                 break;
         }
+        return null;
     }
     public void goGenerate(Env env, GoGen goGen) {
         goGen.addInstruction(id + " " + sign + " " + exp.goGenerate(env, goGen));

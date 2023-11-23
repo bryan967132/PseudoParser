@@ -4,16 +4,16 @@ import Classes.Env.Env;
 import Classes.Generators.GoGen;
 import Classes.Generators.PyGen;
 import Classes.Utils.ReturnType;
-import Classes.Utils.TypeExp;
+import Classes.Utils.TypeInst;
 import Classes.Utils.TypeSent;
-public class If extends Expression {
+public class If extends Instruction {
     public boolean isElseIf = false;
     public boolean isElse = false;
     Expression condition;
     Block block;
     Sentence except;
     public If(int line, int column, Expression condition, Block block, Sentence except) {
-        super(line, column, TypeExp.IF);
+        super(line, column, TypeInst.IF);
         this.condition = condition;        
         this.block = block;        
         this.except = except;        
@@ -21,23 +21,22 @@ public class If extends Expression {
     public ReturnType exec(Env env) {
         Env envIf = new Env(env, env.name + " If");
         ReturnType condition = this.condition.exec(envIf);
-        if(Boolean.parseBoolean(condition.value.toString())) { // if(condicion)
-            ReturnType block = this.block.exec(envIf);           //   instrucciones
+        if(Boolean.parseBoolean(condition.value.toString())) {
+            ReturnType block = this.block.exec(envIf);
             if(block != null) {
                 return block;
             }
             return null;
         }
-        // else
         if(except != null) {
-            ReturnType except = ((Expression) this.except).exec(envIf); // if | instrucciones_else
+            ReturnType except = this.except.exec(envIf);
             if(except != null) {
                 return except;
             }
         }
         return null;
     }
-    public ReturnType goGenerate(Env env, GoGen goGen) {
+    public void goGenerate(Env env, GoGen goGen) {
         Env envIf = new Env(env, env.name + " If");
         if(!isElseIf) {
             goGen.addInstruction("if " + condition.goGenerate(env, goGen).value.toString() + " {");
@@ -46,19 +45,18 @@ public class If extends Expression {
         }
         block.goGenerate(envIf, goGen);
         if(except != null) {
-            if(except.typeSent == TypeSent.EXPRESSION && ((Expression) except).typeExp == TypeExp.IF) {
-                ((If) ((Expression) except)).enableIsElseIf();
-                ((Expression) except).goGenerate(envIf, goGen);
-                return null;
-            } else if(except.typeSent == TypeSent.EXPRESSION && ((Expression) except).typeExp == TypeExp.BLOCK_INST) {
+            if(except.typeSent == TypeSent.INSTRUCTION && ((Instruction) except).typeInst == TypeInst.IF) {
+                ((If) ((Instruction) except)).enableIsElseIf();
+                ((Instruction) except).goGenerate(envIf, goGen);
+                return;
+            } else if(except.typeSent == TypeSent.INSTRUCTION && ((Instruction) except).typeInst == TypeInst.BLOCK_INST) {
                 goGen.addInstruction("} else {");
-                ((Expression) except).goGenerate(envIf, goGen);
+                ((Instruction) except).goGenerate(envIf, goGen);
             }
         }
         goGen.addInstruction("}");
-        return null;
     }
-    public ReturnType pyGenerate(Env env, PyGen pyGen) {
+    public void pyGenerate(Env env, PyGen pyGen) {
         Env envIf = new Env(env, env.name + " If");
         if(!isElseIf) {
             pyGen.addInstruction("if " + condition.pyGenerate(env, pyGen).value.toString() + ":");
@@ -67,16 +65,15 @@ public class If extends Expression {
         }
         block.pyGenerate(envIf, pyGen);
         if(except != null) {
-            if(except.typeSent == TypeSent.EXPRESSION && ((Expression) except).typeExp == TypeExp.IF) {
-                ((If) ((Expression) except)).enableIsElseIf();
-                ((Expression) except).pyGenerate(envIf, pyGen);
-                return null;
-            } else if(except.typeSent == TypeSent.EXPRESSION && ((Expression) except).typeExp == TypeExp.BLOCK_INST) {
+            if(except.typeSent == TypeSent.INSTRUCTION && ((Instruction) except).typeInst == TypeInst.IF) {
+                ((If) ((Instruction) except)).enableIsElseIf();
+                ((Instruction) except).pyGenerate(envIf, pyGen);
+                return;
+            } else if(except.typeSent == TypeSent.INSTRUCTION && ((Instruction) except).typeInst == TypeInst.BLOCK_INST) {
                 pyGen.addInstruction("else:");
-                ((Expression) except).pyGenerate(envIf, pyGen);
+                ((Instruction) except).pyGenerate(envIf, pyGen);
             }
         }
-        return null;
     }
     public void enableIsElseIf() {
         isElseIf = true;

@@ -15,11 +15,12 @@ public class AsignID extends Instruction {
         this.ids = ids;
         this.value = value;
     }
-    public void exec(Env env) {
+    public ReturnType exec(Env env) {
         ReturnType value = this.value.exec(env);
         for(String id : ids) {
             env.reasignID(id, value, this.line, this.column);
         }
+        return null;
     }
     public void goGenerate(Env env, GoGen goGen) {
         ArrayList<String> values = new ArrayList<>();
