@@ -5,7 +5,6 @@ import Classes.Env.Env;
 import Classes.Generators.GoGen;
 import Classes.Generators.PyGen;
 import Classes.Utils.ReturnType;
-import Classes.Utils.TypeExp;
 import Classes.Utils.TypeInst;
 public class While extends Instruction {
     private Expression condition;
