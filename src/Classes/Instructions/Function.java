@@ -37,7 +37,7 @@ public class Function extends Instruction {
         }
         code += ")";
         if(type != Type.NULL) {
-            code += " " + getGoType();
+            code += " " + type.getGoValue();
         }
         code += " {";
         goGen.addInstruction(code);
@@ -54,7 +54,7 @@ public class Function extends Instruction {
         }
         code += ")";
         if(type != Type.NULL) {
-            code += " -> " + getPyType();
+            code += " -> " + type.getPyValue();
         }
         code += ":";
         pyGen.addInstruction(code);
@@ -69,37 +69,5 @@ public class Function extends Instruction {
         pyGen.prevEnv();
         // END GLOBALS
         pyGen.addLocal();
-    }
-    private String getGoType() {
-        switch(type) {
-            case INT:
-                return "int";
-            case DOUBLE:
-                return "float64";
-            case BOOLEAN:
-                return "bool";
-            case STRING:
-                return "string";
-            case CHAR:
-                return "rune";
-            default:
-                return "";
-        }
-    }
-    private String getPyType() {
-        switch(type) {
-            case INT:
-                return "int";
-            case DOUBLE:
-                return "float";
-            case BOOLEAN:
-                return "bool";
-            case STRING:
-                return "str";
-            case CHAR:
-                return "chr";
-            default:
-                return "";
-        }
     }
 }
