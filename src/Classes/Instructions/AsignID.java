@@ -18,7 +18,7 @@ public class AsignID extends Instruction {
     public void exec(Env env) {
         ReturnType value = this.value.exec(env);
         for(String id : ids) {
-            env.reasignID(id, value);
+            env.reasignID(id, value, this.line, this.column);
         }
     }
     public void goGenerate(Env env, GoGen goGen) {

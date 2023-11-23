@@ -19,7 +19,7 @@ public class AddSub extends Instruction {
         this.exp = exp;
     }
     public void exec(Env env) {
-        Symbol value = env.getValueID(id);
+        Symbol value = env.getValueID(id, this.line, this.column);
         switch(this.sign) {
             case "+=":
                 env.reasignID(
@@ -28,7 +28,8 @@ public class AddSub extends Instruction {
                         new Primitive(line, column, value.value.toString(), value.type),
                         "+",
                         exp
-                    ).exec(env)
+                    ).exec(env),
+                    this.line, this.column
                 );
                 break;
             case "-=":
@@ -38,7 +39,8 @@ public class AddSub extends Instruction {
                         new Primitive(line, column, value.value.toString(), value.type),
                         "-",
                         exp
-                    ).exec(env)
+                    ).exec(env),
+                    this.line, this.column
                 );
                 break;
         }

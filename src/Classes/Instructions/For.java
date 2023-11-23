@@ -61,10 +61,10 @@ public class For extends Expression {
         return false;
     }
     public String getRelational(Env env, Expression value) {
-        if(Double.parseDouble(env.getValueID(id).value.toString()) >= Double.parseDouble(value.exec(env).value.toString())) {
+        if(Double.parseDouble(env.getValueID(id, this.line, this.column).value.toString()) >= Double.parseDouble(value.exec(env).value.toString())) {
             return "mayor igual que";
         }
-        else if(Double.parseDouble(env.getValueID(id).value.toString()) <= Double.parseDouble(value.exec(env).value.toString())) {
+        else if(Double.parseDouble(env.getValueID(id, this.line, this.column).value.toString()) <= Double.parseDouble(value.exec(env).value.toString())) {
             return "menor igual que";
         }
         return "";
