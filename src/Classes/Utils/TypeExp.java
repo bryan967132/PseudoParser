@@ -11,13 +11,4 @@ public enum TypeExp {
     CALL_FUNC     ,
     RETURN        ,
     TERNARY       ,
-    BLOCK_INST    ,
-    IF            ,
-    LOOP_FOR      ,
-    LOOP_WHILE    ,
-    LOOP_DOWHILE  ,
-    SWITCH        ,
-    CASE          ,
-    BREAK         ,
-    CONTINUE
 }
