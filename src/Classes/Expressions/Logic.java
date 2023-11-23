@@ -25,22 +25,42 @@ public class Logic extends Expression {
             case "no":
                 return not(env);
             default:
-                return new ReturnType(-1, Type.NULL);
+                return new ReturnType("nulo", Type.NULL);
         }
     }
     public ReturnType and(Env env) {
         ReturnType value1 = exp1.exec(env);
+        if(value1.type != Type.BOOLEAN) {
+            env.setError("Los tipos no son válidos para operaciones lógicas", exp1.line, exp1.column);
+            return new ReturnType("nulo", Type.NULL);
+        }
         ReturnType value2 = exp2.exec(env);
-        return new ReturnType(Boolean.parseBoolean(value1.value.toString()) && Boolean.parseBoolean(value2.value.toString()), Type.BOOLEAN);
+        if(value2.type == Type.BOOLEAN) {
+            return new ReturnType(Boolean.parseBoolean(value1.value.toString()) && Boolean.parseBoolean(value2.value.toString()), Type.BOOLEAN);
+        }
+        env.setError("Los tipos no son válidos para operaciones lógicas", exp2.line, exp2.column);
+        return new ReturnType("nulo", Type.NULL);
     }
     public ReturnType or(Env env) {
         ReturnType value1 = exp1.exec(env);
+        if(value1.type != Type.BOOLEAN) {
+            env.setError("Los tipos no son válidos para operaciones lógicas", exp1.line, exp1.column);
+            return new ReturnType("nulo", Type.NULL);
+        }
         ReturnType value2 = exp2.exec(env);
-        return new ReturnType(Boolean.parseBoolean(value1.value.toString()) || Boolean.parseBoolean(value2.value.toString()), Type.BOOLEAN);
+        if(value2.type == Type.BOOLEAN) {
+            return new ReturnType(Boolean.parseBoolean(value1.value.toString()) || Boolean.parseBoolean(value2.value.toString()), Type.BOOLEAN);
+        }
+        env.setError("Los tipos no son válidos para operaciones lógicas", exp2.line, exp2.column);
+        return new ReturnType("nulo", Type.NULL);
     }
     public ReturnType not(Env env) {
         ReturnType value2 = exp2.exec(env);
-        return new ReturnType(!Boolean.parseBoolean(value2.value.toString()), Type.BOOLEAN);
+        if(value2.type == Type.BOOLEAN) {
+            return new ReturnType(!Boolean.parseBoolean(value2.value.toString()), Type.BOOLEAN);
+        }
+        env.setError("Los tipos no son válidos para operaciones lógicas", exp2.line, exp2.column);
+        return new ReturnType("nulo", Type.NULL);
     }
     public ReturnType goGenerate(Env env, GoGen goGen) {
         String code = "";

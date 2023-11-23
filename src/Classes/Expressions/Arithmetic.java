@@ -8,10 +8,10 @@ import Classes.Utils.ReturnType;
 import Classes.Utils.Type;
 import Classes.Utils.TypeExp;
 public class Arithmetic extends Expression {
-    private Type type;
     private Expression exp1;
     private String sign;
     private Expression exp2;
+    private Type type;
     public Arithmetic(int line, int column, Expression exp1, String sign, Expression exp2) {
         super(line, column, TypeExp.ARITHMETIC_OP);
         this.exp1 = exp1;
@@ -40,7 +40,7 @@ public class Arithmetic extends Expression {
                 return new ReturnType("nulo", Type.NULL);
         }
     }
-    private ReturnType plus(Env env) {
+    public ReturnType plus(Env env) {
         ReturnType value1 = exp1.exec(env);
         ReturnType value2 = exp2.exec(env);
         int t1 = value1.type.ordinal();
@@ -60,9 +60,10 @@ public class Arithmetic extends Expression {
                 return new ReturnType(result, type);
             }
         }
+        env.setError("Los tipos no son válidos para operaciones aritméticas", exp1.line, exp1.column);
         return new ReturnType("nulo", type);
     }
-    private ReturnType minus(Env env) {
+    public ReturnType minus(Env env) {
         ReturnType value1 = exp1.exec(env);
         ReturnType value2 = exp2.exec(env);
         int t1 = value1.type.ordinal();
@@ -78,9 +79,10 @@ public class Arithmetic extends Expression {
                 return new ReturnType(result, type);
             }
         }
+        env.setError("Los tipos no son válidos para operaciones aritméticas", exp1.line, exp1.column);
         return new ReturnType("nulo", type);
     }
-    private ReturnType uminus(Env env) {
+    public ReturnType uminus(Env env) {
         ReturnType value2 = exp2.exec(env);
         type = value2.type;
         if(type != Type.NULL) {
@@ -93,9 +95,10 @@ public class Arithmetic extends Expression {
                 return new ReturnType(result, type);
             }
         }
+        env.setError("Los tipos no son válidos para operaciones aritméticas", exp2.line, exp2.column);
         return new ReturnType("nulo", type);
     }
-    private ReturnType mult(Env env) {
+    public ReturnType mult(Env env) {
         ReturnType value1 = exp1.exec(env);
         ReturnType value2 = exp2.exec(env);
         int t1 = value1.type.ordinal();
@@ -111,9 +114,10 @@ public class Arithmetic extends Expression {
                 return new ReturnType(result, type);
             }
         }
+        env.setError("Los tipos no son válidos para operaciones aritméticas", exp1.line, exp1.column);
         return new ReturnType("nulo", type);
     }
-    private ReturnType div(Env env) {
+    public ReturnType div(Env env) {
         ReturnType value1 = exp1.exec(env);
         ReturnType value2 = exp2.exec(env);
         int t1 = value1.type.ordinal();
@@ -125,9 +129,10 @@ public class Arithmetic extends Expression {
                 return new ReturnType(result, type);
             }
         }
+        env.setError("Los tipos no son válidos para operaciones aritméticas", exp1.line, exp1.column);
         return new ReturnType("nulo", type);
     }
-    private ReturnType pow(Env env) {
+    public ReturnType pow(Env env) {
         ReturnType value1 = exp1.exec(env);
         ReturnType value2 = exp2.exec(env);
         int t1 = value1.type.ordinal();
@@ -143,9 +148,10 @@ public class Arithmetic extends Expression {
                 return new ReturnType(result, type);
             }
         }
+        env.setError("Los tipos no son válidos para operaciones aritméticas", exp1.line, exp1.column);
         return new ReturnType("nulo", type);
     }
-    private ReturnType mod(Env env) {
+    public ReturnType mod(Env env) {
         ReturnType value1 = exp1.exec(env);
         ReturnType value2 = exp2.exec(env);
         int t1 = value1.type.ordinal();
@@ -161,9 +167,10 @@ public class Arithmetic extends Expression {
                 return new ReturnType(result, type);
             }
         }
+        env.setError("Los tipos no son válidos para operaciones aritméticas", exp1.line, exp1.column);
         return new ReturnType("nulo", type);
     }
-    private ReturnType getValue(ReturnType value) {
+    public ReturnType getValue(ReturnType value) {
         if(value.type == Type.BOOLEAN) {
             if(value.value.toString().equals("true")) {
                 return new ReturnType(1, Type.INT);

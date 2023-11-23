@@ -14,21 +14,21 @@ public class AccessID extends Expression {
         this.id = id;
     }
     public ReturnType exec(Env env) {
-        Symbol value = env.getValueID(id);
+        Symbol value = env.getValueID(id, this.line, this.column);
         if(value != null) {
             return new ReturnType(value.value, value.type);
         }
         return new ReturnType("nulo", Type.NULL);
     }
     public ReturnType goGenerate(Env env, GoGen goGen) {
-        Symbol value = env.getValueID(id);
+        Symbol value = env.getValueID(id, this.line, this.column);
         if(value != null) {
             return new ReturnType(id, value.type);
         }
         return new ReturnType("nil", Type.NULL);
     }
     public ReturnType pyGenerate(Env env, PyGen pyGen) {
-        Symbol value = env.getValueID(id);
+        Symbol value = env.getValueID(id, this.line, this.column);
         if(value != null) {
             if(env.isGlobal(id)) {
                 env.getLocal().setIdGlobal(id);
