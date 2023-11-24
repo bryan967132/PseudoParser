@@ -197,6 +197,19 @@ LOGICS ::=
     'no'    EXP 
 ```
 
+## Precedencia de Operadores
+| Nivel | Asociatividad  |                              Token                               |
+|   -   |       -        |                                -                                 |
+|   8   | Izquierda      | ```RW_or```                                                      |
+|   7   | Izquierda      | ```RW_and```                                                     |
+|   6   | Derecha        | ```RW_not```                                                     |
+|   5   | Izquierda      | ```RW_equequ```, ```RW_notequ```                                 |
+|   4   | Izquierda      | ```RW_less```, ```RW_lessequ```, ```RW_more```, ```RW_moreequ``` |
+|   3   | Izquierda      | ```TK_plus```, ```TK_minus```                                    |
+|   2   | Izquierda      | ```TK_mult```, ```TK_div```, ```RW_mod```                        |
+|   1   | No Asociativa  | ```RW_pow```                                                     |
+|   0   | Derecha        | ```TK_uminus```                                                  |
+
 ## Instalación JFlex y CUP
 * Descargar la JFlex: [JFlex](https://jflex.de/download.html)
 * Descargar la CUP: [CUP](http://www2.cs.tum.edu/projects/cup/)
