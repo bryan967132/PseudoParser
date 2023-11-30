@@ -38,7 +38,7 @@ public class Relational extends Expression {
         ReturnType value1 = exp1.exec(env);
         ReturnType value2 = exp2.exec(env);
         if(value1.type == Type.INT || value1.type == Type.DOUBLE || value1.type == Type.CHAR) {
-            if(value1.type == Type.INT || value1.type == Type.DOUBLE || value1.type == Type.CHAR) {
+            if(value2.type == Type.INT || value2.type == Type.DOUBLE || value2.type == Type.CHAR) {
                 value1 = getValue(value1);
                 value2 = getValue(value2);
                 return new ReturnType(Double.parseDouble(value1.value.toString()) == Double.parseDouble(value2.value.toString()), Type.BOOLEAN);
@@ -56,7 +56,7 @@ public class Relational extends Expression {
         ReturnType value1 = exp1.exec(env);
         ReturnType value2 = exp2.exec(env);
         if(value1.type == Type.INT || value1.type == Type.DOUBLE || value1.type == Type.CHAR) {
-            if(value1.type == Type.INT || value1.type == Type.DOUBLE || value1.type == Type.CHAR) {
+            if(value2.type == Type.INT || value2.type == Type.DOUBLE || value2.type == Type.CHAR) {
                 value1 = getValue(value1);
                 value2 = getValue(value2);
                 return new ReturnType(Double.parseDouble(value1.value.toString()) != Double.parseDouble(value2.value.toString()), Type.BOOLEAN);
@@ -74,7 +74,7 @@ public class Relational extends Expression {
         ReturnType value1 = exp1.exec(env);
         ReturnType value2 = exp2.exec(env);
         if(value1.type == Type.INT || value1.type == Type.DOUBLE || value1.type == Type.CHAR) {
-            if(value1.type == Type.INT || value1.type == Type.DOUBLE || value1.type == Type.CHAR) {
+            if(value2.type == Type.INT || value2.type == Type.DOUBLE || value2.type == Type.CHAR) {
                 value1 = getValue(value1);
                 value2 = getValue(value2);
                 return new ReturnType(Double.parseDouble(value1.value.toString()) >= Double.parseDouble(value2.value.toString()), Type.BOOLEAN);
@@ -92,7 +92,7 @@ public class Relational extends Expression {
         ReturnType value1 = exp1.exec(env);
         ReturnType value2 = exp2.exec(env);
         if(value1.type == Type.INT || value1.type == Type.DOUBLE || value1.type == Type.CHAR) {
-            if(value1.type == Type.INT || value1.type == Type.DOUBLE || value1.type == Type.CHAR) {
+            if(value2.type == Type.INT || value2.type == Type.DOUBLE || value2.type == Type.CHAR) {
                 value1 = getValue(value1);
                 value2 = getValue(value2);
                 return new ReturnType(Double.parseDouble(value1.value.toString()) <= Double.parseDouble(value2.value.toString()), Type.BOOLEAN);
@@ -110,7 +110,7 @@ public class Relational extends Expression {
         ReturnType value1 = exp1.exec(env);
         ReturnType value2 = exp2.exec(env);
         if(value1.type == Type.INT || value1.type == Type.DOUBLE || value1.type == Type.CHAR) {
-            if(value1.type == Type.INT || value1.type == Type.DOUBLE || value1.type == Type.CHAR) {
+            if(value2.type == Type.INT || value2.type == Type.DOUBLE || value2.type == Type.CHAR) {
                 value1 = getValue(value1);
                 value2 = getValue(value2);
                 return new ReturnType(Double.parseDouble(value1.value.toString()) > Double.parseDouble(value2.value.toString()), Type.BOOLEAN);
@@ -128,7 +128,7 @@ public class Relational extends Expression {
         ReturnType value1 = exp1.exec(env);
         ReturnType value2 = exp2.exec(env);
         if(value1.type == Type.INT || value1.type == Type.DOUBLE || value1.type == Type.CHAR) {
-            if(value1.type == Type.INT || value1.type == Type.DOUBLE || value1.type == Type.CHAR) {
+            if(value2.type == Type.INT || value2.type == Type.DOUBLE || value2.type == Type.CHAR) {
                 value1 = getValue(value1);
                 value2 = getValue(value2);
                 return new ReturnType(Double.parseDouble(value1.value.toString()) < Double.parseDouble(value2.value.toString()), Type.BOOLEAN);
