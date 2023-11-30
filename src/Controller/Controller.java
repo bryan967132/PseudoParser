@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import javax.swing.JTextPane;
 import javax.swing.text.StyledDocument;
 import Classes.Abstracts.Instruction;
@@ -244,6 +245,10 @@ public class Controller {
             for(Path path : pjs1) {
                 pjs.add(new IconFile(i, new File(path.path), ide, this));
                 i ++;
+            }
+            Collections.sort(pjs);
+            for(i = 0; i < pjs.size(); i ++) {
+                pjs.get(i).id = i;
             }
         }
         catch (Exception e) {}

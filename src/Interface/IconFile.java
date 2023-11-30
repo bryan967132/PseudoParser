@@ -11,7 +11,7 @@ import Controller.Controller;
 import Templates.Colors;
 import Templates.IconImage;
 import Templates.Icons;
-public class IconFile extends JPanel implements MouseListener {
+public class IconFile extends JPanel implements MouseListener, Comparable<IconFile> {
     private static final long serialVersionUID = 1L;
 	boolean activado = false;
 	Color backgroundColor,hoverColor,tmpColor;
@@ -74,6 +74,10 @@ public class IconFile extends JPanel implements MouseListener {
 		controller.deserialize(ide);
 		ide.lookPJFiles();
 	}
+	@Override
+	public int compareTo(IconFile iconFile) {
+        return this.name.compareTo(iconFile.name);
+    }
 	public String toString() {
 		return "FILENAME: " + name + "\nPATH: " + path;
 	}

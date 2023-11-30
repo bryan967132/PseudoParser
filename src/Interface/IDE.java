@@ -103,15 +103,15 @@ public class IDE extends JPanel implements ActionListener, KeyListener, MouseWhe
         console.setForeground(Colors.WHITE);
         console.setBackground(Colors.DARKCOLOR);
         console.setFont(new java.awt.Font("Consolas",  0,  11));
-        console.setBounds(0, 0, 550, 575);;
-        console.setText("PseudoP:");
+        console.setBounds(0, 0, 550, 575);
 
         console.setEditorKit(
             new StyledEditorKit() {
                 public ViewFactory getViewFactory() {
                     return new NoWrapViewFactory();
                 }
-            });
+            }
+        );
 
         TabStop[] tabStops = new TabStop[50];
         int tabWidth = 4 * console.getFontMetrics(console.getFont()).charWidth(' ');
@@ -124,6 +124,7 @@ public class IDE extends JPanel implements ActionListener, KeyListener, MouseWhe
         StyleConstants.setTabSet(paragraphStyle, tabSet);
         doc.setParagraphAttributes(0, doc.getLength(), paragraphStyle, false);
 
+        console.setText("PseudoP:");
         consoleScroll = new JScrollPane(console);
         consoleScroll.setBorder(BorderFactory.createLineBorder(Colors.DARKCOLOR, 8));
         consoleScroll.setBounds(790, 105, 550, 575);
