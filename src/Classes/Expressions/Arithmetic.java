@@ -317,7 +317,13 @@ public class Arithmetic extends Expression {
         int t2 = value2.type.ordinal();
         type = !(t1 == 5 || t2 == 5) ? Operations.minus[t1][t2] : Type.NULL;
         if(type != Type.NULL) {
-            String result = value1.value.toString() + " % " + value2.value.toString();
+            String result;
+            if(type == Type.INT) {
+                result = value1.value.toString() + " % " + value2.value.toString();
+            } else {
+                goGen.importMath();
+                result = "math.Mod(" + value1.value.toString() + ", " + value2.value.toString() + ")";
+            }
             if(isGrp) {
                 result = "(" + result + ")";
             }
