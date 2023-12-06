@@ -41,6 +41,7 @@ public class For extends Instruction {
                 if(block.value == TypeInst.CONTINUE) {
                     new AddSub(line, column, id, "+=", v3).exec(envFor);
                     condition = getConditionValue(envFor, sign, v2);
+                    continue;
                 }
                 else if(block.value == TypeInst.BREAK) {
                     break;
