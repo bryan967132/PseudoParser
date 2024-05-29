@@ -34,7 +34,7 @@
 
 <INSTRUCTION> ::=
     <DECLID>         |
-    <ID_ASIGN>       |
+    <IDASIGN>        |
     <IFSTRUCT>       |
     <SWITCHSTRUCT>   |
     <LOOPFOR>        |
@@ -53,7 +53,7 @@
 <DECLID> ::=
     'ingresar' <LISTID> 'como' <TYPE> 'con valor' <EXP>
 
-<ID_ASIGN> ::=
+<IDASIGN> ::=
     <LISTID> '<-' <EXP>
 
 <LISTID> ::=
@@ -103,38 +103,38 @@
     'de lo contrario' 'entonces'
 
 <LOOPFOR> ::=
-    'para' TK_id '<-' <EXP> 'hasta' <EXP> 'con incremento' <EXP> 'hacer' <INST_FOR> |
-    'para' TK_id '<-' <EXP> 'hasta' <EXP> 'hacer' <INST_FOR>
+    'para' TK_id '<-' <EXP> 'hasta' <EXP> 'con incremento' <EXP> 'hacer' <INSTFOR> |
+    'para' TK_id '<-' <EXP> 'hasta' <EXP> 'hacer' <INSTFOR>
 
-<INST_FOR> ::=
+<LOOPWHILE> ::=
+    'mientras' <EXP>  'hacer' <INSTWHILE>
+
+<LOOPDOWHILE> ::=
+    <INSTREPEAT> 'cuando' <EXP>
+
+<INSTFOR> ::=
     <INSTRUCTIONS> 'fin para' |
     'fin para'
 
-<LOOPWHILE> ::=
-    'mientras' <EXP>  'hacer' <INST_WHILE>
-
-<LOOPDOWHILE> ::=
-    <INST_REPEAT> 'cuando' <EXP>
-
-<INST_WHILE> ::=
+<INSTWHILE> ::=
     <INSTRUCTIONS> 'fin mientras' |
     'fin mientras'
 
-<INST_REPEAT> ::=
+<INSTREPEAT> ::=
     'repetir' <INSTRUCTIONS> |
     'repetir'
 
 <DECLFUNC> ::=
-    'funcion' TK_id <TYPE> 'con parametros' '(' <LISTPARAMS> ')' <INST_FUNC> |
-    'funcion' TK_id <TYPE> <INST_FUNC>                                       |
-    'metodo'  TK_id 'con parametros' '(' <LISTPARAMS> ')' <INST_METH>        |
-    'metodo'  TK_id <INST_METH>
+    'funcion' TK_id <TYPE> 'con parametros' '(' <LISTPARAMS> ')' <INSTFUNC> |
+    'funcion' TK_id <TYPE> <INSTFUNC>                                       |
+    'metodo'  TK_id 'con parametros' '(' <LISTPARAMS> ')' <INSTMETH>        |
+    'metodo'  TK_id <INSTMETH>
 
-<INST_FUNC> ::=
+<INSTFUNC> ::=
     <INSTRUCTIONS> 'fin funcion' |
     'fin funcion'
 
-<INST_METH> ::=
+<INSTMETH> ::=
     <INSTRUCTIONS> 'fin metodo' |
     'fin metodo'
 
