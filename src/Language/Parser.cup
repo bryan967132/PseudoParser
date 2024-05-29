@@ -55,9 +55,9 @@ non terminal Object[] CASESDEFAULT;
 non terminal ArrayList<Sentence> CASES;
 non terminal Sentence CASE;
 non terminal Sentence LOOPFOR, LOOPWHILE, LOOPDOWHILE;
-non terminal Instruction ID_ASIGN;
+non terminal Instruction IDASIGN;
 non terminal Type TYPE;
-non terminal Block INSTIF, INST_FUNC, INST_METH, INST_FOR, INST_WHILE, INST_REPEAT, DEFAULT;
+non terminal Block INSTIF, INSTFUNC, INSTMETH, INSTFOR, INSTWHILE, INSTREPEAT, DEFAULT;
 non terminal ElseIfStruct ELSEIFSTRUCT, ELSESTRUCT;
 non terminal String IDS;
 
@@ -95,20 +95,20 @@ INSTRUCTIONS ::=
     INSTRUCTION:inst                    {:RESULT = new ArrayList<>(Arrays.asList(inst));:} ;
 
 INSTRUCTION ::=
-    DECLID          :inst {:RESULT = inst;                             :} |
-    ID_ASIGN        :inst {:RESULT = inst;                             :} |
-    IFSTRUCT        :inst {:RESULT = inst;                             :} |
-    SWITCHSTRUCT    :inst {:RESULT = inst;                             :} |
-    LOOPFOR         :inst {:RESULT = inst;                             :} |
-    LOOPWHILE       :inst {:RESULT = inst;                             :} |
-    LOOPDOWHILE     :inst {:RESULT = inst;                             :} |
-    CALLFUNC        :inst {:RESULT = inst;                             :} |
-    PRINT           :inst {:RESULT = inst;                             :} |
-    RW_return :r EXP :exp {:RESULT = new Return(rleft, rright, exp);   :} |
-    RW_back :r            {:RESULT = new Return(rleft, rright, null);  :} |
-    RW_continue     :inst {:RESULT = new Continue(instleft, instright);:} |
-    RW_break        :inst {:RESULT = new Break(instleft, instright);   :} |
-    error           ;
+    DECLID           :inst {:RESULT = inst;                             :} |
+    IDASIGN          :inst {:RESULT = inst;                             :} |
+    IFSTRUCT         :inst {:RESULT = inst;                             :} |
+    SWITCHSTRUCT     :inst {:RESULT = inst;                             :} |
+    LOOPFOR          :inst {:RESULT = inst;                             :} |
+    LOOPWHILE        :inst {:RESULT = inst;                             :} |
+    LOOPDOWHILE      :inst {:RESULT = inst;                             :} |
+    CALLFUNC         :inst {:RESULT = inst;                             :} |
+    PRINT            :inst {:RESULT = inst;                             :} |
+    RW_return :r EXP :exp  {:RESULT = new Return(rleft, rright, exp);   :} |
+    RW_back   :r           {:RESULT = new Return(rleft, rright, null);  :} |
+    RW_continue      :inst {:RESULT = new Continue(instleft, instright);:} |
+    RW_break         :inst {:RESULT = new Break(instleft, instright);   :} |
+    error            ;
 
 CALLMAINFUNC ::=
     RW_start :s CALLFUNC :fnc {:RESULT = new MainMethod(sleft, sright, fnc);:} ;
@@ -116,7 +116,7 @@ CALLMAINFUNC ::=
 DECLID ::=
     RW_insert :i LISTID :ids RW_as TYPE :t RW_equ EXP :exp {:RESULT = new InitID(ileft, iright, ids, exp, t);:} ;
 
-ID_ASIGN ::=
+IDASIGN ::=
     LISTID :ids TK_prompt EXP :exp {:RESULT = new AsignID(idsleft, idsright, ids, exp);:} ;
 
 LISTID ::=
@@ -166,38 +166,38 @@ DEFAULT ::=
     RW_else :d RW_then                 {:RESULT = new Block(dleft, dright, new ArrayList<>());:} ;
 
 LOOPFOR ::=
-    RW_for :f IDS :id TK_prompt EXP :v1 RW_to EXP :v2 RW_incr EXP :v3 RW_do INST_FOR :b {:RESULT = new For(fleft, fright, id, v1, v2, v3,   b);:} |
-    RW_for :f IDS :id TK_prompt EXP :v1 RW_to EXP :v2 RW_do INST_FOR :b                 {:RESULT = new For(fleft, fright, id, v1, v2, null, b);:} ;
+    RW_for :f IDS :id TK_prompt EXP :v1 RW_to EXP :v2 RW_incr EXP :v3 RW_do INSTFOR :b {:RESULT = new For(fleft, fright, id, v1, v2, v3,   b);:} |
+    RW_for :f IDS :id TK_prompt EXP :v1 RW_to EXP :v2 RW_do INSTFOR :b                 {:RESULT = new For(fleft, fright, id, v1, v2, null, b);:} ;
 
 LOOPWHILE ::=
-    RW_while :w EXP :exp RW_do INST_WHILE :b {:RESULT = new While(wleft, wright, exp, b);:} ;
+    RW_while :w EXP :exp RW_do INSTWHILE :b {:RESULT = new While(wleft, wright, exp, b);:} ;
 
 LOOPDOWHILE ::=
-    INST_REPEAT :d RW_until EXP :exp {:RESULT = new DoWhile(dleft, dright, exp, d);:} ;
+    INSTREPEAT :d RW_until EXP :exp {:RESULT = new DoWhile(dleft, dright, exp, d);:} ;
 
-INST_FOR ::=
+INSTFOR ::=
     INSTRUCTIONS :l RW_endfor {:RESULT = new Block(lleft, lright, l);                :} |
     RW_endfor :l              {:RESULT = new Block(lleft, lright, new ArrayList<>());:} ;
 
-INST_WHILE ::=
+INSTWHILE ::=
     INSTRUCTIONS :l RW_endwhile {:RESULT = new Block(lleft, lright, l);                :} |
     RW_endwhile :l              {:RESULT = new Block(lleft, lright, new ArrayList<>());:} ;
 
-INST_REPEAT ::=
+INSTREPEAT ::=
     RW_repeat INSTRUCTIONS :l {:RESULT = new Block(lleft, lright, l);                :} |
     RW_repeat :l              {:RESULT = new Block(lleft, lright, new ArrayList<>());:} ;
 
 DECLFUNC ::=
-    RW_func :s IDS :id TYPE :t RW_params TK_lpar LISTPARAMS :l TK_rpar INST_FUNC :b {:RESULT = new Function(sleft, sright, id, l,                 b ,t);        :} |
-    RW_func :s IDS :id TYPE :t INST_FUNC :b                                         {:RESULT = new Function(sleft, sright, id, new ArrayList<>(), b ,t);        :} |
-    RW_meth :s IDS :id RW_params TK_lpar LISTPARAMS :l TK_rpar INST_METH :b         {:RESULT = new Function(sleft, sright, id, l,                 b ,Type.NULL);:} |
-    RW_meth :s IDS :id INST_METH :b                                                 {:RESULT = new Function(sleft, sright, id, new ArrayList<>(), b ,Type.NULL);:} ;
+    RW_func :s IDS :id TYPE :t RW_params TK_lpar LISTPARAMS :l TK_rpar INSTFUNC :b {:RESULT = new Function(sleft, sright, id, l,                 b ,t);        :} |
+    RW_func :s IDS :id TYPE :t INSTFUNC :b                                         {:RESULT = new Function(sleft, sright, id, new ArrayList<>(), b ,t);        :} |
+    RW_meth :s IDS :id RW_params TK_lpar LISTPARAMS :l TK_rpar INSTMETH :b         {:RESULT = new Function(sleft, sright, id, l,                 b ,Type.NULL);:} |
+    RW_meth :s IDS :id INSTMETH :b                                                 {:RESULT = new Function(sleft, sright, id, new ArrayList<>(), b ,Type.NULL);:} ;
 
-INST_FUNC ::=
+INSTFUNC ::=
     INSTRUCTIONS :l RW_endfunc {:RESULT = new Block(lleft, lright, l);                :} |
     RW_endfunc :l              {:RESULT = new Block(lleft, lright, new ArrayList<>());:} ;
 
-INST_METH ::=
+INSTMETH ::=
     INSTRUCTIONS :l RW_endmeth {:RESULT = new Block(lleft, lright, l);                :} |
     RW_endmeth :l              {:RESULT = new Block(lleft, lright, new ArrayList<>());:} ;
 

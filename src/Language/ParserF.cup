@@ -35,7 +35,7 @@ terminal String TK_id, TK_int, TK_double, TK_str, TK_char;
 non terminal String INIT, INSTSGLOBAL, INSTRUCTIONS, LISTARGS, LISTPARAMS, EXP, ARITHMETICS, RELATIONALS, LOGICS, CALLFUNC;
 non terminal String CALLMAINFUNC, INSTGLOBAL, PRINT, DECLID, DECLFUNC, LISTID1, LISTID2;
 non terminal String INSTRUCTION, IFSTRUCT, SWITCHSTRUCT, CASESDEFAULT, CASES, CASE, LOOPFOR, ARGSFOR, INITIALIZE, LOOPWHILE, LOOPDOWHILE;
-non terminal String ID_ASIGN, TYPE, INSTIF, INST_FUNC, INST_METH, INST_FOR, INST_WHILE, INST_REPEAT, DEFAULT;
+non terminal String IDASIGN, TYPE, INSTIF, INSTFUNC, INSTMETH, INSTFOR, INSTWHILE, INSTREPEAT, DEFAULT;
 non terminal String ELSEIFSTRUCT, ELSESTRUCT, IDS;
 non terminal String BEGINCOLOR, IFCOLOR, ELSEIFCOLOR, SWITCHCOLOR, CASECOLOR, ELSECOLOR, THENCOLOR;
 non terminal String FORCOLOR, TOCOLOR, FNCCOLOR, MTHCOLOR, IDCOLORUSEFNC, PRINTCOLOR, COLORLPAR, COLORRPAR;
@@ -78,7 +78,7 @@ INSTRUCTIONS ::=
 
 INSTRUCTION ::=
     DECLID           |
-    ID_ASIGN         |
+    IDASIGN          |
     IFSTRUCT         |
     SWITCHSTRUCT     |
     LOOPFOR          |
@@ -102,7 +102,7 @@ LISTID1 ::=
     LISTID1 TK_comma IDS :id {:painter.VARIABLE(idleft,idright);:} |
     IDS :id                 {:painter.VARIABLE(idleft,idright);:} ;
 
-ID_ASIGN ::=
+IDASIGN ::=
     LISTID2 TK_prompt EXP ;
 
 LISTID2 ::=
@@ -170,7 +170,7 @@ THENCOLOR ::=
     RW_then :th {:painter.RW2(thleft, thright);:} ;
 
 LOOPFOR ::=
-    FORCOLOR ARGSFOR RW_do :d {:painter.RW2(dleft, dright);:} INST_FOR ;
+    FORCOLOR ARGSFOR RW_do :d {:painter.RW2(dleft, dright);:} INSTFOR ;
 
 FORCOLOR ::=
     RW_for :f {:painter.RW2(fleft, fright);:} ;
@@ -186,28 +186,28 @@ INITIALIZE ::=
     IDS :id {:painter.VARIABLE(idleft, idright);:} TK_prompt EXP ;
 
 LOOPWHILE ::=
-    RW_while :wh {:painter.RW2(whleft, whright);:} EXP RW_do :d {:painter.RW2(dleft,dright);:} INST_WHILE ;
+    RW_while :wh {:painter.RW2(whleft, whright);:} EXP RW_do :d {:painter.RW2(dleft,dright);:} INSTWHILE ;
 
 LOOPDOWHILE ::=
-    INST_REPEAT RW_until :u {:painter.RW2(uleft, uright);:} EXP ;
+    INSTREPEAT RW_until :u {:painter.RW2(uleft, uright);:} EXP ;
 
-INST_FOR ::=
+INSTFOR ::=
     INSTRUCTIONS RW_endfor :ef {:painter.RW2(efleft, efright);:} |
     RW_endfor :ef              {:painter.RW2(efleft, efright);:} ;
 
-INST_WHILE ::=
+INSTWHILE ::=
     INSTRUCTIONS RW_endwhile :ew {:painter.RW2(ewleft, ewright);:} |
     RW_endwhile :ew              {:painter.RW2(ewleft, ewright);:} ;
 
-INST_REPEAT ::=
+INSTREPEAT ::=
     RW_repeat :r {:painter.RW2(rleft, rright);:} INSTRUCTIONS |
     RW_repeat :r {:painter.RW2(rleft, rright);:}              ;
 
 DECLFUNC ::=
-    FNCCOLOR TYPE RW_params :p {:painter.RW4(pleft, pright);:} COLORLPAR LISTPARAMS COLORRPAR INST_FUNC |
-    FNCCOLOR TYPE INST_FUNC                                                                             |
-    MTHCOLOR RW_params :p {:painter.RW4(pleft, pright);:} COLORLPAR LISTPARAMS COLORRPAR INST_METH      |
-    MTHCOLOR INST_METH                                                                                  ;
+    FNCCOLOR TYPE RW_params :p {:painter.RW4(pleft, pright);:} COLORLPAR LISTPARAMS COLORRPAR INSTFUNC |
+    FNCCOLOR TYPE INSTFUNC                                                                             |
+    MTHCOLOR RW_params :p {:painter.RW4(pleft, pright);:} COLORLPAR LISTPARAMS COLORRPAR INSTMETH      |
+    MTHCOLOR INSTMETH                                                                                  ;
 
 FNCCOLOR ::=
     RW_func :s {:painter.RW1(sleft, sright);:} IDS :id {:painter.FNC(idleft, idright);:} ;
@@ -215,11 +215,11 @@ FNCCOLOR ::=
 MTHCOLOR ::=
     RW_meth :s {:painter.RW1(sleft, sright);:} IDS :id {:painter.FNC(idleft, idright);:} ;
 
-INST_FUNC ::=
+INSTFUNC ::=
     INSTRUCTIONS RW_endfunc :ef {:painter.RW1(efleft, efright);:} |
     RW_endfunc :ef              {:painter.RW1(efleft, efright);:} ;
 
-INST_METH ::=
+INSTMETH ::=
     INSTRUCTIONS RW_endmeth :ef {:painter.RW1(efleft, efright);:} |
     RW_endmeth :ef              {:painter.RW1(efleft, efright);:} ;
 
