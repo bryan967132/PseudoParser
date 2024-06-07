@@ -58,6 +58,7 @@ public class Controller {
         }
         catch(Exception e) {}
     }
+    @SuppressWarnings("unchecked")
     public void analyze(IDE ide,  int index,  JTextPane editor,  JTextPane console) {
         IconFile currentFile = pjs.get(index);
         Outs.resetOuts();
@@ -70,10 +71,10 @@ public class Controller {
                 )
             );
             Parser parser = new Parser(scanner);
-            parser.parse();
+            ArrayList<Instruction> execute = (ArrayList<Instruction>) parser.parse().value;
             Env global = new Env(null,  "Global");
             MainMethod mainMethod = null;
-            for (Instruction instruction : parser.execute) {
+            for (Instruction instruction : execute) {
                 try {
                     if (instruction.typeInst == TypeInst.MAIN) {
                         mainMethod = (MainMethod) instruction;
@@ -94,6 +95,7 @@ public class Controller {
             console.setText(outPrint);
         }
     }
+    @SuppressWarnings("unchecked")
     public void generateGoCode(IDE ide,  int index,  JTextPane editor,  JTextPane console) {
         IconFile currentFile = pjs.get(index);
         Outs.resetOuts();
@@ -106,17 +108,17 @@ public class Controller {
                 )
             );
             Parser parser = new Parser(scanner);
-            parser.parse();
+            ArrayList<Instruction> execute = (ArrayList<Instruction>) parser.parse().value;
             Env global = new Env(null,  "Global");
             GoGen goGen = new GoGen();
-            for (Instruction instruction : parser.execute) {
+            for (Instruction instruction : execute) {
                 try {
                     if (instruction.typeInst != TypeInst.MAIN) {
                         instruction.exec(global);
                     }
                 } catch (Exception e) {}
             }
-            for(Instruction instruction : parser.execute) {
+            for(Instruction instruction : execute) {
                 instruction.goGenerate(global, goGen);
             }
             goGen.generateFinalCode();
@@ -131,6 +133,7 @@ public class Controller {
             console.setText(outPrint);
         }
     }
+    @SuppressWarnings("unchecked")
     public void generatePyCode(IDE ide,  int index,  JTextPane editor,  JTextPane console) {
         IconFile currentFile = pjs.get(index);
         Outs.resetOuts();
@@ -143,17 +146,17 @@ public class Controller {
                 )
             );
             Parser parser = new Parser(scanner);
-            parser.parse();
+            ArrayList<Instruction> execute = (ArrayList<Instruction>) parser.parse().value;
             Env global = new Env(null,  "Global");
             PyGen pyGen = new PyGen();
-            for (Instruction instruction : parser.execute) {
+            for (Instruction instruction : execute) {
                 try {
                     if (instruction.typeInst != TypeInst.MAIN) {
                         instruction.exec(global);
                     }
                 } catch (Exception e) {}
             }
-            for(Instruction instruction : parser.execute) {
+            for(Instruction instruction : execute) {
                 instruction.pyGenerate(global, pyGen);
             }
             pyGen.generateFinalCode();

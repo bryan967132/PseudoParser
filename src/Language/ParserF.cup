@@ -11,6 +11,7 @@ parser code
     int index;
     int nIB = 0;
     WordPainter painter;
+    @SuppressWarnings("deprecation")
     public ParserF(ScannerF s, WordPainter painter) {
         super(s);
         this.s = s;

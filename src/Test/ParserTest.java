@@ -13,6 +13,7 @@ import Classes.Utils.TypeInst;
 import Language.Parser;
 import Language.Scanner;
 public class ParserTest {
+    @SuppressWarnings("unchecked")
     public static void main(String[] args) throws Exception {
         try {
             String input = readInput("./Inputs/Ackermann.psp");
@@ -22,11 +23,11 @@ public class ParserTest {
                 )
             );
             Parser parser = new Parser(scanner);
-            parser.parse();
+            ArrayList<Instruction> execute = (ArrayList<Instruction>) parser.parse().value;
             Classes.Utils.Outs.printConsole = new ArrayList<>();
             Env global = new Env(null, "Global");
             MainMethod mainMethod = null;
-            for (Instruction instruction : parser.execute) {
+            for (Instruction instruction : execute) {
                 try {
                     if (instruction.typeInst == TypeInst.MAIN) {
                         mainMethod = (MainMethod) instruction;

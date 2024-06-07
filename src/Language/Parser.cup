@@ -18,7 +18,7 @@ import Classes.Utils.Outs;
 parser code 
 {:
     public String fileName;
-    public ArrayList<Instruction> execute;
+    @SuppressWarnings("deprecation")
     public Parser(Scanner s) {
         super(s);
     }
@@ -40,8 +40,7 @@ terminal String TK_prompt, TK_plus, TK_minus, TK_uminus, TK_mult, TK_div, TK_lpa
 terminal String TK_id, TK_int, TK_double, TK_str, TK_char;
 
 /* 4. No Terminales*/
-non terminal String INIT;
-non terminal ArrayList<Instruction> INSTSGLOBAL;
+non terminal ArrayList<Instruction> INIT, INSTSGLOBAL;
 non terminal ArrayList<Sentence> INSTRUCTIONS;
 non terminal ArrayList<Expression> LISTARGS;
 non terminal ArrayList<Parameter> LISTPARAMS;
@@ -77,8 +76,8 @@ precedence right TK_uminus;
 start with INIT;
 
 INIT ::=
-    RW_begin IDS :fn INSTSGLOBAL :ins RW_end {:fileName = fn; execute = ins;              :} |
-    RW_begin IDS :fn RW_end                  {:fileName = fn; execute = new ArrayList<>();:} ;
+    RW_begin IDS :fn INSTSGLOBAL :ins RW_end {:fileName = fn; RESULT = ins;              :} |
+    RW_begin IDS :fn RW_end                  {:fileName = fn; RESULT = new ArrayList<>();:} ;
 
 INSTSGLOBAL ::=
     INSTSGLOBAL :insts INSTGLOBAL :inst {:insts.add(inst); RESULT = insts;              :} |

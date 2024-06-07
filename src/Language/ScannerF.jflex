@@ -3,6 +3,8 @@ package Language;
 import java_cup.runtime.Symbol;
 import Painter.WordPainter;
 
+@SuppressWarnings("unused")
+
 %%
 
 /* 2. Configuraciones para el analisis (Operaciones y Declaraciones) */

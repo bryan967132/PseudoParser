@@ -4,6 +4,8 @@ import java_cup.runtime.Symbol;
 import Classes.Utils.TypeError;
 import Classes.Utils.Outs;
 
+@SuppressWarnings("unused")
+
 %%
 
 /* 2. Configuraciones para el analisis (Operaciones y Declaraciones) */
@@ -16,7 +18,6 @@ import Classes.Utils.Outs;
 %cupsym TOK
 %cup
 %char
-%column
 %full
 %line
 %unicode
