@@ -70,6 +70,7 @@ public class EditorArea extends JPanel {
         scroll = new JScrollPane(editor);
         scroll.setBorder(null);
     }
+    @SuppressWarnings("deprecation")
     public void paint(Graphics g) {
         super.paint(g);
         int start = editor.viewToModel(scroll.getViewport().getViewPosition());
