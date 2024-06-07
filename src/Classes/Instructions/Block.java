@@ -17,19 +17,20 @@ public class Block extends Instruction {
         this.instructions = instructions;
     }
     public ReturnType exec(Env env) {
+        Env newEnv = new Env(env, env.name);
         Expression exp;
         Instruction inst;
         ReturnType ret;
         for(Sentence instruction : instructions) {
             if(instruction.typeSent == TypeSent.EXPRESSION) {
                 exp = (Expression) instruction;
-                ret = exp.exec(env);
+                ret = exp.exec(newEnv);
                 if(ret != null && exp.typeExp != TypeExp.INC && exp.typeExp != TypeExp.DEC) {
                     return ret;
                 }
             } else if(instruction.typeSent == TypeSent.INSTRUCTION) {
                 inst = (Instruction) instruction;
-                ret = inst.exec(env);
+                ret = inst.exec(newEnv);
                 if(ret != null) {
                     return ret;
                 }
