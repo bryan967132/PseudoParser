@@ -20,15 +20,13 @@ import Templates.Button;
 import Templates.FunctionButton;
 import Templates.Icons;
 public class ToolBar extends JPanel implements MouseListener {
-    Button newOLC,openOLC,saveAsOLC;
+    Button newOLC, openOLC, saveAsOLC;
     Controller controller;
-    File olcFile,auxiliar;
-    FunctionButton close,minimize;
+    FunctionButton close, minimize;
     IDE ide;
-    JFileChooser file;
     JPanel div;
     Window w;
-    public ToolBar(Controller controller,IDE ide,Window w) {
+    public ToolBar(Controller controller, IDE ide, Window w) {
         this.w = w;
         this.ide = ide;
         this.controller = this.ide.controller;
@@ -42,8 +40,8 @@ public class ToolBar extends JPanel implements MouseListener {
     }
     private void addOpenOLC() {
         openOLC = new Button("Abrir");
-        openOLC.locationSize(20,5,50,25);
-        openOLC.text(Colors.WHITE,14);
+        openOLC.locationSize(20, 5, 50, 25);
+        openOLC.text(Colors.WHITE, 14);
         openOLC.setDesign(Colors.MEDIUMCOLOR1);
         openOLC.setHoverColor(Colors.MEDIUMCOLOR2);
         openOLC.addMouseListener(this);
@@ -51,8 +49,8 @@ public class ToolBar extends JPanel implements MouseListener {
     }
     private void addNewOLC() {
         newOLC = new Button("Nuevo");
-        newOLC.locationSize(72,5,60,25);
-        newOLC.text(Colors.WHITE,14);
+        newOLC.locationSize(72, 5, 60, 25);
+        newOLC.text(Colors.WHITE, 14);
         newOLC.setDesign(Colors.MEDIUMCOLOR1);
         newOLC.setHoverColor(Colors.MEDIUMCOLOR2);
         newOLC.addMouseListener(this);
@@ -60,8 +58,8 @@ public class ToolBar extends JPanel implements MouseListener {
     }
     private void addSaveAsOLC() {
         saveAsOLC = new Button("Guardar Como");
-        saveAsOLC.locationSize(134,5,110,25);
-        saveAsOLC.text(Colors.WHITE,14);
+        saveAsOLC.locationSize(134, 5, 110, 25);
+        saveAsOLC.text(Colors.WHITE, 14);
         saveAsOLC.setDesign(Colors.MEDIUMCOLOR1);
         saveAsOLC.setHoverColor(Colors.MEDIUMCOLOR2);
         saveAsOLC.addMouseListener(this);
@@ -75,47 +73,50 @@ public class ToolBar extends JPanel implements MouseListener {
     private void addDivisor() {
         div = new JPanel();
         div.setBackground(Colors.MEDIUMCOLOR2);
-        div.setBounds(0,35,1390,5);
+        div.setBounds(0, 35, 1390, 5);
         div.setVisible(true);
         this.add(div);
     }
     private void addCloseButton() {
         close = new FunctionButton();
-        close.locationSize(1331,0,45,35);
-        close.text("×",25);
+        close.locationSize(1331, 0, 45, 35);
+        close.text("×", 25);
         close.setHoverColor(Colors.RED);
         close.addMouseListener(this);
         this.add(close);
     }
     private void addMinimizeButton() {
         minimize = new FunctionButton();
-        minimize.locationSize(1286,0,45,35);
-        minimize.text("─",20);
+        minimize.locationSize(1286, 0, 45, 35);
+        minimize.text("─", 20);
         minimize.setHoverColor(Colors.LIGHTCOLOR);
         minimize.addMouseListener(this);
         this.add(minimize);
     }
-    private void chooseFile() {
+    private void chooseFiles() {
         try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-		}
-        this.file = new JFileChooser();
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos PsP (*.psp)", "psp");
-        file.setFileFilter(filtro);
-        int seleccion = file.showOpenDialog(null);
-        if (seleccion == JFileChooser.APPROVE_OPTION) {
-            olcFile = file.getSelectedFile();
-            int index = controller.existPJFile(olcFile.getAbsolutePath());
-            if(index == -1) {
-                controller.pjs.add(new IconFile(controller.countPJ(),olcFile,ide,controller));
-                controller.serialize();
-                controller.deserialize(ide);
-                ide.lookPJFiles();
-                controller.pjs.get(controller.countPJ() - 1).lookCode();
-            }
-            else {
-                controller.pjs.get(index).lookCode();
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+        JFileChooser file = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos PseudoP (*.psp)", "psp");
+        file.setFileFilter(filter);
+        file.setMultiSelectionEnabled(true);
+        int selection = file.showOpenDialog(null);
+        if (selection == JFileChooser.APPROVE_OPTION) {
+            File[] selectedFiles = file.getSelectedFiles();
+            for (File olcFile : selectedFiles) {
+                int index = controller.existPJFile(olcFile.getAbsolutePath());
+                if (index == -1) {
+                    controller.pjs.add(new IconFile(controller.countPJ(), olcFile, ide, controller));
+                    controller.serialize();
+                    controller.deserialize(ide);
+                    ide.lookPJFiles();
+                    controller.pjs.get(controller.countPJ() - 1).lookCode();
+                } else {
+                    controller.pjs.get(index).lookCode();
+                }
             }
         }
     }
@@ -124,28 +125,26 @@ public class ToolBar extends JPanel implements MouseListener {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
 		}
-        this.file = new JFileChooser();
-        this.file.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int seleccion = file.showDialog(null,"Seleccionar Directorio");
+        JFileChooser file = new JFileChooser();
+        file.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int seleccion = file.showDialog(null, "Seleccionar Directorio");
         if (seleccion == JFileChooser.APPROVE_OPTION) {
-            olcFile = file.getSelectedFile();
+            File olcFile = file.getSelectedFile();
             String name;
-            String message = "Nombre del Archivo PsP [.psp]:";
-            String path;
+            String message = "Nombre del Archivo PseudoP [.psp]:";
             ImageIcon icon = new ImageIcon(Icons.FILE1);
             Image img = icon.getImage();
-            img = img.getScaledInstance(40,40,Image.SCALE_DEFAULT);
+            img = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
             icon = new ImageIcon(img);
             do {
                 
-                name = (String) JOptionPane.showInputDialog(null,message,"Nuevo Proyecto",JOptionPane.PLAIN_MESSAGE,icon,null,null);
+                name = (String) JOptionPane.showInputDialog(null, message, "Nuevo Proyecto", JOptionPane.PLAIN_MESSAGE, icon, null, null);
                 if(name == null) break;
-                else if(name.replace(" ","").equals("")) {
-                    message = "Debe Ingresar un Nombre.\nNombre del Archivo PsP [.psp]:";
+                else if(name.replace(" ", "").equals("")) {
+                    message = "Debe Ingresar un Nombre.\nNombre del Archivo PseudoP [.psp]:";
                     continue;
                 }
-                path = olcFile.getAbsolutePath() + "\\" + name + ".psp";
-                auxiliar = new File(path);
+                File auxiliar = new File(olcFile.getAbsolutePath() + "\\" + name + ".psp");
                 if(!auxiliar.exists()) {
                     try {
                         BufferedWriter writer = new BufferedWriter(
@@ -156,7 +155,7 @@ public class ToolBar extends JPanel implements MouseListener {
                         );
                         writer.write(content);
                         writer.close();
-                        controller.pjs.add(new IconFile(controller.countPJ(),auxiliar,ide,controller));
+                        controller.pjs.add(new IconFile(controller.countPJ(), auxiliar, ide, controller));
                         controller.serialize();
                         controller.deserialize(ide);
                         ide.lookPJFiles();
@@ -165,7 +164,7 @@ public class ToolBar extends JPanel implements MouseListener {
                     catch(Exception e1) {}
                     break;
                 }
-                message = "El nuevo archivo no puede llamarse\ncon el mismo nombre de uno existente\nen el mismo directorio.\nNombre del Archivo PsP [.psp]:";
+                message = "El nuevo archivo no puede llamarse\ncon el mismo nombre de uno existente\nen el mismo directorio.\nNombre del Archivo PseudoP [.psp]:";
             } while(true);
         }
     }
@@ -194,7 +193,7 @@ public class ToolBar extends JPanel implements MouseListener {
     }
     public void mouseClicked(MouseEvent e) {
         if(e.getSource() == openOLC) {
-            chooseFile();
+            chooseFiles();
         }
         else if(e.getSource() == newOLC) {
             createFile("");
@@ -202,7 +201,7 @@ public class ToolBar extends JPanel implements MouseListener {
         else if(e.getSource() == saveAsOLC) {
             try {
                 StyledDocument doc = ide.editorArea.editor.getStyledDocument();
-                String input = doc.getText(0,doc.getLength());
+                String input = doc.getText(0, doc.getLength());
                 createFile(input);
             }
             catch(Exception e1) {}
