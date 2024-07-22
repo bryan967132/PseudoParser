@@ -46,12 +46,7 @@ public class Controller {
             StyledDocument doc = editor.getStyledDocument();
             String input = doc.getText(0, doc.getLength());
             WordPainter painter = new WordPainter();
-            ScannerF scanner = new ScannerF(
-                new BufferedReader(
-                    new StringReader(input)
-                ), 
-                painter
-            );
+            ScannerF scanner = new ScannerF(input, painter);
             painter.setStyle(editor);
             ParserF parser = new ParserF(scanner, painter);
             parser.parse();
@@ -65,11 +60,7 @@ public class Controller {
         try {
             StyledDocument doc = editor.getStyledDocument();
             String input = doc.getText(0, doc.getLength());
-            Scanner scanner = new Scanner(
-                new BufferedReader(
-                    new StringReader(input)
-                )
-            );
+            Scanner scanner = new Scanner(input);
             Parser parser = new Parser(scanner);
             ArrayList<Instruction> execute = (ArrayList<Instruction>) parser.parse().value;
             Env global = new Env(null,  "Global");
