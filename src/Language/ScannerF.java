@@ -564,9 +564,11 @@ public class ScannerF implements java_cup.runtime.Scanner {
 
   /* user code: */
     WordPainter painter;
-    public ScannerF(java.io.Reader in,WordPainter painter) {
+    public ScannerF(String input, WordPainter painter) {
         yychar = 0;
-        this.zzReader = in;
+        this.zzReader = new java.io.BufferedReader(
+            new java.io.StringReader(input)
+        );
         this.painter = painter;
     }
 

@@ -564,6 +564,13 @@ public class Scanner implements java_cup.runtime.Scanner {
   private int zzFinalHighSurrogate = 0;
 
   /* user code: */
+    public Scanner(String input) {
+        yyline = 1;
+        yychar = 1;
+        this.zzReader = new java.io.BufferedReader(
+            new java.io.StringReader(input)
+        );
+    }
 
 
   /**

@@ -10,6 +10,13 @@ import Classes.Utils.Outs;
 
 /* 2. Configuraciones para el analisis (Operaciones y Declaraciones) */
 %{
+    public Scanner(String input) {
+        yyline = 1;
+        yychar = 1;
+        this.zzReader = new java.io.BufferedReader(
+            new java.io.StringReader(input)
+        );
+    }
 %}
 
 //Directivas

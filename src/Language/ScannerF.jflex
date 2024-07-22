@@ -10,9 +10,11 @@ import Painter.WordPainter;
 /* 2. Configuraciones para el analisis (Operaciones y Declaraciones) */
 %{
     WordPainter painter;
-    public ScannerF(java.io.Reader in,WordPainter painter) {
+    public ScannerF(String input, WordPainter painter) {
         yychar = 0;
-        this.zzReader = in;
+        this.zzReader = new java.io.BufferedReader(
+            new java.io.StringReader(input)
+        );
         this.painter = painter;
     }
 %}
