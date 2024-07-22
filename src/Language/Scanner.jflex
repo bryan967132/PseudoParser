@@ -113,9 +113,9 @@ COMMENTM = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 {ID}                    {return new Symbol(TOK.TK_id,         yyline, yychar, yytext());}
 {INTEGER}               {return new Symbol(TOK.TK_int,        yyline, yychar, yytext());}
 {DOUBLE}                {return new Symbol(TOK.TK_double,     yyline, yychar, yytext());}
-{STRING}                {return new Symbol(TOK.TK_str,        yyline, yychar, yytext().substring(1, yytext().toString().length() - 1));}
-"'${"[0-9]+"}'"         {return new Symbol(TOK.TK_char,       yyline, yychar, yytext().substring(1, yytext().toString().length() - 1));}
-{CHAR}                  {return new Symbol(TOK.TK_char,       yyline, yychar, yytext().substring(1, yytext().toString().length() - 1));}
+{STRING}                {return new Symbol(TOK.TK_str,        yyline, yychar, yytext().substring(1, yylength() - 1));}
+"'${"[0-9]+"}'"         {return new Symbol(TOK.TK_char,       yyline, yychar, String.valueOf((char) Integer.parseInt(yytext().substring(3, yylength() - 2))));}
+{CHAR}                  {return new Symbol(TOK.TK_char,       yyline, yychar, yytext().substring(1, yylength() - 1));}
 \n                      {yychar = 1;}
 {UNUSED}                {}
 {COMMENTS}              {}
