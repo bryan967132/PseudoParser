@@ -28,10 +28,10 @@ public class For extends Instruction {
         Env envFor = new Env(env, env.name + " For");
         envFor.saveID(id, v1.exec(envFor).value, Type.INT, line, column);
         String sign = getRelational(envFor, v2);
-        if(sign.equals("mayor igual que") && Double.parseDouble(v3.exec(envFor).value.toString()) >= 0) {
+        if(sign.equals(">=") && Double.parseDouble(v3.exec(envFor).value.toString()) >= 0) {
             return null;
         }
-        else if(sign.equals("menor igual que") && Double.parseDouble(v3.exec(envFor).value.toString()) <= 0) {
+        else if(sign.equals("<=") && Double.parseDouble(v3.exec(envFor).value.toString()) <= 0) {
             return null;
         }
         Boolean condition = getConditionValue(envFor, sign, v2);
@@ -54,20 +54,20 @@ public class For extends Instruction {
         return null;
     }
     public boolean getConditionValue(Env env, String sign, Expression value) {
-        if(sign.equals("mayor igual que")) {
-            return Boolean.parseBoolean(new Relational(line, column, new AccessID(line, column, id), "mayor igual que", this.v2).exec(env).value.toString());
+        if(sign.equals(">=")) {
+            return Boolean.parseBoolean(new Relational(line, column, new AccessID(line, column, id), ">=", this.v2).exec(env).value.toString());
         }
-        else if(sign.equals("menor igual que")) {
-            return Boolean.parseBoolean(new Relational(line, column, new AccessID(line, column, id), "menor igual que", this.v2).exec(env).value.toString());
+        else if(sign.equals("<=")) {
+            return Boolean.parseBoolean(new Relational(line, column, new AccessID(line, column, id), "<=", this.v2).exec(env).value.toString());
         }
         return false;
     }
     public String getRelational(Env env, Expression value) {
         if(Double.parseDouble(env.getValueID(id, this.line, this.column).value.toString()) >= Double.parseDouble(value.exec(env).value.toString())) {
-            return "mayor igual que";
+            return ">=";
         }
         else if(Double.parseDouble(env.getValueID(id, this.line, this.column).value.toString()) <= Double.parseDouble(value.exec(env).value.toString())) {
-            return "menor igual que";
+            return "<=";
         }
         return "";
     }
@@ -75,7 +75,6 @@ public class For extends Instruction {
         Env envFor = new Env(env, env.name + " For");
         envFor.saveID(id, v1.exec(envFor).value, Type.INT, line, column);
         String sign = getRelational(envFor, v2);
-        sign = sign.equals("mayor igual que") ? ">=" : "<=";
         String v1 = this.v1.goGenerate(envFor, goGen).value.toString();
         String v2 = this.v2.goGenerate(envFor, goGen).value.toString();
         String v3 = this.v3.goGenerate(envFor, goGen).value.toString();
@@ -86,8 +85,6 @@ public class For extends Instruction {
     public void pyGenerate(Env env, PyGen pyGen) {
         Env envFor = new Env(env, env.name + " For");
         envFor.saveID(id, v1.exec(envFor).value, Type.INT, line, column);
-        String sign = getRelational(envFor, v2);
-        sign = sign.equals("mayor igual que") ? ">=" : "<=";
         String v1 = this.v1.pyGenerate(envFor, pyGen).value.toString();
         String v2 = this.v2.pyGenerate(envFor, pyGen).value.toString();
         String v3 = this.v3.pyGenerate(envFor, pyGen).value.toString();
