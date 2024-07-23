@@ -17,14 +17,14 @@ inicio ParImpar
 	fin metodo
 
 	funcion par Booleano con parametros(n Entero)
-		si n igual a 0 entonces
+		si n = 0 entonces
 			retornar Verdadero
 		fin si
 		retornar ejecutar impar(n - 1)
 	fin funcion
 
 	funcion impar Booleano con parametros(n Entero)
-		si n igual a 0 entonces
+		si n = 0 entonces
 			retornar Falso
 		fin si
 		retornar ejecutar par(n - 1)

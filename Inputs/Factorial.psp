@@ -17,7 +17,7 @@ inicio Factorial
 	fin metodo
 
 	funcion factorial Entero con parametros(n Entero)
-		si n igual a 0 entonces
+		si n = 0 entonces
 			retornar 1
 		fin si
 		retornar n * ejecutar factorial(n - 1)

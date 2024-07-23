@@ -4,7 +4,7 @@ inicio Hanoi
 	ingresar c como Entero con valor 1
 
 	metodo hanoi con parametros(n Entero, origen Cadena, medio Cadena, destino Cadena)
-		si n igual a 1 entonces
+		si n = 1 entonces
 			imprimir ejecutar t(c) + ") Mover disco 1: desde " + origen + " hasta " + destino
 			c <- c + 1
 			regresar
@@ -16,9 +16,11 @@ inicio Hanoi
 	fin metodo
 
 	funcion t Cadena con parametros(c Entero)
-		si c mayor que 9 entonces
-			retornar "" + c
+		si c < 10 entonces
+			retornar "  " + c
+		o si c < 100 entonces
+			retornar " " + c
 		fin si
-		retornar " " + c
+		retornar "" + c
 	fin funcion
 fin
