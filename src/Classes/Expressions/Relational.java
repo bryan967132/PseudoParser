@@ -18,17 +18,17 @@ public class Relational extends Expression {
     }
     public ReturnType exec(Env env) {
         switch(this.sign) {
-            case "igual a":
+            case "=":
                 return equal(env);
-            case "diferente de":
+            case "!=":
                 return notEqual(env);
-            case "mayor igual que":
+            case ">=":
                 return moreEqual(env);
-            case "menor igual que":
+            case "<=":
                 return lessEqual(env);
-            case "mayor que":
+            case ">":
                 return more(env);
-            case "menor que":
+            case "<":
                 return less(env);
             default:
                 return new ReturnType("nulo", Type.NULL);
@@ -167,20 +167,10 @@ public class Relational extends Expression {
     }
     private String getSign() {
         switch (sign) {
-            case "igual a":
+            case "=":
                 return "==";
-            case "diferente de":
-                return "!=";
-            case "mayor igual que":
-                return ">=";
-            case "menor igual que":
-                return "<=";
-            case "mayor que":
-                return ">";
-            case "menor que":
-                return "<";
             default:
-                return "";
+                return sign;
         }
     }
 }
