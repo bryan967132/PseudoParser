@@ -61,15 +61,9 @@ COMMENTM = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 "fin si"                {return new Symbol(TOK.RW_endif,      yyline, yychar, yytext());}
 "o si"                  {return new Symbol(TOK.RW_elseif,     yyline, yychar, yytext());}
 "imprimir nl"           {return new Symbol(TOK.RW_println,    yyline, yychar, yytext());}
-"mayor igual que"       {return new Symbol(TOK.RW_moreequ,    yyline, yychar, yytext());}
-"menor igual que"       {return new Symbol(TOK.RW_lessequ,    yyline, yychar, yytext());}
 "cuando"                {return new Symbol(TOK.RW_until,      yyline, yychar, yytext());}
 "hasta"                 {return new Symbol(TOK.RW_to,         yyline, yychar, yytext());}
 "imprimir"              {return new Symbol(TOK.RW_print,      yyline, yychar, yytext());}
-"mayor que"             {return new Symbol(TOK.RW_more,       yyline, yychar, yytext());}
-"menor que"             {return new Symbol(TOK.RW_less,       yyline, yychar, yytext());}
-"igual a"               {return new Symbol(TOK.RW_equequ,     yyline, yychar, yytext());}
-"diferente de"          {return new Symbol(TOK.RW_notequ,     yyline, yychar, yytext());}
 "en caso de ser"        {return new Symbol(TOK.RW_case,       yyline, yychar, yytext());}
 "o"                     {return new Symbol(TOK.RW_or,         yyline, yychar, yytext());}
 "y"                     {return new Symbol(TOK.RW_and,        yyline, yychar, yytext());}
@@ -107,6 +101,12 @@ COMMENTM = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 "-"                     {return new Symbol(TOK.TK_minus,      yyline, yychar, yytext());}
 "*"                     {return new Symbol(TOK.TK_mult,       yyline, yychar, yytext());}
 "/"                     {return new Symbol(TOK.TK_div,        yyline, yychar, yytext());}
+">="                    {return new Symbol(TOK.RW_moreequ,    yyline, yychar, yytext());}
+"<="                    {return new Symbol(TOK.RW_lessequ,    yyline, yychar, yytext());}
+">"                     {return new Symbol(TOK.RW_more,       yyline, yychar, yytext());}
+"<"                     {return new Symbol(TOK.RW_less,       yyline, yychar, yytext());}
+"!="                    {return new Symbol(TOK.RW_notequ,     yyline, yychar, yytext());}
+"="                     {return new Symbol(TOK.RW_equequ,     yyline, yychar, yytext());}
 "("                     {return new Symbol(TOK.TK_lpar,       yyline, yychar, yytext());}
 ")"                     {return new Symbol(TOK.TK_rpar,       yyline, yychar, yytext());}
 ","                     {return new Symbol(TOK.TK_comma,      yyline, yychar, yytext());}

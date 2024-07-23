@@ -59,15 +59,9 @@ COMMENTM = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 "fin si"                {return new Symbol(TOK.RW_endif,     yychar, yylength(), yytext());}
 "o si"                  {return new Symbol(TOK.RW_elseif,    yychar, yylength(), yytext());}
 "imprimir nl"           {return new Symbol(TOK.RW_println,   yychar, yylength(), yytext());}
-"mayor igual que"       {return new Symbol(TOK.RW_moreequ,   yychar, yylength(), yytext());}
-"menor igual que"       {return new Symbol(TOK.RW_lessequ,   yychar, yylength(), yytext());}
 "cuando"                {return new Symbol(TOK.RW_until,     yychar, yylength(), yytext());}
 "hasta"                 {return new Symbol(TOK.RW_to,        yychar, yylength(), yytext());}
 "imprimir"              {return new Symbol(TOK.RW_print,     yychar, yylength(), yytext());}
-"mayor que"             {return new Symbol(TOK.RW_more,      yychar, yylength(), yytext());}
-"menor que"             {return new Symbol(TOK.RW_less,      yychar, yylength(), yytext());}
-"igual a"               {return new Symbol(TOK.RW_equequ,    yychar, yylength(), yytext());}
-"diferente de"          {return new Symbol(TOK.RW_notequ,    yychar, yylength(), yytext());}
 "en caso de ser"        {return new Symbol(TOK.RW_case,      yychar, yylength(), yytext());}
 "o"                     {return new Symbol(TOK.RW_or,        yychar, yylength(), yytext());}
 "y"                     {return new Symbol(TOK.RW_and,       yychar, yylength(), yytext());}
@@ -105,6 +99,12 @@ COMMENTM = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 "-"                     {return new Symbol(TOK.TK_minus,     yychar, yylength(), yytext());}
 "*"                     {return new Symbol(TOK.TK_mult,      yychar, yylength(), yytext());}
 "/"                     {return new Symbol(TOK.TK_div,       yychar, yylength(), yytext());}
+">="                    {return new Symbol(TOK.RW_moreequ,   yychar, yylength(), yytext());}
+"<="                    {return new Symbol(TOK.RW_lessequ,   yychar, yylength(), yytext());}
+">"                     {return new Symbol(TOK.RW_more,      yychar, yylength(), yytext());}
+"<"                     {return new Symbol(TOK.RW_less,      yychar, yylength(), yytext());}
+"="                     {return new Symbol(TOK.RW_equequ,    yychar, yylength(), yytext());}
+"!="                    {return new Symbol(TOK.RW_notequ,    yychar, yylength(), yytext());}
 "("                     {return new Symbol(TOK.TK_lpar,      yychar, yylength(), yytext());}
 ")"                     {return new Symbol(TOK.TK_rpar,      yychar, yylength(), yytext());}
 ","                     {return new Symbol(TOK.TK_comma,     yychar, yylength(), yytext());}
