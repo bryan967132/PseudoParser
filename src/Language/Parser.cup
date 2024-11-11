@@ -41,19 +41,19 @@ terminal String TK_id, TK_int, TK_double, TK_str, TK_char;
 
 /* 4. No Terminales*/
 non terminal ArrayList<Instruction> INIT, INSTSGLOBAL;
-non terminal ArrayList<Sentence> INSTRUCTIONS;
+non terminal ArrayList<Statement> INSTRUCTIONS;
 non terminal ArrayList<Expression> LISTARGS;
 non terminal ArrayList<Parameter> LISTPARAMS;
 non terminal Expression EXP, ARITHMETICS, RELATIONALS, LOGICS, CALLFUNC;
 non terminal Instruction CALLMAINFUNC, INSTGLOBAL, PRINT;
 non terminal Instruction DECLID, DECLFUNC;
 non terminal ArrayList<String> LISTID;
-non terminal Sentence INSTRUCTION;
-non terminal Sentence IFSTRUCT, SWITCHSTRUCT;
+non terminal Statement INSTRUCTION;
+non terminal Statement IFSTRUCT, SWITCHSTRUCT;
 non terminal Object[] CASESDEFAULT;
-non terminal ArrayList<Sentence> CASES;
-non terminal Sentence CASE;
-non terminal Sentence LOOPFOR, LOOPWHILE, LOOPDOWHILE;
+non terminal ArrayList<Statement> CASES;
+non terminal Statement CASE;
+non terminal Statement LOOPFOR, LOOPWHILE, LOOPDOWHILE;
 non terminal Instruction IDASIGN;
 non terminal Type TYPE;
 non terminal Block INSTIF, INSTFUNC, INSTMETH, INSTFOR, INSTWHILE, INSTREPEAT, DEFAULT;
