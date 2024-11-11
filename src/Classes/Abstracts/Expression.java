@@ -5,7 +5,7 @@ import Classes.Generators.PyGen;
 import Classes.Utils.ReturnType;
 import Classes.Utils.TypeExp;
 import Classes.Utils.TypeSent;
-public abstract class Expression extends Sentence {
+public abstract class Expression extends Statement {
     public boolean isGrp = false;
     public TypeExp typeExp;
     public boolean isInstruction = false;

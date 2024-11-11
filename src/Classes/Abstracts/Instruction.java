@@ -5,7 +5,7 @@ import Classes.Generators.PyGen;
 import Classes.Utils.ReturnType;
 import Classes.Utils.TypeInst;
 import Classes.Utils.TypeSent;
-public abstract class Instruction extends Sentence {
+public abstract class Instruction extends Statement {
     public TypeInst typeInst;
     public Instruction(int line, int column, TypeInst typeInst) {
         super(line, column, TypeSent.INSTRUCTION);
