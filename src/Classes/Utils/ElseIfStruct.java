@@ -1,10 +1,10 @@
 package Classes.Utils;
 import java.util.ArrayList;
-import Classes.Abstracts.Sentence;
+import Classes.Abstracts.Statement;
 public class ElseIfStruct {
-    public ArrayList<Sentence> instructions;
-    public Sentence _if;
-    public ElseIfStruct(ArrayList<Sentence> instructions, Sentence _if) {
+    public ArrayList<Statement> instructions;
+    public Statement _if;
+    public ElseIfStruct(ArrayList<Statement> instructions, Statement _if) {
         this.instructions = instructions;
         this._if = _if;
     }
