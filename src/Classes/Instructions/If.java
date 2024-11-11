@@ -11,8 +11,8 @@ public class If extends Instruction {
     public boolean isElse = false;
     Expression condition;
     Block block;
-    Sentence except;
-    public If(int line, int column, Expression condition, Block block, Sentence except) {
+    Statement except;
+    public If(int line, int column, Expression condition, Block block, Statement except) {
         super(line, column, TypeInst.IF);
         this.condition = condition;        
         this.block = block;        

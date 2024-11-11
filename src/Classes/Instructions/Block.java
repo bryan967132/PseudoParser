@@ -2,7 +2,7 @@ package Classes.Instructions;
 import java.util.ArrayList;
 import Classes.Abstracts.Expression;
 import Classes.Abstracts.Instruction;
-import Classes.Abstracts.Sentence;
+import Classes.Abstracts.Statement;
 import Classes.Env.Env;
 import Classes.Generators.GoGen;
 import Classes.Generators.PyGen;
@@ -11,8 +11,8 @@ import Classes.Utils.TypeExp;
 import Classes.Utils.TypeInst;
 import Classes.Utils.TypeSent;
 public class Block extends Instruction {
-    ArrayList<Sentence> instructions;
-    public Block(int line, int column, ArrayList<Sentence> instructions) {
+    ArrayList<Statement> instructions;
+    public Block(int line, int column, ArrayList<Statement> instructions) {
         super(line, column, TypeInst.BLOCK_INST);
         this.instructions = instructions;
     }
@@ -21,7 +21,7 @@ public class Block extends Instruction {
         Expression exp;
         Instruction inst;
         ReturnType ret;
-        for(Sentence instruction : instructions) {
+        for(Statement instruction : instructions) {
             if(instruction.typeSent == TypeSent.EXPRESSION) {
                 exp = (Expression) instruction;
                 ret = exp.exec(newEnv);
@@ -40,7 +40,7 @@ public class Block extends Instruction {
     }
     public void goGenerate(Env env, GoGen goGen) {
         goGen.newEnv();
-        for(Sentence instruction : instructions) {
+        for(Statement instruction : instructions) {
             if(instruction.typeSent == TypeSent.EXPRESSION) {
                 if(((Expression) instruction).typeExp != TypeExp.CALL_FUNC) {
                     ((Expression) instruction).goGenerate(env, goGen);
@@ -56,7 +56,7 @@ public class Block extends Instruction {
     public void pyGenerate(Env env, PyGen pyGen) {
         pyGen.newEnv();
         if(instructions.size() > 0) {
-            for(Sentence instruction : instructions) {
+            for(Statement instruction : instructions) {
                 if(instruction.typeSent == TypeSent.EXPRESSION) {
                     if(((Expression) instruction).typeExp != TypeExp.CALL_FUNC) {
                         ((Expression) instruction).pyGenerate(env, pyGen);
