@@ -198,17 +198,17 @@
 ```
 
 ## Precedencia de Operadores
-| Nivel | Asociatividad  |                              Token                               |
-|   -   |       -        |                                -                                 |
-|   8   | Izquierda      | ```RW_or```                                                      |
-|   7   | Izquierda      | ```RW_and```                                                     |
-|   6   | Derecha        | ```RW_not```                                                     |
-|   5   | Izquierda      | ```RW_equequ```, ```RW_notequ```                                 |
-|   4   | Izquierda      | ```RW_less```, ```RW_lessequ```, ```RW_more```, ```RW_moreequ``` |
-|   3   | Izquierda      | ```TK_plus```, ```TK_minus```                                    |
-|   2   | Izquierda      | ```TK_mult```, ```TK_div```, ```RW_mod```                        |
-|   1   | No Asociativa  | ```RW_pow```                                                     |
-|   0   | Derecha        | ```TK_uminus```                                                  |
+| Nivel | Asociatividad  |                                   Token                                     |
+|   -   |       -        |                                     -                                       |
+|   8   | Izquierda      | ```o```                                                                     |
+|   7   | Izquierda      | ```y```                                                                     |
+|   6   | Derecha        | ```no```                                                                    |
+|   5   | Izquierda      | ```igual a``` ```diferente de```                                            |
+|   4   | Izquierda      | ```menor que``` ```menor igual que``` ```mayor que``` ```mayor igual que``` |
+|   3   | Izquierda      | ```+``` ```-```                                                             |
+|   2   | Izquierda      | ```*``` ```/``` ```modulo```                                                |
+|   1   | No Asociativa  | ```potencia```                                                              |
+|   0   | Derecha        | ```-```                                                                     |
 
 ## Instalación JFlex y CUP
 * Descargar la JFlex: [JFlex](https://jflex.de/download.html)
