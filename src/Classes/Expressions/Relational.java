@@ -23,11 +23,11 @@ public class Relational extends Expression {
             case "!=":
                 return notEqual(env);
             case ">=":
-                return moreEqual(env);
+                return greaterEqual(env);
             case "<=":
                 return lessEqual(env);
             case ">":
-                return more(env);
+                return greater(env);
             case "<":
                 return less(env);
             default:
@@ -70,7 +70,7 @@ public class Relational extends Expression {
         env.setError("Los tipos no son válidos para operaciones relacionales", exp1.line, exp1.column);
         return new ReturnType("nulo", Type.NULL);
     }
-    public ReturnType moreEqual(Env env) {
+    public ReturnType greaterEqual(Env env) {
         ReturnType value1 = exp1.exec(env);
         ReturnType value2 = exp2.exec(env);
         if(value1.type == Type.INT || value1.type == Type.DOUBLE || value1.type == Type.CHAR) {
@@ -106,7 +106,7 @@ public class Relational extends Expression {
         env.setError("Los tipos no son válidos para operaciones relacionales", exp1.line, exp1.column);
         return new ReturnType("nulo", Type.NULL);
     }
-    public ReturnType more(Env env) {
+    public ReturnType greater(Env env) {
         ReturnType value1 = exp1.exec(env);
         ReturnType value2 = exp2.exec(env);
         if(value1.type == Type.INT || value1.type == Type.DOUBLE || value1.type == Type.CHAR) {
