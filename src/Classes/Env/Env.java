@@ -37,7 +37,7 @@ public class Env {
         setError("Acceso a variable inexistente. '" + id +"'", line, column);
         return null;
     }
-    public boolean reasignID(String id, ReturnType value, int line, int column) {
+    public boolean reassignID(String id, ReturnType value, int line, int column) {
         Env current = this;
         while(current != null) {
             if(current.ids.containsKey(id)) {
