@@ -17,8 +17,10 @@ public class TOK {
   public static final int RW_str = 48;
   public static final int RW_start = 19;
   public static final int RW_break = 18;
+  public static final int RW_greaterequ = 14;
   public static final int RW_insert = 31;
   public static final int RW_notequ = 24;
+  public static final int RW_greater = 21;
   public static final int RW_meth = 43;
   public static final int RW_int = 46;
   public static final int RW_println = 13;
@@ -45,7 +47,6 @@ public class TOK {
   public static final int RW_print = 20;
   public static final int RW_continue = 42;
   public static final int error = 1;
-  public static final int RW_moreequ = 14;
   public static final int TK_int = 65;
   public static final int RW_endfunc = 8;
   public static final int RW_then = 33;
@@ -60,7 +61,6 @@ public class TOK {
   public static final int RW_equ = 6;
   public static final int RW_elseif = 3;
   public static final int TK_div = 60;
-  public static final int RW_more = 21;
   public static final int RW_endwhile = 7;
   public static final int RW_endfor = 11;
   public static final int RW_endswitch = 10;
@@ -92,14 +92,14 @@ public class TOK {
   "RW_endfor",
   "RW_endif",
   "RW_println",
-  "RW_moreequ",
+  "RW_greaterequ",
   "RW_lessequ",
   "RW_until",
   "RW_to",
   "RW_break",
   "RW_start",
   "RW_print",
-  "RW_more",
+  "RW_greater",
   "RW_less",
   "RW_equequ",
   "RW_notequ",

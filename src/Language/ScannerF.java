@@ -860,77 +860,77 @@ public class ScannerF implements java_cup.runtime.Scanner {
             // fall through
           case 71: break;
           case 3: 
-            { return new Symbol(TOK.TK_id,        yychar, yylength(), yytext());
+            { return new Symbol(TOK.TK_id,         yychar, yylength(), yytext());
             } 
             // fall through
           case 72: break;
           case 4: 
-            { return new Symbol(TOK.TK_int,       yychar, yylength(), yytext());
+            { return new Symbol(TOK.TK_int,        yychar, yylength(), yytext());
             } 
             // fall through
           case 73: break;
           case 5: 
-            { return new Symbol(TOK.TK_div,       yychar, yylength(), yytext());
+            { return new Symbol(TOK.TK_div,        yychar, yylength(), yytext());
             } 
             // fall through
           case 74: break;
           case 6: 
-            { return new Symbol(TOK.TK_mult,      yychar, yylength(), yytext());
+            { return new Symbol(TOK.TK_mult,       yychar, yylength(), yytext());
             } 
             // fall through
           case 75: break;
           case 7: 
-            { return new Symbol(TOK.RW_or,        yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_or,         yychar, yylength(), yytext());
             } 
             // fall through
           case 76: break;
           case 8: 
-            { return new Symbol(TOK.RW_and,       yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_and,        yychar, yylength(), yytext());
             } 
             // fall through
           case 77: break;
           case 9: 
-            { return new Symbol(TOK.RW_less,      yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_less,       yychar, yylength(), yytext());
             } 
             // fall through
           case 78: break;
           case 10: 
-            { return new Symbol(TOK.TK_minus,     yychar, yylength(), yytext());
+            { return new Symbol(TOK.TK_minus,      yychar, yylength(), yytext());
             } 
             // fall through
           case 79: break;
           case 11: 
-            { return new Symbol(TOK.TK_plus,      yychar, yylength(), yytext());
+            { return new Symbol(TOK.TK_plus,       yychar, yylength(), yytext());
             } 
             // fall through
           case 80: break;
           case 12: 
-            { return new Symbol(TOK.RW_more,      yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_greater,    yychar, yylength(), yytext());
             } 
             // fall through
           case 81: break;
           case 13: 
-            { return new Symbol(TOK.RW_equequ,    yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_equequ,     yychar, yylength(), yytext());
             } 
             // fall through
           case 82: break;
           case 14: 
-            { return new Symbol(TOK.TK_lpar,      yychar, yylength(), yytext());
+            { return new Symbol(TOK.TK_lpar,       yychar, yylength(), yytext());
             } 
             // fall through
           case 83: break;
           case 15: 
-            { return new Symbol(TOK.TK_rpar,      yychar, yylength(), yytext());
+            { return new Symbol(TOK.TK_rpar,       yychar, yylength(), yytext());
             } 
             // fall through
           case 84: break;
           case 16: 
-            { return new Symbol(TOK.TK_comma,     yychar, yylength(), yytext());
+            { return new Symbol(TOK.TK_comma,      yychar, yylength(), yytext());
             } 
             // fall through
           case 85: break;
           case 17: 
-            { return new Symbol(TOK.TK_str,       yychar, yylength(), yytext());
+            { return new Symbol(TOK.TK_str,        yychar, yylength(), yytext());
             } 
             // fall through
           case 86: break;
@@ -940,257 +940,257 @@ public class ScannerF implements java_cup.runtime.Scanner {
             // fall through
           case 87: break;
           case 19: 
-            { return new Symbol(TOK.RW_not,       yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_not,        yychar, yylength(), yytext());
             } 
             // fall through
           case 88: break;
           case 20: 
-            { return new Symbol(TOK.RW_if,        yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_if,         yychar, yylength(), yytext());
             } 
             // fall through
           case 89: break;
           case 21: 
-            { return new Symbol(TOK.TK_prompt,    yychar, yylength(), yytext());
+            { return new Symbol(TOK.TK_prompt,     yychar, yylength(), yytext());
             } 
             // fall through
           case 90: break;
           case 22: 
-            { return new Symbol(TOK.RW_lessequ,   yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_lessequ,    yychar, yylength(), yytext());
             } 
             // fall through
           case 91: break;
           case 23: 
-            { return new Symbol(TOK.RW_moreequ,   yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_greaterequ, yychar, yylength(), yytext());
             } 
             // fall through
           case 92: break;
           case 24: 
-            { return new Symbol(TOK.RW_notequ,    yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_notequ,     yychar, yylength(), yytext());
             } 
             // fall through
           case 93: break;
           case 25: 
-            { return new Symbol(TOK.TK_char,      yychar, yylength(), yytext());
+            { return new Symbol(TOK.TK_char,       yychar, yylength(), yytext());
             } 
             // fall through
           case 94: break;
           case 26: 
-            { return new Symbol(TOK.TK_double,    yychar, yylength(), yytext());
+            { return new Symbol(TOK.TK_double,     yychar, yylength(), yytext());
             } 
             // fall through
           case 95: break;
           case 27: 
-            { return new Symbol(TOK.RW_end,       yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_end,        yychar, yylength(), yytext());
             } 
             // fall through
           case 96: break;
           case 28: 
-            { return new Symbol(TOK.RW_elseif,    yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_elseif,     yychar, yylength(), yytext());
             } 
             // fall through
           case 97: break;
           case 29: 
-            { return new Symbol(TOK.RW_as,        yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_as,         yychar, yylength(), yytext());
             } 
             // fall through
           case 98: break;
           case 30: 
-            { return new Symbol(TOK.RW_for,       yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_for,        yychar, yylength(), yytext());
             } 
             // fall through
           case 99: break;
           case 31: 
-            { return new Symbol(TOK.RW_switch,    yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_switch,     yychar, yylength(), yytext());
             } 
             // fall through
           case 100: break;
           case 32: 
-            { return new Symbol(TOK.RW_do,        yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_do,         yychar, yylength(), yytext());
             } 
             // fall through
           case 101: break;
           case 33: 
-            { return new Symbol(TOK.RW_to,        yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_to,         yychar, yylength(), yytext());
             } 
             // fall through
           case 102: break;
           case 34: 
-            { return new Symbol(TOK.RW_false,     yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_false,      yychar, yylength(), yytext());
             } 
             // fall through
           case 103: break;
           case 35: 
-            { return new Symbol(TOK.RW_until,     yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_until,      yychar, yylength(), yytext());
             } 
             // fall through
           case 104: break;
           case 36: 
-            { return new Symbol(TOK.RW_begin,     yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_begin,      yychar, yylength(), yytext());
             } 
             // fall through
           case 105: break;
           case 37: 
-            { return new Symbol(TOK.RW_start,     yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_start,      yychar, yylength(), yytext());
             } 
             // fall through
           case 106: break;
           case 38: 
-            { return new Symbol(TOK.RW_meth,      yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_meth,       yychar, yylength(), yytext());
             } 
             // fall through
           case 107: break;
           case 39: 
-            { return new Symbol(TOK.RW_mod,       yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_mod,        yychar, yylength(), yytext());
             } 
             // fall through
           case 108: break;
           case 40: 
-            { return new Symbol(TOK.RW_endif,     yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_endif,      yychar, yylength(), yytext());
             } 
             // fall through
           case 109: break;
           case 41: 
-            { return new Symbol(TOK.RW_int,       yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_int,        yychar, yylength(), yytext());
             } 
             // fall through
           case 110: break;
           case 42: 
-            { return new Symbol(TOK.RW_str,       yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_str,        yychar, yylength(), yytext());
             } 
             // fall through
           case 111: break;
           case 43: 
-            { return new Symbol(TOK.RW_break,     yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_break,      yychar, yylength(), yytext());
             } 
             // fall through
           case 112: break;
           case 44: 
-            { return new Symbol(TOK.RW_repeat,    yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_repeat,     yychar, yylength(), yytext());
             } 
             // fall through
           case 113: break;
           case 45: 
-            { return new Symbol(TOK.RW_func,      yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_func,       yychar, yylength(), yytext());
             } 
             // fall through
           case 114: break;
           case 46: 
-            { return new Symbol(TOK.RW_double,    yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_double,     yychar, yylength(), yytext());
             } 
             // fall through
           case 115: break;
           case 47: 
-            { return new Symbol(TOK.RW_then,      yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_then,       yychar, yylength(), yytext());
             } 
             // fall through
           case 116: break;
           case 48: 
-            { return new Symbol(TOK.RW_exec,      yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_exec,       yychar, yylength(), yytext());
             } 
             // fall through
           case 117: break;
           case 49: 
-            { return new Symbol(TOK.RW_return,    yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_return,     yychar, yylength(), yytext());
             } 
             // fall through
           case 118: break;
           case 50: 
-            { return new Symbol(TOK.RW_back,      yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_back,       yychar, yylength(), yytext());
             } 
             // fall through
           case 119: break;
           case 51: 
-            { return new Symbol(TOK.RW_insert,    yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_insert,     yychar, yylength(), yytext());
             } 
             // fall through
           case 120: break;
           case 52: 
-            { return new Symbol(TOK.RW_print,     yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_print,      yychar, yylength(), yytext());
             } 
             // fall through
           case 121: break;
           case 53: 
-            { return new Symbol(TOK.RW_pow,       yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_pow,        yychar, yylength(), yytext());
             } 
             // fall through
           case 122: break;
           case 54: 
-            { return new Symbol(TOK.RW_while,     yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_while,      yychar, yylength(), yytext());
             } 
             // fall through
           case 123: break;
           case 55: 
-            { return new Symbol(TOK.RW_endfor,    yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_endfor,     yychar, yylength(), yytext());
             } 
             // fall through
           case 124: break;
           case 56: 
-            { return new Symbol(TOK.RW_char,      yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_char,       yychar, yylength(), yytext());
             } 
             // fall through
           case 125: break;
           case 57: 
-            { return new Symbol(TOK.RW_bool,      yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_bool,       yychar, yylength(), yytext());
             } 
             // fall through
           case 126: break;
           case 58: 
-            { return new Symbol(TOK.RW_equ,       yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_equ,        yychar, yylength(), yytext());
             } 
             // fall through
           case 127: break;
           case 59: 
-            { return new Symbol(TOK.RW_continue,  yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_continue,   yychar, yylength(), yytext());
             } 
             // fall through
           case 128: break;
           case 60: 
-            { return new Symbol(TOK.RW_endswitch, yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_endswitch,  yychar, yylength(), yytext());
             } 
             // fall through
           case 129: break;
           case 61: 
-            { return new Symbol(TOK.RW_true,      yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_true,       yychar, yylength(), yytext());
             } 
             // fall through
           case 130: break;
           case 62: 
-            { return new Symbol(TOK.RW_endmeth,   yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_endmeth,    yychar, yylength(), yytext());
             } 
             // fall through
           case 131: break;
           case 63: 
-            { return new Symbol(TOK.RW_println,   yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_println,    yychar, yylength(), yytext());
             } 
             // fall through
           case 132: break;
           case 64: 
-            { return new Symbol(TOK.RW_endfunc,   yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_endfunc,    yychar, yylength(), yytext());
             } 
             // fall through
           case 133: break;
           case 65: 
-            { return new Symbol(TOK.RW_endwhile,  yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_endwhile,   yychar, yylength(), yytext());
             } 
             // fall through
           case 134: break;
           case 66: 
-            { return new Symbol(TOK.RW_case,      yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_case,       yychar, yylength(), yytext());
             } 
             // fall through
           case 135: break;
           case 67: 
-            { return new Symbol(TOK.RW_incr,      yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_incr,       yychar, yylength(), yytext());
             } 
             // fall through
           case 136: break;
           case 68: 
-            { return new Symbol(TOK.RW_params,    yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_params,     yychar, yylength(), yytext());
             } 
             // fall through
           case 137: break;
           case 69: 
-            { return new Symbol(TOK.RW_else,      yychar, yylength(), yytext());
+            { return new Symbol(TOK.RW_else,       yychar, yylength(), yytext());
             } 
             // fall through
           case 138: break;

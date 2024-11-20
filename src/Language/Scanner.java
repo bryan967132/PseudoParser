@@ -963,7 +963,7 @@ public class Scanner implements java_cup.runtime.Scanner {
             // fall through
           case 82: break;
           case 13: 
-            { return new Symbol(TOK.RW_more,       yyline, yychar, yytext());
+            { return new Symbol(TOK.RW_greater,    yyline, yychar, yytext());
             } 
             // fall through
           case 83: break;
@@ -1013,7 +1013,7 @@ public class Scanner implements java_cup.runtime.Scanner {
             // fall through
           case 92: break;
           case 23: 
-            { return new Symbol(TOK.RW_moreequ,    yyline, yychar, yytext());
+            { return new Symbol(TOK.RW_greaterequ, yyline, yychar, yytext());
             } 
             // fall through
           case 93: break;
