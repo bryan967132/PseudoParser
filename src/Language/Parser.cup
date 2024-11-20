@@ -113,10 +113,10 @@ CALLMAINFUNC ::=
     RW_start :s CALLFUNC :fnc {:RESULT = new MainMethod(sleft, sright, fnc);:} ;
 
 DECLID ::=
-    RW_insert :i LISTID :ids RW_as TYPE :t RW_equ EXP :exp {:RESULT = new InitID(ileft, iright, ids, exp, t);:} ;
+    RW_insert :i LISTID :ids RW_as TYPE :t RW_equ EXP :exp {:RESULT = new InitVar(ileft, iright, ids, exp, t);:} ;
 
 IDASIGN ::=
-    LISTID :ids TK_prompt EXP :exp {:RESULT = new AsignID(idsleft, idsright, ids, exp);:} ;
+    LISTID :ids TK_prompt EXP :exp {:RESULT = new Assign(idsleft, idsright, ids, exp);:} ;
 
 LISTID ::=
     LISTID :ls TK_comma IDS :id {:RESULT = ls; RESULT.add(id);                :} |
@@ -233,7 +233,7 @@ EXP ::=
     RELATIONALS :exp         {:RESULT = exp;:} |
     LOGICS      :exp         {:RESULT = exp;:} |
     CALLFUNC    :exp         {:RESULT = exp;:} |
-    TK_id       :id          {:RESULT = new AccessID(idleft, idright, id);:} |
+    TK_id       :id          {:RESULT = new AccessVar(idleft, idright, id);:} |
     TK_str      :p           {:RESULT = new Primitive(pleft, pright, p, Type.STRING); :} |
     TK_char     :p           {:RESULT = new Primitive(pleft, pright, p, Type.CHAR);   :} |
     TK_int      :p           {:RESULT = new Primitive(pleft, pright, p, Type.INT);    :} |
@@ -252,11 +252,11 @@ ARITHMETICS ::=
     TK_minus :s         EXP :e2 {:RESULT = new Arithmetic(sleft, sright, null, s, e2);:} %prec TK_uminus ;
 
 RELATIONALS ::=
-    EXP :e1 RW_equequ  :s EXP :e2 {:RESULT = new Relational(e1left, e1right, e1, s, e2);:} |
-    EXP :e1 RW_notequ  :s EXP :e2 {:RESULT = new Relational(e1left, e1right, e1, s, e2);:} |
-    EXP :e1 RW_lessequ :s EXP :e2 {:RESULT = new Relational(e1left, e1right, e1, s, e2);:} |
+    EXP :e1 RW_equequ     :s EXP :e2 {:RESULT = new Relational(e1left, e1right, e1, s, e2);:} |
+    EXP :e1 RW_notequ     :s EXP :e2 {:RESULT = new Relational(e1left, e1right, e1, s, e2);:} |
+    EXP :e1 RW_lessequ    :s EXP :e2 {:RESULT = new Relational(e1left, e1right, e1, s, e2);:} |
     EXP :e1 RW_greaterequ :s EXP :e2 {:RESULT = new Relational(e1left, e1right, e1, s, e2);:} |
-    EXP :e1 RW_less    :s EXP :e2 {:RESULT = new Relational(e1left, e1right, e1, s, e2);:} |
+    EXP :e1 RW_less       :s EXP :e2 {:RESULT = new Relational(e1left, e1right, e1, s, e2);:} |
     EXP :e1 RW_greater    :s EXP :e2 {:RESULT = new Relational(e1left, e1right, e1, s, e2);:} ;
 
 LOGICS ::=

@@ -282,11 +282,11 @@ ARITHMETICS ::=
     TK_minus :s         EXP :e2 %prec TK_uminus ;
 
 RELATIONALS ::=
-    EXP :e1 RW_equequ  :s EXP :e2 |
-    EXP :e1 RW_notequ  :s EXP :e2 |
-    EXP :e1 RW_lessequ :s EXP :e2 |
+    EXP :e1 RW_equequ     :s EXP :e2 |
+    EXP :e1 RW_notequ     :s EXP :e2 |
+    EXP :e1 RW_lessequ    :s EXP :e2 |
     EXP :e1 RW_greaterequ :s EXP :e2 |
-    EXP :e1 RW_less    :s EXP :e2 |
+    EXP :e1 RW_less       :s EXP :e2 |
     EXP :e1 RW_greater    :s EXP :e2 ;
 
 LOGICS ::=
