@@ -2,7 +2,7 @@ package Classes.Instructions;
 import Classes.Abstracts.Expression;
 import Classes.Abstracts.Instruction;
 import Classes.Env.Env;
-import Classes.Expressions.AccessID;
+import Classes.Expressions.AccessVar;
 import Classes.Expressions.Arithmetic;
 import Classes.Generators.GoGen;
 import Classes.Generators.PyGen;
@@ -21,10 +21,10 @@ public class AddSub extends Instruction {
     public ReturnType exec(Env env) {
         switch(this.sign) {
             case "+=":
-                env.reasignID(
+                env.reassignID(
                     id,
                     new Arithmetic(line, column,
-                        new AccessID(line, column, id),
+                        new AccessVar(line, column, id),
                         "+",
                         exp
                     ).exec(env),
@@ -32,10 +32,10 @@ public class AddSub extends Instruction {
                 );
                 break;
             case "-=":
-                env.reasignID(
+                env.reassignID(
                     id,
                     new Arithmetic(line, column,
-                        new AccessID(line, column, id),
+                        new AccessVar(line, column, id),
                         "-",
                         exp
                     ).exec(env),

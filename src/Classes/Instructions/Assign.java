@@ -7,10 +7,10 @@ import Classes.Generators.GoGen;
 import Classes.Generators.PyGen;
 import Classes.Utils.ReturnType;
 import Classes.Utils.TypeInst;
-public class AsignID extends Instruction {
+public class Assign extends Instruction {
     private ArrayList<String> ids;
     private Expression value;
-    public AsignID(int line, int column, ArrayList<String> ids, Expression value) {
+    public Assign(int line, int column, ArrayList<String> ids, Expression value) {
         super(line, column, TypeInst.ASIGN_ID);
         this.ids = ids;
         this.value = value;
@@ -18,7 +18,7 @@ public class AsignID extends Instruction {
     public ReturnType exec(Env env) {
         ReturnType value = this.value.exec(env);
         for(String id : ids) {
-            env.reasignID(id, value, this.line, this.column);
+            env.reassignID(id, value, this.line, this.column);
         }
         return null;
     }
