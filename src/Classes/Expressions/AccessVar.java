@@ -7,9 +7,9 @@ import Classes.Generators.PyGen;
 import Classes.Utils.ReturnType;
 import Classes.Utils.Type;
 import Classes.Utils.TypeExp;
-public class AccessID extends Expression {
+public class AccessVar extends Expression {
     private String id;
-    public AccessID(int line, int column, String id) {
+    public AccessVar(int line, int column, String id) {
         super(line, column, TypeExp.ACCESS_ID);
         this.id = id;
     }
