@@ -15,7 +15,7 @@ public class Function extends Instruction {
     public Block block;
     public Type type;
     public Function(int line, int column, String id, ArrayList<Parameter> params, Block block, Type type) {
-        super(line, column, TypeInst.INIT_FUNCTION);
+        super(line, column, TypeInst.INITFUNC);
         this.id = id;
         this.params = params;
         this.block = block;
@@ -42,7 +42,7 @@ public class Function extends Instruction {
         code += " {";
         goGen.addInstruction(code);
         block.goGenerate(envFunc, goGen);
-        code = "}";
+        code = "}\n";
         goGen.addInstruction(code);
     }
     public void pyGenerate(Env env, PyGen pyGen) {
@@ -60,6 +60,7 @@ public class Function extends Instruction {
         pyGen.addInstruction(code);
         pyGen.isTemporal();
         block.pyGenerate(envFunc, pyGen);
+        pyGen.addInstruction("");
         // GLOBALS
         pyGen.isNotTemporal();
         pyGen.newEnv();

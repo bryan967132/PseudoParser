@@ -10,7 +10,7 @@ public class DoWhile extends Instruction {
     private Expression condition;
     private Block block;
     public DoWhile(int line, int column, Expression condition, Block block) {
-        super(line, column, TypeInst.LOOP_DOWHILE);
+        super(line, column, TypeInst.DOWHILE);
         this.condition = condition;
         this.block = block;
     }

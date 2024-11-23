@@ -10,7 +10,7 @@ public class While extends Instruction {
     private Expression condition;
     private Block block;
     public While(int line, int column, Expression condition, Block block) {
-        super(line, column, TypeInst.LOOP_WHILE);
+        super(line, column, TypeInst.WHILE);
         this.condition = condition;
         this.block = block;
     }

@@ -13,7 +13,7 @@ import Classes.Utils.TypeSent;
 public class Block extends Instruction {
     ArrayList<Statement> instructions;
     public Block(int line, int column, ArrayList<Statement> instructions) {
-        super(line, column, TypeInst.BLOCK_INST);
+        super(line, column, TypeInst.BLOCK);
         this.instructions = instructions;
     }
     public ReturnType exec(Env env) {
@@ -42,7 +42,7 @@ public class Block extends Instruction {
         goGen.newEnv();
         for(Statement instruction : instructions) {
             if(instruction.typeSent == TypeSent.EXPRESSION) {
-                if(((Expression) instruction).typeExp != TypeExp.CALL_FUNC) {
+                if(((Expression) instruction).typeExp != TypeExp.CALLFUNC) {
                     ((Expression) instruction).goGenerate(env, goGen);
                     continue;
                 }
@@ -58,7 +58,7 @@ public class Block extends Instruction {
         if(instructions.size() > 0) {
             for(Statement instruction : instructions) {
                 if(instruction.typeSent == TypeSent.EXPRESSION) {
-                    if(((Expression) instruction).typeExp != TypeExp.CALL_FUNC) {
+                    if(((Expression) instruction).typeExp != TypeExp.CALLFUNC) {
                         ((Expression) instruction).pyGenerate(env, pyGen);
                         continue;
                     }

@@ -2,7 +2,7 @@ package Classes.Instructions;
 import Classes.Abstracts.Expression;
 import Classes.Abstracts.Instruction;
 import Classes.Env.Env;
-import Classes.Expressions.AccessID;
+import Classes.Expressions.AccessVar;
 import Classes.Expressions.Primitive;
 import Classes.Expressions.Relational;
 import Classes.Generators.GoGen;
@@ -17,7 +17,7 @@ public class For extends Instruction {
     private Expression v3;
     private Block instructions;
     public For(int line, int column, String id, Expression v1, Expression v2, Expression v3, Block instructions) {
-        super(line, column, TypeInst.LOOP_FOR);
+        super(line, column, TypeInst.FOR);
         this.id = id;
         this.v1 = v1;
         this.v2 = v2;
@@ -55,10 +55,10 @@ public class For extends Instruction {
     }
     public boolean getConditionValue(Env env, String sign, Expression value) {
         if(sign.equals(">=")) {
-            return Boolean.parseBoolean(new Relational(line, column, new AccessID(line, column, id), ">=", this.v2).exec(env).value.toString());
+            return Boolean.parseBoolean(new Relational(line, column, new AccessVar(line, column, id), ">=", this.v2).exec(env).value.toString());
         }
         else if(sign.equals("<=")) {
-            return Boolean.parseBoolean(new Relational(line, column, new AccessID(line, column, id), "<=", this.v2).exec(env).value.toString());
+            return Boolean.parseBoolean(new Relational(line, column, new AccessVar(line, column, id), "<=", this.v2).exec(env).value.toString());
         }
         return false;
     }

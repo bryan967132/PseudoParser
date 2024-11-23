@@ -11,7 +11,7 @@ public class Assign extends Instruction {
     private ArrayList<String> ids;
     private Expression value;
     public Assign(int line, int column, ArrayList<String> ids, Expression value) {
-        super(line, column, TypeInst.ASIGN_ID);
+        super(line, column, TypeInst.ASSIGN);
         this.ids = ids;
         this.value = value;
     }

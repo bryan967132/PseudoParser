@@ -49,7 +49,7 @@ public class If extends Instruction {
                 ((If) ((Instruction) except)).enableIsElseIf();
                 ((Instruction) except).goGenerate(envIf, goGen);
                 return;
-            } else if(except.typeSent == TypeSent.INSTRUCTION && ((Instruction) except).typeInst == TypeInst.BLOCK_INST) {
+            } else if(except.typeSent == TypeSent.INSTRUCTION && ((Instruction) except).typeInst == TypeInst.BLOCK) {
                 goGen.addInstruction("} else {");
                 ((Instruction) except).goGenerate(envIf, goGen);
             }
@@ -69,7 +69,7 @@ public class If extends Instruction {
                 ((If) ((Instruction) except)).enableIsElseIf();
                 ((Instruction) except).pyGenerate(envIf, pyGen);
                 return;
-            } else if(except.typeSent == TypeSent.INSTRUCTION && ((Instruction) except).typeInst == TypeInst.BLOCK_INST) {
+            } else if(except.typeSent == TypeSent.INSTRUCTION && ((Instruction) except).typeInst == TypeInst.BLOCK) {
                 pyGen.addInstruction("else:");
                 ((Instruction) except).pyGenerate(envIf, pyGen);
             }
