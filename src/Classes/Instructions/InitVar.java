@@ -8,12 +8,12 @@ import Classes.Generators.PyGen;
 import Classes.Utils.ReturnType;
 import Classes.Utils.Type;
 import Classes.Utils.TypeInst;
-public class InitID extends Instruction {
+public class InitVar extends Instruction {
     ArrayList<String> inits;
     Expression value;
     Type type;
-    public InitID(int line, int column, ArrayList<String> inits, Expression value, Type type) {
-        super(line, column, TypeInst.INIT_ID);
+    public InitVar(int line, int column, ArrayList<String> inits, Expression value, Type type) {
+        super(line, column, TypeInst.INITVAR);
         this.inits = inits;
         this.value = value;
         this.type = type;
@@ -40,7 +40,7 @@ public class InitID extends Instruction {
                         env.saveID(id, true, type, line, column);
                         break;
                     case CHAR:
-                        env.saveID(id, '0', type, line, column);
+                        env.saveID(id, '\0', type, line, column);
                         break;
                     case STRING:
                         env.saveID(id, "", type, line, column);
@@ -75,7 +75,7 @@ public class InitID extends Instruction {
                         values.add("true");
                         break;
                     case CHAR:
-                        values.add("'0'");
+                        values.add("'\\0'");
                         break;
                     case STRING:
                         values.add("\"\"");
@@ -110,7 +110,7 @@ public class InitID extends Instruction {
                         values.add("True");
                         break;
                     case CHAR:
-                        values.add("'0'");
+                        values.add("'\\0'");
                         break;
                     case STRING:
                         values.add("''");
