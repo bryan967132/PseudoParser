@@ -40,9 +40,7 @@ public class PyGen {
         this.mainCall = call;
     }
     public void generateFinalCode() {
-        for(String instruction : instructions) {
-            pyCode.add(instruction);
-        }
+        pyCode.addAll(instructions);
         pyCode.add("if __name__ == '__main__':");
         pyCode.add("\t" + (!mainCall.equals("") ? mainCall : "pass"));
     }

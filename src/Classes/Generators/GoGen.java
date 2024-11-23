@@ -2,6 +2,7 @@ package Classes.Generators;
 import java.util.ArrayList;
 public class GoGen {
     private int tabs = 0;
+    private int imports = 0;
     private String mainCall = "";
     private boolean fmtImport = false;
     private boolean mathImport = false;
@@ -20,16 +21,19 @@ public class GoGen {
     public void importFmt() {
         if(!fmtImport) {
             fmtImport = true;
+            imports ++;
         }
     }
     public void importMath() {
         if(!mathImport) {
             mathImport = true;
+            imports ++;
         }
     }
     public void importStrconv() {
         if(!strconvImport) {
             strconvImport = true;
+            imports ++;
         }
     }
     public ArrayList<String> getFinalCode() {
@@ -44,21 +48,23 @@ public class GoGen {
     public void generateFinalCode() {
         goCode.add("package main\n");
         if(fmtImport || mathImport || strconvImport) {
-            goCode.add("import (");
+            if(imports > 1) {
+                goCode.add("import (");
+            }
             if(fmtImport) {
-                goCode.add("\t\"fmt\"");
+                goCode.add(imports > 1 ? "\t\"fmt\"" : "import \"fmt\"\n");
             }
             if(mathImport) {
-                goCode.add("\t\"math\"");
+                goCode.add(imports > 1 ? "\t\"math\"" : "import \"math\"\n");
             }
             if(strconvImport) {
-                goCode.add("\t\"strconv\"");
+                goCode.add(imports > 1 ? "\t\"strconv\"" : "import \"strconv\"\n");
             }
-            goCode.add(")\n");
+            if(imports > 1) {
+                goCode.add(")\n");
+            }
         }
-        for(String instruction : instructions) {
-            goCode.add(instruction);
-        }
+        goCode.addAll(instructions);
         goCode.add("func main() {");
         goCode.add(!mainCall.equals("") ? "\t" + mainCall : "");
         goCode.add("}");
