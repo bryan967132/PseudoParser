@@ -33,6 +33,9 @@ public class Primitive extends Expression {
     }
     public ReturnType goGenerate(Env env, GoGen goGen) {
         if(type != Type.STRING) {
+            if(type == Type.CHAR) {
+                return new ReturnType("'" + value.toString() + "'", type);
+            }
             if(type != Type.BOOLEAN) {
                 return new ReturnType(value.toString(), type);
             }
@@ -42,6 +45,9 @@ public class Primitive extends Expression {
     }
     public ReturnType pyGenerate(Env env, PyGen pyGen) {
         if(type != Type.STRING) {
+            if(type == Type.CHAR) {
+                return new ReturnType("'" + value.toString() + "'", type);
+            }
             if(type != Type.BOOLEAN) {
                 return new ReturnType(value.toString(), type);
             }

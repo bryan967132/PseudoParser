@@ -11,7 +11,7 @@ public class Relational extends Expression {
     private String sign;
     private Expression exp2;
     public Relational(int line, int column, Expression exp1, String sign, Expression exp2) {
-        super(line, column, TypeExp.RELATIONAL_OP);
+        super(line, column, TypeExp.RELATIONAL);
         this.exp1 = exp1;
         this.sign = sign;
         this.exp2 = exp2;
