@@ -25,7 +25,7 @@
 
 <INSTGLOBAL> ::=
     <CALLMAINFUNC> |
-    <DECLID>       |
+    <INITVAR>      |
     <DECLFUNC>
 
 <INSTRUCTIONS> ::=
@@ -33,13 +33,13 @@
     <INSTRUCTION>
 
 <INSTRUCTION> ::=
-    <DECLID>         |
-    <IDASIGN>        |
-    <IFSTRUCT>       |
-    <SWITCHSTRUCT>   |
-    <LOOPFOR>        |
-    <LOOPWHILE>      |
-    <LOOPDOWHILE>    |
+    <INITVAR>        |
+    <ASSIGN>         |
+    <IF>             |
+    <SWITCH>         |
+    <FOR>            |
+    <WHILE>          |
+    <DOWHILE>        |
     <CALLFUNC>       |
     <PRINT>          |
     'retornar' <EXP> |
@@ -50,30 +50,48 @@
 <CALLMAINFUNC> ::=
     'inicia' <CALLFUNC>
 
-<DECLID> ::=
+<INITVAR> ::=
     'ingresar' <LISTID> 'como' <TYPE> 'con valor' <EXP>
 
-<IDASIGN> ::=
+<ASSIGN> ::=
     <LISTID> '<-' <EXP>
 
 <LISTID> ::=
     <LISTID> ',' TK_id |
     TK_id
 
-<IFSTRUCT> ::=
-    'si' <EXP> 'entonces' <ELSEIFSTRUCT> |
-    'si' <EXP> 'entonces' <ELSESTRUCT>   |
+<DECLFUNC> ::=
+    'funcion' TK_id <TYPE> 'con parametros' '(' <LISTPARAMS> ')' <INSTFUNC> |
+    'funcion' TK_id <TYPE> <INSTFUNC>                                       |
+    'metodo'  TK_id 'con parametros' '(' <LISTPARAMS> ')' <INSTMETH>        |
+    'metodo'  TK_id <INSTMETH>
+
+<INSTFUNC> ::=
+    <INSTRUCTIONS> 'fin funcion' |
+    'fin funcion'
+
+<INSTMETH> ::=
+    <INSTRUCTIONS> 'fin metodo' |
+    'fin metodo'
+
+<LISTPARAMS> ::=
+    <LISTPARAMS> ',' TK_id <TYPE> |
+    TK_id <TYPE>
+
+<IF> ::=
+    'si' <EXP> 'entonces' <ELSEIF> |
+    'si' <EXP> 'entonces' <ELSE>   |
     'si' <EXP> 'entonces' <INSTIF>
 
-<ELSEIFSTRUCT> ::=
-    <INSTRUCTIONS> 'o si' <EXP> 'entonces' <ELSEIFSTRUCT> |
-    <INSTRUCTIONS> 'o si' <EXP> 'entonces' <ELSESTRUCT>   |
-    <INSTRUCTIONS> 'o si' <EXP> 'entonces' <INSTIF>       |
-    'o si' <EXP> 'entonces' <ELSEIFSTRUCT>                |
-    'o si' <EXP> 'entonces' <ELSESTRUCT>                  |
+<ELSEIF> ::=
+    <INSTRUCTIONS> 'o si' <EXP> 'entonces' <ELSEIF> |
+    <INSTRUCTIONS> 'o si' <EXP> 'entonces' <ELSE>   |
+    <INSTRUCTIONS> 'o si' <EXP> 'entonces' <INSTIF> |
+    'o si' <EXP> 'entonces' <ELSEIF>                |
+    'o si' <EXP> 'entonces' <ELSE>                  |
     'o si' <EXP> 'entonces' <INSTIF>
 
-<ELSESTRUCT> ::=
+<ELSE> ::=
     <INSTRUCTIONS> 'de lo contrario' <INSTIF> |
     'de lo contrario' <INSTIF>
 
@@ -81,7 +99,7 @@
     <INSTRUCTIONS> 'fin si' |
     'fin si'
 
-<SWITCHSTRUCT> ::=
+<SWITCH> ::=
     'segun' <EXP> 'hacer' <CASESDEFAULT> 'fin segun' |
     'segun' <EXP> 'hacer' 'fin segun'
 
@@ -102,14 +120,14 @@
     'de lo contrario' 'entonces' <INSTRUCTIONS> |
     'de lo contrario' 'entonces'
 
-<LOOPFOR> ::=
+<FOR> ::=
     'para' TK_id '<-' <EXP> 'hasta' <EXP> 'con incremento' <EXP> 'hacer' <INSTFOR> |
     'para' TK_id '<-' <EXP> 'hasta' <EXP> 'hacer' <INSTFOR>
 
-<LOOPWHILE> ::=
+<WHILE> ::=
     'mientras' <EXP>  'hacer' <INSTWHILE>
 
-<LOOPDOWHILE> ::=
+<DOWHILE> ::=
     <INSTREPEAT> 'cuando' <EXP>
 
 <INSTFOR> ::=
@@ -123,32 +141,6 @@
 <INSTREPEAT> ::=
     'repetir' <INSTRUCTIONS> |
     'repetir'
-
-<DECLFUNC> ::=
-    'funcion' TK_id <TYPE> 'con parametros' '(' <LISTPARAMS> ')' <INSTFUNC> |
-    'funcion' TK_id <TYPE> <INSTFUNC>                                       |
-    'metodo'  TK_id 'con parametros' '(' <LISTPARAMS> ')' <INSTMETH>        |
-    'metodo'  TK_id <INSTMETH>
-
-<INSTFUNC> ::=
-    <INSTRUCTIONS> 'fin funcion' |
-    'fin funcion'
-
-<INSTMETH> ::=
-    <INSTRUCTIONS> 'fin metodo' |
-    'fin metodo'
-
-<LISTPARAMS> ::=
-    <LISTPARAMS> ',' TK_id <TYPE> |
-    TK_id <TYPE>
-
-<CALLFUNC> ::=
-    'ejecutar' TK_id '(' <LISTARGS> ')' |
-    'ejecutar' TK_id '(' ')'
-
-<LISTARGS> ::=
-    <LISTARGS> ',' <EXP> |
-    <EXP>
 
 <PRINT> ::=
     'imprimir nl' <EXP> |
@@ -195,6 +187,14 @@
     <EXP> 'y' <EXP> |
     <EXP> 'o' <EXP> |
     'no'  <EXP>
+
+<CALLFUNC> ::=
+    'ejecutar' TK_id '(' <LISTARGS> ')' |
+    'ejecutar' TK_id '(' ')'
+
+<LISTARGS> ::=
+    <LISTARGS> ',' <EXP> |
+    <EXP>
 ```
 
 ## Precedencia de Operadores
